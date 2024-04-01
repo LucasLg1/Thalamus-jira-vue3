@@ -36,6 +36,7 @@
                             </h5>
                         </div>
                     </div>
+
                 </div>
                 <div :id="item.nome" style="width: 100%; display: flex; flex-flow: column; padding-right: 0.5rem;">
                     <div
@@ -113,8 +114,8 @@
                             </div>
 
                             <div style="width: 3rem; text-align: center;">
-                                <select v-model="element.HP" @change="editarBacklog('HP', element.id, element.HP)"
-                                    style="text-align: center; border: 1px solid black; border-radius: 50px; padding-left: 0.2rem; padding-right: 0.2rem;">
+                                <select v-model="element.HP" disabled @change="editarBacklog('HP', element.id, element.HP)"
+                                    style="text-align: center; border: 1px solid black; border-radius: 50px; padding-left: 0.2rem; padding-right: 0.2rem; cursor: not-allowed">
                                     <option hidden>0</option>
                                     <option>1</option>
                                     <option>2</option>
@@ -132,9 +133,9 @@
                             </div>
 
                             <div style="width: 15%;">
-                                <select v-model="element.responsavel_id" class="form-select"
+                                <select v-model="element.responsavel_id" class="form-select" disabled
                                     @change="editarBacklog('responsavel_id', element.id, element.responsavel_id)"
-                                    style="width: 100%; outline: none; text-align: left; padding: 0.5rem; border: none; background-color: transparent;">
+                                    style="width: 100%; outline: none; text-align: left; padding: 0.5rem; border: none; background-color: transparent; cursor: not-allowed">
                                     <option v-for=" item  in  gerente " :key="item.id" :value="item.id">
                                         {{ nomeEsobrenome(item.nomeCompleto) }}
                                         <!-- {{ item.nomeCompleto }} -->
@@ -143,20 +144,20 @@
                             </div>
 
                             <div style="width:10%; margin-inline: 0.5rem;">
-                                <input style="width: 7rem; outline: none; text-align: center; cursor: pointer;"
+                                <input style="width: 7rem; outline: none; text-align: center; cursor: not-allowed;" disabled
                                     type="date" @change="editarBacklog('dtInicio', element.id, element.dtInicio)"
                                     v-model="element.dtInicio">
                             </div>
 
                             <div style="width: 10%; margin-inline: 0.5rem;">
-                                <input style="width: 7rem; outline: none; text-align: center; cursor: pointer;"
+                                <input style="width: 7rem; outline: none; text-align: center; cursor: not-allowed" disabled
                                     type="date" :min="element.dtInicio"
                                     @change="editarBacklog('dtFim', element.id, element.dtFim)" v-model="element.dtFim">
                             </div>
 
                             <div style="width: 16%; margin-right: 0.3rem; margin-left: 0.3rem;">
-                                <select
-                                    :style="{ 'color': (element.status == 'Pendente') ? 'rgb(255, 145, 0)' : (element.status == 'Em andamento') ? 'rgb(0, 47, 255)' : 'rgb(0, 192, 0)', }"
+                                <select :disabled="parseInt(element.responsavel_id) !== parseInt(idUsuario)"
+                                    :style="{ 'color': (element.status == 'Pendente') ? 'rgb(255, 145, 0)' : (element.status == 'Em andamento') ? 'rgb(0, 47, 255)' : 'rgb(0, 192, 0)', 'cursor' : parseInt(element.responsavel_id) !== parseInt(idUsuario) ? 'not-allowed' : '' }"
                                     style="width: 100%; outline: none; text-align: center; border: none; background-color: transparent;"
                                     class="form-select" @change="editarBacklog('status', element.id, element.status)"
                                     v-model="element.status">
@@ -175,11 +176,11 @@
                                     </template>
 
                                     <v-list>
-                                        <v-list-item style="margin: 0.2rem;"
-                                                @click="abrirModalEditarBacklog(element.id, item.id, false)">
-                                                Editar tarefa
+                                        <v-list-item style="margin: 0.2rem;" @click="abrirModalEditarBacklog(element.id, item.id, false)" disabled>
+
+                                            Editar Tarefa
                                         </v-list-item>
-                                        <v-list-item>
+                                        <v-list-item disabled>
 
                                             <v-menu>
 
@@ -216,9 +217,9 @@
                         </div>
                         <div
                             style="border: 1px solid black; border-radius: 5px; width: 100%; margin-left: 0.3rem; padding: 0.3rem;">
-                            <input type="text" placeholder="O que será feito?"
+                            <input type="text" placeholder="O que será feito?" disabled
                                 @keyup.enter="criarBacklog(item.id, $event.target.value), $event.target.value = ''"
-                                style="width: 100%; padding: 0.1rem; padding-left: 0.5rem; outline: none;"
+                                style="width: 100%; padding: 0.1rem; padding-left: 0.5rem; outline: none; cursor: not-allowed"
                                 :id="'inputNovaTarefa' + item.id">
                         </div>
                     </div>
@@ -756,21 +757,21 @@ export default {
 <style scoped>
 @media (max-width: 1800px) {
     .container {
-        margin-left: 13rem ;
-        max-width: 1100px ;
+        margin-left: 13rem;
+        max-width: 1100px;
     }
 
     .botaoHome {
-    margin-left: 200px !important;
-}
+        margin-left: 200px !important;
+    }
 
 }
 
 .botaoHome {
-    font-size: 30px ;
+    font-size: 30px;
     margin-left: 250px;
-    cursor: pointer ;
-    position: absolute ;
+    cursor: pointer;
+    position: absolute;
 }
 
 .hPoints {

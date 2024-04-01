@@ -25,6 +25,7 @@ import axios from 'axios'
 //PCM
 import VisualizaçãoCriaçãoPCM from '@/views/PCM/VisualizaçãoCriaçãoPCM.vue'
 import ControlePCM from '@/views/PCM/ControlePCM'
+import LeituraPlanodeAção from '@/views/PA/LeituraPlanodeAção.vue'
 // import CadastroPCM from '@/views/PCM/CadastroPCM.vue'
 
 //Plano de Ação
@@ -80,6 +81,34 @@ function guardMyroute2(to, from, next) {
   }
 }
 
+function guardMyroute3(to, from, next) {
+  var isAuthenticated = false;
+  if (localStorage.getItem('LoggedUser'))
+    isAuthenticated = true;
+  else
+    isAuthenticated = false;
+  if (isAuthenticated) {
+
+    var idUsuario = localStorage.getItem('id');
+    var planos = null
+    var idProjeto = sessionStorage.getItem('idProjeto')
+    axios.get(`http://192.168.0.5:8000/api/planoAcao/listar`, {
+    })
+      .then((response) => {
+        planos = response.data;
+
+        if ((planos.find(projeto => projeto.id == idProjeto).permissao).find(pessoa => pessoa.usuario_id == idUsuario).nivel == 2) {
+          next();
+        } else {
+          next('/PA/Controle');
+        }
+      })
+  }
+  else {
+    next('/');
+  }
+}
+
 
 const routes = [
 
@@ -108,19 +137,17 @@ const routes = [
     path: '/PCM',
     name: 'PCM',
     component: VisualizaçãoCriaçãoPCM,
+    beforeEnter: guardMyroute,
   },
 
   {
     path: '/PCM/Controle',
     name: 'ControlePCM',
     component: ControlePCM,
+    beforeEnter: guardMyroute,
   },
 
-  // {
-  //   path: '/PCM/Cadastro',
-  //   name: 'PCMv',
-  //   component: CadastroPCM,
-  // },
+
 
   //Plano de Ação
 
@@ -128,13 +155,24 @@ const routes = [
     path: '/PA/Controle',
     name: 'ControlePA',
     component: ControledePlanodeAção,
+    beforeEnter: guardMyroute,
   },
 
   {
     path: '/PA',
     name: 'PA',
+    beforeEnter: guardMyroute3, guardMyroute,
     component: VisualizaçãoPlanodeAção,
   },
+
+  {
+    path: '/PA/Vo',
+    name: 'PAVo',
+    component: LeituraPlanodeAção,
+    beforeEnter: guardMyroute,
+  },
+
+  
 
   //programas
 
@@ -142,6 +180,7 @@ const routes = [
     path: '/Programas/controle',
     name: 'controleProgramas',
     component: controleProgramas,
+    beforeEnter: guardMyroute,
   },
 
   //Projetos
@@ -150,8 +189,7 @@ const routes = [
     name: 'sprints',
     component: SprintsView,
     props: { sharedVariable: 'backlogs' },
-    beforeEnter: guardMyroute2,
-
+    beforeEnter: guardMyroute2, guardMyroute
   },
   {
     path: '/sprintsVo',
@@ -159,7 +197,6 @@ const routes = [
     component: SprintsViewOnly,
     props: { sharedVariable: 'backlogs' },
     beforeEnter: guardMyroute,
-
   },
   {
     path: '/projetos',
@@ -173,8 +210,7 @@ const routes = [
     path: '/painel',
     name: 'painel',
     component: PainelKanbanView,
-    beforeEnter: guardMyroute2,
-
+    beforeEnter: guardMyroute2, guardMyroute
   },
 
   {

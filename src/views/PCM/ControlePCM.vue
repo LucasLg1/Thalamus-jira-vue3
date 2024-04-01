@@ -17,7 +17,7 @@
                     <div style="width: 100%;">
                         <h3 style="text-align: center; margin: 0;">Propostas de Criação ou Mudança</h3>
                     </div>
-                    <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM"
+                    <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1"
                         class="botaoAdicionarSprint">
                         <i class="bi bi-plus-circle"></i>
                     </button>
@@ -34,8 +34,8 @@
                                 <th scope="col">Nome </th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Data de abertura</th>
-                                <th scope="col">Responsável</th>
-                                <th scope="col" style="width: 15rem;"></th>
+                                <th scope="col">Aprovador</th>
+                                <th scope="col" style="width: 15rem;" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,7 +63,7 @@
                                     {{ nomeEsobrenome(item.responsavel_nome) }}
                                 </td>
 
-                                <td style="text-align: center; vertical-align: middle;">
+                                <td style="text-align: center; vertical-align: middle;" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3">
                                     <div style="display: flex;" @click.stop>
                                         <div style="margin-left: 1rem;">
                                             <button class="button-aprovar" :disabled="item.aprovada !== null"
@@ -87,29 +87,28 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>             
         </div>
     </div>
 </template>
-
-
 <script>
 
 import axios from 'axios';
-import { devURL } from '../../services/api'
-import { prodURL } from '../../services/api'
+import { devURL, prodURL, permissoes } from '../../services/api'
 
 export default {
     name: "ControlePCM",
 
     data() {
         return {
+            permissoes: permissoes,
             PCMSelecionado: null,
             listaPCMsFiltrada: null,
 
             PCMs: null,
             devURL: devURL,
             prodURL: prodURL,
+            idUsuario: localStorage.getItem('id'),
 
             teste: null
         }
@@ -117,6 +116,7 @@ export default {
 
     mounted() {
         this.getPCMs()
+            // this.idUsuario = localStorage.getItem('id')
     },
 
     methods: {

@@ -244,7 +244,7 @@
                                     :style="{ 'cursor': (parseInt(element.responsavel_id) !== parseInt(idUsuario)) ? 'not-allowed' : 'pointer' }">
                             </div>
 
-                            <div style="width: 15%; margin-right: 0.3rem; margin-left: 0.3rem;">
+                            <div style="width: 16%; margin-right: 0.3rem; margin-left: 0.3rem;">
                                 <select :disabled="parseInt(element.responsavel_id) !== parseInt(idUsuario)"
                                     :style="{ 'color': (element.status == 'Pendente') ? 'rgb(255, 145, 0)' : (element.status == 'Em andamento') ? 'rgb(0, 47, 255)' : 'rgb(0, 192, 0)', 'cursor': (parseInt(element.responsavel_id) !== parseInt(idUsuario)) ? 'not-allowed' : 'pointer' }"
                                     style="width: 100%; outline: none; text-align: center; border: none; background-color: transparent;"
@@ -265,11 +265,11 @@
                                     </template>
 
                                     <v-list>
-                                        <v-list-item>
-                                            <button style="margin: 0.2rem; color: grey; cursor: not-allowed;"
-                                                @click="abrirModalEditarBacklog(element.id, item.id, false)"
-                                                disabled>Editar
-                                                Tarefa</button><br />
+                                        <v-list-item style="margin: 0.2rem;"
+                                                    @click="abrirModalEditarBacklog(element.id, item.id, false)">
+                                                Editar Tarefa
+                                            </v-list-item>
+                                            <v-list-item>
                                             <v-menu>
 
                                                 <template v-slot:activator="{ props }">

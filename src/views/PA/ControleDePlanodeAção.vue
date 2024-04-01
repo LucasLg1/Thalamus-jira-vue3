@@ -53,8 +53,9 @@
                                 @mouseleave="mostrarBotao(item.id, false)">
 
                                 <td style="vertical-align: middle;">{{ item.nome }}</td>
-                                <td style="vertical-align: middle;"><select v-model="item.status" class="form-select"
-                                        :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', }"
+                                <td style="vertical-align: middle;">
+                                    <select v-model="item.status" class="form-select" :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                        :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', 'cursor' : (item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : '' }"
                                         style="width: 10rem; outline: none; text-align: center; border: none; background-color: transparent; "
                                         @click.stop @change="editarPlanoInline(item.id, 'status', item.status)">
                                         <option style="color: red;">Proposto</option>
@@ -104,7 +105,8 @@
                                                 <v-list-item
                                                     :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
                                                     :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
-                                                    @click="modalExcluirPlano = true, this.planoEditado = item">
+                                                    @click="modalExcluirPlano = true, this.planoEditado = item"
+                                                    style="color: red;">
                                                     Excluir
                                                 </v-list-item>
 
@@ -162,7 +164,7 @@
                         <li v-for="item in reordenarArray(planoEditado.permissao) " :key="item.usuario_id"
                             style="display: flex; align-items: center;">
                             <div
-                                style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%;">
+                                style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%; margin-top: 0.3rem;">
                                 {{ item.nome }} {{ item.usuario_id == planoEditado.gerente_id ? '(Gerente)' :
                                 item.usuario_id == this.idUsuario ? '(Você)' : '' }}
                                 <select style="width: 7rem; text-align: center;" class="form-select"
@@ -718,7 +720,7 @@ export default {
                     sessionStorage.setItem('nomeDoProjeto', nomeProjeto)
                 }
                 if ((this.planosAcao.find(projeto => projeto.id == id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1) {
-                    this.$router.push({ name: "login" })
+                    this.$router.push({ name: "PAVo" })
                     sessionStorage.setItem('idProjeto', id)
                     sessionStorage.setItem('nomeDoProjeto', nomeProjeto)
                 }

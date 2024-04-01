@@ -252,7 +252,7 @@
                                         v-model="element.dtFim">
                                 </div>
 
-                                <div style="width: 15%; margin-right: 0.3rem; margin-left: 0.3rem;">
+                                <div style="width: 16%; margin-right: 0.3rem; margin-left: 0.3rem;">
                                     <select
                                         :style="{ 'color': (element.status == 'Pendente') ? 'rgb(255, 145, 0)' : (element.status == 'Em andamento') ? 'rgb(0, 47, 255)' : 'rgb(0, 192, 0)', }"
                                         style="width: 100%; outline: none; text-align: center; border: none; background-color: transparent;"
@@ -274,10 +274,11 @@
                                         </template>
 
                                         <v-list>
+                                            <v-list-item style="margin: 0.2rem;"
+                                                    @click="abrirModalEditarBacklog(element.id, item.id, false)">
+                                                Editar Tarefa
+                                            </v-list-item>
                                             <v-list-item>
-                                                <button style="margin: 0.2rem;"
-                                                    @click="abrirModalEditarBacklog(element.id, item.id, false)">Editar
-                                                    Tarefa</button><br />
                                                 <v-menu>
 
                                                     <template v-slot:activator="{ props }">
