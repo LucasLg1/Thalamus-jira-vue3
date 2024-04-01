@@ -81,21 +81,21 @@
                                             <v-list>
                                                 <v-list-item
                                                     @click="modalCompartilharProjeto = true, this.projetoEditado = item"
-                                                    :disabled="(this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
-                                                    :style="{ 'cursor': (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }">
+                                                    :disabled="item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }">
                                                     Compartilhar
                                                     <br />
                                                 </v-list-item>
                                                 <v-list-item
-                                                    :disabled="(this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
-                                                    :style="{ 'cursor': (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
+                                                    :disabled="item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
                                                     @click="modalEditarProjeto = true, this.projetoEditado = item">
                                                     Editar
                                                     <br />
                                                 </v-list-item>
                                                 <v-list-item
-                                                    :disabled="item.dtTermino || (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
-                                                    :style="{ 'cursor': (item.dtTermino) || (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': (item.dtTermino) || (this.projetos.find(projeto => projeto.id == item.id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black', }"
+                                                    :disabled="item.dtTermino || item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': (item.dtTermino) || item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': (item.dtTermino) || item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black', }"
                                                     @click="modalFinalizarProjeto = true, this.projetoEditado = item">
                                                     Finalizar
                                                     <br />
@@ -492,8 +492,6 @@ export default {
             const primeiroElemento = array.find(item => parseInt(item.usuario_id) === id);
             const arraySemPrimeiroElemento = [array.filter(item => item.usuario_id !== parseInt(id))];
             return [].concat(primeiroElemento, ...arraySemPrimeiroElemento)
-
-
         },
 
         nomeEsobrenome(nome) {

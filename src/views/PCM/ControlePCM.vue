@@ -11,7 +11,7 @@
                         <span class="input-group-text" id="basic-addon1"><i
                                 class="fa-solid fa-magnifying-glass"></i></span>
                         <input type="text" class="form-control" placeholder="Pesquisar PCM" aria-label="Username"
-                            aria-describedby="basic-addon1" v-model="projetoSelecionado" @input="filtrarPCMs()">
+                            aria-describedby="basic-addon1" v-model="PCMSelecionado" @input="filtrarPCMs()">
                     </div>
 
                     <div style="width: 100%;">
@@ -210,8 +210,8 @@ export default {
                 this.listaPCMsFiltrada = this.PCMs;
             } else {
                 const textoLowerCase = this.PCMSelecionado.toLowerCase();
-                this.listaPCMsFiltrada = this.PCMS.filter(PCM => {
-                    return PCM.nome.toLowerCase().includes(textoLowerCase);
+                this.listaPCMsFiltrada = this.PCMs.filter(pcm => {
+                    return pcm.codigo.toLowerCase().includes(textoLowerCase);
                 });
             }
         },
@@ -245,11 +245,12 @@ export default {
     margin-left: 0rem !important;
 }
 
-input:disabled{
-    color:black
+input:disabled {
+    color: black
 }
-select:disabled{
-    color:black
+
+select:disabled {
+    color: black
 }
 
 @media (max-width: 1800px) {

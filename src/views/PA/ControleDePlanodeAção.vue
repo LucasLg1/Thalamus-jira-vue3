@@ -83,15 +83,27 @@
                                             </template>
 
                                             <v-list>
-
                                                 <v-list-item
+                                                    :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
+                                                    @click="modalCompartilharPlano = true, this.planoEditado = item">
+                                                    Compartilhar
+                                                    <br />
+                                                </v-list-item>
+                                                <v-list-item
+                                                    :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
                                                     @click="modalEditarPlano = true, this.planoEditado = item, this.planoEditado.dtTermino !== null ? this.planoEditado.dtTermino = this.planoEditado.dtTermino.slice(0, 10) : '', this.planoEditado.dtInicio !== null ? this.planoEditado.dtInicio = this.planoEditado.dtInicio.slice(0, 10) : ''">Editar
                                                 </v-list-item>
                                                 <v-list-item
+                                                    :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
                                                     @click="modalFinalizarPlano = true, this.planoEditado = item">
                                                     Finalizar
                                                 </v-list-item>
                                                 <v-list-item
+                                                    :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                                    :style="{ 'cursor': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : 'pointer', 'color': item.permissao.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'grey' : 'black' }"
                                                     @click="modalExcluirPlano = true, this.planoEditado = item">
                                                     Excluir
                                                 </v-list-item>
@@ -107,6 +119,71 @@
             </div>
         </div>
     </div>
+
+
+    <!-- MODAL compartilhar Plano-->
+
+    <div style="overflow: auto" class="modal-mask" v-if="modalCompartilharPlano" @click="fecharModalFora">
+        <div style="height: 100rem ;width: 50rem; padding: 3rem; margin-bottom: 2rem; " class="modal-container">
+
+            <div>
+
+                <h3 class="titulo">Compartilhar: {{ planoEditado.nome }} </h3>
+                <hr>
+                <br>
+            </div>
+
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <div style="display: flex; flex-flow: column; width: 100%; height: 10rem;">
+                    <input type="text" v-model="pessoaSelecionada" class="form-control"
+                        @focusin="this.procurar($event.target.value)"
+                        style="background-color: #f1f1f1; color: black; padding-top : 1.5rem; padding-bottom: 1.5rem;"
+                        @input="this.procurar($event.target.value)" @focusout="fecharLista()"
+                        placeholder="Adicionar Participante">
+
+                    <div style="height: fit-content; max-height: 15rem ; overflow: auto; background-color: #f1f1f1; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; position: absolute; margin-top: 3.5rem; width: 30rem;"
+                        v-if="listaPessoasFiltrada">
+                        <ul style="list-style: none;">
+                            <li @click="atualizarPermissão(item, 'adicionar')" v-for="item in listaPessoasFiltrada"
+                                :key="item.id">
+                                <div style="display: flex; ; align-items: center; padding: 5px; border-radius: 10px; margin-right: 3rem;"
+                                    :style="{ 'color': (this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id) ? 'grey' : 'black', 'cursor': (this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id) ? 'not-allowed' : '' }">
+                                    {{ item.nomeCompleto }} {{ (this.planoEditado.permissao.map((item) =>
+                                item.usuario_id)).includes(item.id) ? '(Já adicionado)' : '' }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <br>
+                    <h5>Pessoas com acesso:</h5>
+                    <ul style="list-style: none; padding-left: 0rem !important;">
+                        <li v-for="item in reordenarArray(planoEditado.permissao) " :key="item.usuario_id"
+                            style="display: flex; align-items: center;">
+                            <div
+                                style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%;">
+                                {{ item.nome }} {{ item.usuario_id == planoEditado.gerente_id ? '(Gerente)' :
+                                item.usuario_id == this.idUsuario ? '(Você)' : '' }}
+                                <select style="width: 7rem; text-align: center;" class="form-select"
+                                    v-model="item.nivel" @change="atualizarPermissão(item, 'atualizar')"
+                                    :disabled="item.usuario_id == planoEditado.gerente_id || item.usuario_id == this.idUsuario">
+                                    <option :value="1">Leitor</option>
+                                    <option :value="2">Editor</option>
+                                </select>
+                            </div>
+                            <i v-if="parseInt(item.usuario_id) !== parseInt(this.idUsuario) && parseInt(item.usuario_id) !== parseInt(this.planoEditado.gerente_id)"
+                                @click=" atualizarPermissão(item, 'remover')"
+                                style="margin-left: 1rem; font-size: 20px; color: red;" :id="'botaoEdicao' + item.id"
+                                class="bi bi-dash-circle botaoAdicionarSprint"></i>
+                        </li>
+                        <br><br><br>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL-->
 
     <!-- MODAL FINALIZAR PLANO-->
     <div class="modal-mask" v-if="modalFinalizarPlano" @click="fecharModalFora">
@@ -303,8 +380,16 @@ export default {
 
     data() {
         return {
+            idUsuario: null,
+            modalCompartilharPlano: false,
+
             planoSelecionado: null,
             listaPlanosFiltrada: null,
+
+            listaPessoasFiltrada: null,
+            pessoaSelecionada: null,
+
+
             modalNovoPA: false,
             devURL: devURL,
             prodURL: prodURL,
@@ -323,7 +408,9 @@ export default {
             modalFinalizarPlano: false,
             planoEditado: null,
             programas: [],
-            dataTerminoPlano: null
+            dataTerminoPlano: null,
+
+            teste: 'teste'
 
         }
     },
@@ -335,7 +422,97 @@ export default {
 
     },
 
+
+    created() {
+        this.idUsuario = localStorage.getItem('id')
+    },
+
     methods: {
+
+        atualizarPermissão(item, ação) {
+            if ((this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id)) {
+                return
+            } else {
+
+                if (ação == 'adicionar') {
+
+                    var novaPermissão = {
+                        usuario_id: item.id,
+                        nivel: 1,
+                        nome: item.nomeCompleto
+                    }
+                    this.planoEditado.permissao.push(novaPermissão);
+
+                    axios.post(`http://192.168.0.5:8000/api/permissao/planoAcao/${this.planoEditado.id}`, {
+                        usuarios: this.planoEditado.permissao
+                    })
+                        .then(() => {
+                            this.listaPessoasFiltrada = null;
+                            this.pessoaSelecionada = null
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+                if (ação == 'remover') {
+                    this.planoEditado.permissao = this.planoEditado.permissao.filter(pessoa => pessoa.usuario_id !== parseInt(item.usuario_id));
+                    axios.post(`http://192.168.0.5:8000/api/permissao/planoAcao/${this.planoEditado.id}`, {
+                        usuarios: this.planoEditado.permissao
+                    })
+                        .then(() => {
+                            this.listaPessoasFiltrada = null;
+                            this.pessoaSelecionada = null
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+                if (ação == 'atualizar') {
+
+                    axios.post(`http://192.168.0.5:8000/api/permissao/planoAcao/${this.planoEditado.id}`, {
+                        usuarios: this.planoEditado.permissao
+                        // .filter(item => item.usuario_id !== parseInt(this.idUsuario))
+                    })
+                        .then(() => {
+                            this.listaPessoasFiltrada = null;
+                            this.pessoaSelecionada = null
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+            }
+
+        },
+
+        reordenarArray(array) {
+            var id = this.planoEditado.gerente_id
+            // var idUserLogado = parseInt(localStorage.getItem('id'))
+
+            const primeiroElemento = array.find(item => parseInt(item.usuario_id) === id);
+            const arraySemPrimeiroElemento = [array.filter(item => item.usuario_id !== parseInt(id))];
+            return [].concat(primeiroElemento, ...arraySemPrimeiroElemento)
+        },
+
+        procurar(texto) {
+            if (!texto) {
+                this.listaPessoasFiltrada = this.gerente
+                // .filter(item => !(this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id));
+            } else {
+                if (this.listaPessoasFiltrada !== null) {
+                    // this.listaPessoasFiltrada = this.gerente.filter(item => !(this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id));
+                    this.listaPessoasFiltrada = this.gerente
+                    this.listaPessoasFiltrada = this.listaPessoasFiltrada.filter(nome => nome.nomeCompleto.toLowerCase().includes(texto.toLowerCase()));
+                }
+            }
+        },
+
+        fecharLista() {
+            setTimeout(() => {
+                this.listaPessoasFiltrada = null;
+                this.pessoaSelecionada = null;
+            }, 200);
+        },
 
         finalizarPlano() {
             if (this.dataTerminoPlano == null) {
@@ -513,6 +690,7 @@ export default {
             })
                 .then((response) => {
                     this.planosAcao = response.data;
+                    this.planosAcao = this.planosAcao.filter(item => item.permissao.some(permissao => permissao.usuario_id === parseInt(this.idUsuario)))
                     this.filtrarPlanosdeAção()
                 })
                 .catch((error) => {
@@ -526,14 +704,26 @@ export default {
                 this.modalEditarPlano = false;
                 this.modalExcluirPlano = false;
                 this.modalFinalizarPlano = false;
+                this.modalCompartilharPlano = false;
                 return this.getPlanoAcao()
             }
         },
 
         verBacklogs(id, nomeProjeto) {
-            this.$router.push({ name: "PA" })
-            sessionStorage.setItem('idProjeto', id)
-            sessionStorage.setItem('nomeDoProjeto', nomeProjeto)
+
+            if (this.planosAcao.length > 0) {
+                if ((this.planosAcao.find(projeto => projeto.id == id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 2) {
+                    this.$router.push({ name: "PA" })
+                    sessionStorage.setItem('idProjeto', id)
+                    sessionStorage.setItem('nomeDoProjeto', nomeProjeto)
+                }
+                if ((this.planosAcao.find(projeto => projeto.id == id).permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1) {
+                    this.$router.push({ name: "login" })
+                    sessionStorage.setItem('idProjeto', id)
+                    sessionStorage.setItem('nomeDoProjeto', nomeProjeto)
+                }
+            }
+
         },
 
         verPCM() {
@@ -549,12 +739,14 @@ export default {
 </script>
 
 <style scoped>
-input:disabled{
-    color:black
+input:disabled {
+    color: black
 }
-select:disabled{
-    color:black
+
+select:disabled {
+    color: black
 }
+
 @media (max-width: 1800px) {
     .container {
         margin-left: 12rem !important;

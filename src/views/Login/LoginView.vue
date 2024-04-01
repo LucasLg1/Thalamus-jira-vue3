@@ -199,7 +199,7 @@ export default {
         margin-top: 10px;
         padding: 30px;
         border-radius: 20px;
-        margin-left: 300px;
+        margin-left: 380px !important;
     }
     .logo {
         font-size: 18px;
