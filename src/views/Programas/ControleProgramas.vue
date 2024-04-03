@@ -2,7 +2,7 @@
     <br>
     <br><br><br>
     <div style="padding: 1rem;">
-        <div class="container"
+        <div class="container" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario)"
             style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; ">
 
             <div class="col-sm-12" style="text-align: center;">
@@ -93,6 +93,12 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="container" v-else style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; text-align: center; ">
+            <h5 style="color: red">
+                Você não tem permissão para acessar esta tela! <br>
+                Por favor, contate o administrador do sistema
+            </h5>
         </div>
     </div>
 

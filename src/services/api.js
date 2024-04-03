@@ -31,7 +31,7 @@ const permissoes = [
   },
   {
     "usuario_id": 14,
-    "nivel": 1,
+    "nivel": 3,
     "nome": "Emerson Mozzer"
   },
   {
@@ -66,7 +66,7 @@ const permissoes = [
   },
   {
     "usuario_id": 9,
-    "nivel": 1,
+    "nivel": 3,
     "nome": "Raiane de Cassia Baldez Mendes"
   },
   {
