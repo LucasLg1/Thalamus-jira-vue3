@@ -51,22 +51,22 @@
                                         <option style="color: rgb(0, 47, 255);">Em andamento</option>
                                         <option style="color: rgb(0, 192, 0);">Concluído</option>
                                     </select></td>
-                                <td style="text-align: center; vertical-align: middle;">
-                                    <input v-if="Array.isArray(projetos) && projetos.length > 0" type="date"
-                                        v-model="item.dtInicio" disabled style="text-align: center; width: 8rem;">
+                                <td style="text-align: center; vertical-align: middle; width: 9rem;">
+
+                                    {{ item.dtInicio ?
+                                `${item.dtInicio.split('-')[2]}/${item.dtInicio.split('-')[1]}/${item.dtInicio.split('-')[0]}`
+                                : '' }}
+
+                                </td>
+                                <td style="text-align: center; vertical-align: middle; width: 9rem;">
+
+                                    {{ item.dtTermino ?
+                                `${item.dtTermino.split('-')[2]}/${item.dtTermino.split('-')[1]}/${item.dtTermino.split('-')[0]}`
+                                : '-' }}
+
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    <input v-if="item.dtTermino" type="date" v-model="item.dtTermino" disabled
-                                        style="text-align: center; width: 8rem;">
-                                    <label v-if="!item.dtTermino" style="width: 8rem;">-</label>
-                                </td>
-                                <td style="text-align: center; vertical-align: middle;">
-                                    <select id="gerente" v-model="item.gerente_id" disabled
-                                        style="text-align: center; padding: none; width: 13rem;">
-                                        <option v-for="pessoa in gerente" :key="pessoa.nomeCompleto" :value="pessoa.id">
-                                            {{ nomeEsobrenome(pessoa.nomeCompleto) }}
-                                        </option>
-                                    </select>
+                                    {{ nomeEsobrenome(item.gerente) }}
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">{{ item.setor }}</td>
                                 <td style="vertical-align: middle;">
@@ -779,12 +779,14 @@ export default {
 </script>
 
 <style scoped>
-input:disabled{
-    color:black
+input:disabled {
+    color: black
 }
-select:disabled{
-    color:black
+
+select:disabled {
+    color: black
 }
+
 @media (max-width: 1800px) {
     .container {
         margin-left: 12rem !important;
@@ -798,6 +800,7 @@ select:disabled{
         position: absolute;
     }
 }
+
 .fa-solid {
     margin-left: 0rem !important;
 }
@@ -869,6 +872,7 @@ li {
     align-items: center;
     justify-content: center;
 }
+
 .modal-container {
     max-height: 90%;
     width: 70%;

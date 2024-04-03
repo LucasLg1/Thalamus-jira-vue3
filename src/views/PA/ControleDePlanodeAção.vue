@@ -52,27 +52,34 @@
                                 @mouseover="mostrarBotao(item.id, true)" @click="verBacklogs(item.id, item.nome)"
                                 @mouseleave="mostrarBotao(item.id, false)">
 
-                                <td style="vertical-align: middle;">{{ item.nome }}</td>
+                                <td style="vertical-align: middle; text-align: left;">{{ item.nome }}</td>
                                 <td style="vertical-align: middle;">
-                                    <select v-model="item.status" class="form-select" :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
-                                        :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', 'cursor' : (item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : '' }"
+                                    <select v-model="item.status" class="form-select"
+                                        :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
+                                        :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', 'cursor': (item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : '' }"
                                         style="width: 10rem; outline: none; text-align: center; border: none; background-color: transparent; "
                                         @click.stop @change="editarPlanoInline(item.id, 'status', item.status)">
                                         <option style="color: red;">Proposto</option>
                                         <option style="color: rgb(255, 145, 0);">Pendente</option>
                                         <option style="color: rgb(0, 47, 255);">Em andamento</option>
                                         <option style="color: rgb(0, 192, 0);">Concluído</option>
-                                    </select></td>
-                                <td style="vertical-align: middle;">
-                                    <input style="text-align: center;" type="date"
-                                        :value="formatarDataHora(item.dtInicio)" disabled>
+                                    </select>
                                 </td>
                                 <td style="vertical-align: middle;">
-                                    <input v-if="item.dtTermino" style="text-align: center;" type="date"
-                                        :value="formatarDataHora(item.dtTermino)" disabled>
-                                    <span v-if="!item.dtTermino">-</span>
+
+                                    {{ item.dtInicio ?
+                                `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
+                                : '' }}
+
                                 </td>
-                                <td style="vertical-align: middle;">{{ item.gerente_name }}</td>
+                                <td style="vertical-align: middle;">
+
+                                    {{ item.dtTermino ?
+                                `${formatarDataHora(item.dtTermino).split('-')[2]}/${formatarDataHora(item.dtTermino).split('-')[1]}/${formatarDataHora(item.dtTermino).split('-')[0]}`
+                                : '-' }}
+
+                                </td>
+                                <td style="vertical-align: middle;">{{ nomeEsobrenome(item.gerente_name) }}</td>
                                 <td style="vertical-align: middle;">{{ item.setor_nome }}</td>
                                 <td style="vertical-align: middle;">
                                     <div style="width: max-content; visibility: hidden;" :id="'botaoEdicao' + item.id">
@@ -430,6 +437,24 @@ export default {
     },
 
     methods: {
+
+        nomeEsobrenome(nome) {
+            const nomeESobrenome = nome.split(" ");
+
+
+            if (nomeESobrenome.length >= 2) {
+                const primeiroNome = nomeESobrenome[0];
+                const segundoNome = nomeESobrenome[1];
+
+                if (segundoNome.length <= 3 || segundoNome == 'Paula') {
+                    return `${primeiroNome} ${segundoNome} ${nomeESobrenome[2] || ''}`;
+                } else {
+                    return `${primeiroNome} ${segundoNome}`;
+                }
+            } else {
+                return nome;
+            }
+        },
 
         atualizarPermissão(item, ação) {
             if ((this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id)) {
