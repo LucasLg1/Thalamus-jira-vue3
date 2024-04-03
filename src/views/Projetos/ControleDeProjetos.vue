@@ -133,7 +133,6 @@
                     <div class="form-group" style="width: 20rem; margin-left: 2rem;">
                         <label for="data">Data de Início</label>
                         <input id="data" type="date" ref="dtInicio" v-model="novoProjeto.dtInicio" class="form-control">
-
                     </div>
                 </div>
 
@@ -408,7 +407,7 @@ export default {
             modalFinalizarProjeto: false,
             novoProjeto: {
                 "nome": "",
-                "dtInicio": new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                "dtInicio": new Date().toISOString().split('T')[0],
                 "gerente_id": "",
                 "setor_id": "",
             },

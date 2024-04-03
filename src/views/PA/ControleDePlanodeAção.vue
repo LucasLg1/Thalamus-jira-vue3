@@ -369,7 +369,6 @@
             </div>
         </div>
     </div>
-
     <!-- END MODAL NOVO PLANO DE AÇÃO -->
 </template>
 
@@ -400,7 +399,7 @@ export default {
             planosAcao: [],
             novoPlanoAcao: {
                 "nome": '',
-                "dtInicio": new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                "dtInicio": new Date().toISOString().split('T')[0],
                 "gerente_id": '',
                 "setor_id": '',
                 "programa_id": ''
