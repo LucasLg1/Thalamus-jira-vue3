@@ -7,7 +7,7 @@
             <div class="col-sm-12" style="text-align: center;">
                 <div style="display: flex;">
 
-                    <div class="input-group mb-3" style="width: 16rem; position: absolute;">
+                    <div class="input-group mb-3" style="width: 13rem; position: absolute;">
                         <span class="input-group-text" id="basic-addon1"><i
                                 class="fa-solid fa-magnifying-glass"></i></span>
                         <input type="text" class="form-control" placeholder="Pesquisar PCM" aria-label="Username"
@@ -257,20 +257,6 @@ input:disabled {
 
 select:disabled {
     color: black
-}
-
-@media (max-width: 1800px) {
-    .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
-    }
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
 }
 
 .button-reprovar:disabled {

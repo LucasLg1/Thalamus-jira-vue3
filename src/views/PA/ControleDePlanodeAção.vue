@@ -52,7 +52,7 @@
                                 @mouseover="mostrarBotao(item.id, true)" @click="verBacklogs(item.id, item.nome)"
                                 @mouseleave="mostrarBotao(item.id, false)">
 
-                                <td style="vertical-align: middle; text-align: left;">{{ item.nome }}</td>
+                                <td style="vertical-align: middle; text-align: left; width: 13rem">{{ item.nome }}</td>
                                 <td style="vertical-align: middle;">
                                     <select v-model="item.status" class="form-select"
                                         :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
@@ -772,20 +772,6 @@ input:disabled {
 
 select:disabled {
     color: black
-}
-
-@media (max-width: 1800px) {
-    .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
-    }
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
 }
 
 .fa-solid {

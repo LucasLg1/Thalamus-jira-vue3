@@ -643,20 +643,6 @@ select:disabled{
     margin-left: 0rem !important;
 }
 
-@media (max-width: 1800px) {
-    .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
-    }
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
-}
-
 .modal-container {
     max-height: 80%;
     width: 70%;
