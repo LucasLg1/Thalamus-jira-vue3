@@ -18,7 +18,7 @@
                     <div style="width: 100%;">
                         <h3 style="text-align: center; margin: 0;">Programas</h3>
                     </div>
-                    <button :title="'Adicionar Programa'" style="width: max-content; font-size: 30px;"
+                    <button :title="'Adicionar Programa'" style="width: max-content; font-size: 30px;" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1"
                         @click="this.modalNovoPrograma = true" class="botaoAdicionarSprint">
                         <i class="bi bi-plus-circle"></i>
                     </button>
@@ -72,15 +72,15 @@
                                             </template>
 
                                             <v-list>
-                                                <v-list-item
+                                                <v-list-item :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                                     @click="modalEditarPrograma = true, this.programaEditado = item, this.programaEditado.dtFim !== null ? this.programaEditado.dtFim = this.programaEditado.dtFim.slice(0, 10) : '', this.programaEditado.dtInicio !== null ? this.programaEditado.dtInicio = this.programaEditado.dtInicio.slice(0, 10) : ''">
                                                     Editar
                                                 </v-list-item>
-                                                <v-list-item
+                                                <v-list-item :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                                     @click="modalFinalizarPrograma = true, this.programaEditado = item">
                                                     Finalizar
                                                 </v-list-item>
-                                                <v-list-item
+                                                <v-list-item :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                                     @click="modalExcluirPrograma = true, this.programaEditado = item">
                                                     Excluir
                                                 </v-list-item>
@@ -200,19 +200,19 @@
             <div style="display: flex; justify-content: space-between;">
                 <!-- Coluna de Projetos associados -->
                 <div style="width: 48%;">
-                    <h5>Projetos disponíveis:</h5>
-                    <select id="projetos" class="form-select" @change="associarProjeto($event)">
+                    <h5 v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1">Projetos disponíveis:</h5>
+                    <select id="projetos" class="form-select" @change="associarProjeto($event)" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1" >
                         <option hidden selected>Selecione um projeto</option>
                         <option v-for="item in projetos" :key="item.id" :value="item.id">{{ item.nome }}</option>
                     </select>
                     <div v-if="programaEditado.projeto.length > 0">
                         <br>
                         <h5>Projetos associados:</h5>
-                        <ul style="height: 5rem; list-style: none;">
+                        <ul style="height: 5rem;">
                             <!-- <li    style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%;"  -->
                             <li v-for="(projeto, index) in programaEditado.projeto" :key="index"> {{
                                 projeto.projeto_nome }}
-                                <span @click="desassociarPlano('projeto', projeto.associacao_id)"
+                                <span v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1" @click="desassociarPlano('projeto', projeto.associacao_id)"
                                     style="cursor: pointer; color: red; text-align: right;"
                                     class="bi bi-dash-circle"></span>
                             </li>
@@ -220,7 +220,8 @@
                         <br><br>
                     </div>
                     <div v-else>
-                        <p>Nenhum projeto associado.</p>
+                        <br>
+                        <h5>Nenhum projeto associado.</h5>
                     </div>
 
                 </div>
@@ -228,8 +229,8 @@
                 <!-- Coluna de Planos de Ação associados -->
 
                 <div style="width: 48%;">
-                    <h5>Planos de ação disponíveis:</h5>
-                    <select id="planosAcao" class="form-select" @change="associarPlanoAcao($event)">
+                    <h5 v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1">Planos de ação disponíveis:</h5>
+                    <select id="planosAcao" class="form-select" @change="associarPlanoAcao($event)" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1">
                         <option hidden selected>Selecione um plano de ação</option>
                         <option v-for="item in planosAcao" :key="item.id" :value="item.id">{{ item.nome }}</option>
                     </select>
@@ -239,16 +240,17 @@
 
                         <br>
                         <h5>Planos de Ação associados:</h5>
-                        <ul style="height: 5rem; list-style: none;">
+                        <ul style="height: 5rem;">
                             <li v-for="(plano, index) in programaEditado.planoAcao" :key="index"> 
-                                    {{ plano.planoAcao_nome }} <span @click="desassociarPlano('plano', plano.associacao_id)"
+                                    {{ plano.planoAcao_nome }} <span v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1" @click="desassociarPlano('plano', plano.associacao_id)"
                                     class="bi bi-dash-circle"
                                     style="cursor: pointer; color: red; text-align: right;"></span>
                             </li>
                         </ul>
                     </div>
                     <div v-else>
-                        <p>Nenhum plano de ação associado.</p>
+                        <br>
+                        <h5>Nenhum plano de ação associado.</h5>
                     </div>
 
                 </div>
@@ -312,8 +314,7 @@
 
 
 <script>
-import { devURL } from '../../services/api'
-import { prodURL } from '../../services/api'
+import { devURL, prodURL, permissoes } from '../../services/api'
 import axios from 'axios'
 
 export default {
@@ -321,6 +322,9 @@ export default {
 
     data() {
         return {
+            permissoes: permissoes,
+            idUsuario: localStorage.getItem('id'),
+
             programaSelecionado: null,
             listaProgramasFiltrada: null,
 

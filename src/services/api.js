@@ -11,7 +11,7 @@ const permissoes = [
   },
   {
     "usuario_id": 3,
-    "nivel": 2,
+    "nivel": 1,
     "nome": "Mariana Mozzer Arantes"
   }
 ];
@@ -43,6 +43,6 @@ api.interceptors.request.use(
 
 export { devURL };
 export { prodURL };
-export { permissoes}
+export { permissoes }
 
 export default api;
