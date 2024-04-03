@@ -129,7 +129,6 @@
         </div>
     </div>
 
-
     <!-- MODAL compartilhar Plano-->
 
     <div style="overflow: auto" class="modal-mask" v-if="modalCompartilharPlano" @click="fecharModalFora">
@@ -218,7 +217,6 @@
     </div>
     <!--END MODAL FINALIZAR PLANO-->
 
-
     <!-- MODAL EXCLUIR PLANO DE AÇÃO -->
     <div style="overflow: auto" class="modal-mask" v-if="modalExcluirPlano" @click="fecharModalFora">
         <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; "
@@ -237,7 +235,6 @@
         </div>
     </div>
     <!-- MODAL EXCLUIR PLANO DE AÇÃO -->
-
 
     <!-- MODAL EDITAR PLANO DE AÇÃO -->
     <div style="overflow: auto" class="modal-mask" v-if="modalEditarPlano" @click="fecharModalFora">
@@ -311,7 +308,6 @@
     </div>
     <!-- END MODAL EDITAR PLANO DE AÇÃO -->
 
-
     <!-- MODAL NOVO PLANO DE AÇÃO -->
 
     <div style="overflow: auto" class="modal-mask" v-if="modalNovoPA" @click="fecharModalFora">
@@ -376,7 +372,6 @@
 
     <!-- END MODAL NOVO PLANO DE AÇÃO -->
 </template>
-
 
 <script>
 import { devURL } from '../../services/api'
@@ -635,14 +630,12 @@ export default {
             }
         },
 
-
         editarPlano(itemAlterado, novoValor) {
 
             axios.put(`${this.prodURL}/planoAcao/atualizar/${this.planoEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
-
 
         mostrarBotao(id, mostrar) {
             if (mostrar) {
@@ -652,8 +645,6 @@ export default {
                 document.getElementById('botaoEdicao' + id).style.visibility = 'hidden';
             }
         },
-
-
 
         adicionarPlanoAcao() {
             axios.post(`${this.prodURL}/planoAcao/cadastrar`, {
