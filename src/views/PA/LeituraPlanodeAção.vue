@@ -9,7 +9,7 @@
         <i @click="verProjetos" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome"
             :title="'Ir para tela inicial'"></i>
 
-        <h2>{{ nomeDoProjeto }}</h2>
+        <h2 style="margin-left: 5rem;">{{ nomeDoProjeto }}</h2>
         <i style="font-size: 30px; margin-right: 3rem; cursor: pointer;visibility: hidden;"
             class="bi bi-kanban botaoAdicionarSprint" :title="'Ir para painel KanBan'"></i>
     </div>

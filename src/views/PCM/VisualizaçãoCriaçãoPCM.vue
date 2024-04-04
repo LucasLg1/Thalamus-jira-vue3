@@ -8,7 +8,7 @@
 
         <i @click="verPCMs" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome"
             :title="'Ir para tela de inicial'"></i>
-        <h2>
+        <h2 style="margin-left: 5rem;">
             <input type="text" v-model="codigo" @change="atualizarPCM('codigo', codigo)" style="text-align: center" />
         </h2>
         <i style="font-size: 30px; margin-right: 3rem; cursor: pointer; visibility: hidden"
@@ -27,7 +27,7 @@
                         Finalidade
                         <br />
                     </strong>
-                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem" v-model="finalidade"
+                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" v-model="finalidade"
                         :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                         @change="atualizarPCM('finalidade', finalidade)">
                         <option>Criação</option>
@@ -220,7 +220,7 @@
                             <select v-model="parecer_responsavel" class="form-select"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
                                 @change="atualizarPCM('parecer_responsavel', parecer_responsavel)"
-                                style="margin-left: 0.5rem; margin-top: 0.5rem" :style="{
+                                style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" :style="{
                 color: parecer_responsavel == 'Proposta viável' ? 'green' : 'red',
             }">
                                 <option style="color: green">Proposta viável</option>
@@ -230,7 +230,7 @@
                         <div
                             style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
                             <strong> Nome </strong>
-                            <select class="form-select" style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem"
+                            <select class="form-select" style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem; text-align: center"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
                                 v-model="responsavel_id" @change="atualizarPCM('responsavel_id', responsavel_id)">
                                 <option v-for="item in usuarios" :key="item.id" :value="item.id">
@@ -257,7 +257,7 @@
                             <select v-model="meio_mudanca" @change="atualizarPCM('meio_mudanca', meio_mudanca)"
                                 class="form-select"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
-                                style="margin-top: 0.5rem">
+                                style="margin-top: 0.5rem;text-align: center">
                                 <option>Plano de Ação</option>
                                 <option>Projeto</option>
                             </select>
@@ -287,7 +287,7 @@
                         style="display: flex;align-content: center;justify-content: center;margin-top: 1rem;">
                         <div style="display: flex;align-items: center;margin-left: 1rem;flex-flow: column;">
                             <strong>Responsável pelo cadastro no sistema</strong>
-                            <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem"
+                            <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                 v-model="responsavelCadastro_id"
                                 @change="atualizarPCM('responsavelCadastro_id', responsavelCadastro_id)">
@@ -299,7 +299,7 @@
                         <div
                             style=" display: flex; align-items: center; width: fit-content;  margin-left: 1rem;  flex-flow: column; ">
                             <strong> Data </strong>
-                            <input type="date" class="form-control" style="width: 9rem; margin-left: 0.5rem"
+                            <input type="date" class="form-control" style="width: 9rem; margin-left: 0.5rem; text-align: center"
                                 v-model="dtCadastro"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                 @change="atualizarPCM('dtCadastro', dtCadastro)" />
@@ -310,7 +310,7 @@
                             <input type="text" v-model="codigo_cadastro"
                                 @change="atualizarPCM('codigo_cadastro', codigo_cadastro)"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
-                                class="form-control" style="width: 10rem; margin-left: 0.5rem" />
+                                class="form-control" style="width: 10rem; margin-left: 0.5rem; text-align: center" />
                         </div>
 
                         <div
@@ -319,7 +319,7 @@
                             <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text"
                                 class="form-control"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
-                                style="width: 10rem; margin-left: 0.5rem" />
+                                style="width: 10rem; margin-left: 0.5rem; text-align: center" />
                         </div>
                     </div>
                 </div>
