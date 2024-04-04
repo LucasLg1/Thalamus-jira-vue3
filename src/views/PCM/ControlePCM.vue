@@ -7,7 +7,7 @@
             <div class="col-sm-12" style="text-align: center;">
                 <div style="display: flex;">
 
-                    <div class="input-group mb-3" style="width: 16rem; position: absolute;">
+                    <div class="input-group mb-3" style="width: 13rem; position: absolute;">
                         <span class="input-group-text" id="basic-addon1"><i
                                 class="fa-solid fa-magnifying-glass"></i></span>
                         <input type="text" class="form-control" placeholder="Pesquisar PCM" aria-label="Username"
@@ -17,7 +17,8 @@
                     <div style="width: 100%;">
                         <h3 style="text-align: center; margin: 0;">Propostas de Criação ou Mudança</h3>
                     </div>
-                    <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1"
+                    <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM"
+                        v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1"
                         class="botaoAdicionarSprint">
                         <i class="bi bi-plus-circle"></i>
                     </button>
@@ -35,7 +36,8 @@
                                 <th scope="col">Status</th>
                                 <th scope="col">Data de abertura</th>
                                 <th scope="col">Aprovador</th>
-                                <th scope="col" style="width: 15rem;" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3"></th>
+                                <th scope="col" style="width: 15rem;"
+                                    v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,7 +47,7 @@
                                     {{ item.codigo }}
                                 </td>
 
-                                <td style="text-align: center; vertical-align: middle;">
+                                <td style="text-align: center; vertical-align: middle; width: 15% ;">
                                     {{ item.nome }}
                                 </td>
 
@@ -55,16 +57,21 @@
                                 </td>
 
                                 <td style="text-align: center; vertical-align: middle;">
-                                    <input type="date" disabled style="text-align: center"
-                                        :value="formatarDataHora(item.dtInicio)">
+
+                                    {{ item.dtInicio ?
+            `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
+            : '' }}
+
                                 </td>
 
                                 <td style="text-align: center; vertical-align: middle;">
                                     {{ nomeEsobrenome(item.responsavel_nome) }}
                                 </td>
 
-                                <td style="text-align: center; vertical-align: middle;" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3">
+                                <td style="text-align: center; vertical-align: middle;"
+                                    v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3">
                                     <div style="display: flex;" @click.stop>
+
                                         <div style="margin-left: 1rem;">
                                             <button class="button-aprovar" :disabled="item.aprovada !== null"
                                                 @click="atualizarPCM('status', 'Aprovado', item.id)">
@@ -87,9 +94,10 @@
                         </tbody>
                     </table>
                 </div>
-            </div>             
+            </div>
         </div>
-        <div class="container" v-else style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; text-align: center; ">
+        <div class="container" v-else
+            style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; text-align: center; ">
             <h5 style="color: red">
                 Você não tem permissão para acessar esta tela! <br>
                 Por favor, contate o administrador do sistema
@@ -122,7 +130,7 @@ export default {
 
     mounted() {
         this.getPCMs()
-            // this.idUsuario = localStorage.getItem('id')
+        // this.idUsuario = localStorage.getItem('id')
     },
 
     methods: {
@@ -259,20 +267,6 @@ select:disabled {
     color: black
 }
 
-@media (max-width: 1800px) {
-    .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
-    }
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
-}
-
 .button-reprovar:disabled {
     width: 10rem;
     background-color: #e0213171 !important;
@@ -315,5 +309,15 @@ select:disabled {
     border: none !important;
     border-radius: 6px !important;
     cursor: pointer;
+}
+
+.button-aprovar:hover {
+    transition: 50ms linear;
+    transform: scale(1.1);
+}
+
+.button-reprovar:hover {
+    transition: 50ms linear;
+    transform: scale(1.1);
 }
 </style>

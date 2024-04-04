@@ -38,6 +38,18 @@ export default {
 
 
 <style>
+@media (max-width: 1800px) {
+  .container {
+    margin-left: 10.5rem !important;
+    max-width: 1010px !important;
+  }
+
+  .botaoHome {
+    margin-left: 200px !important;
+  }
+
+}
+
 .menu {
     z-index: 3;
     position: absolute;

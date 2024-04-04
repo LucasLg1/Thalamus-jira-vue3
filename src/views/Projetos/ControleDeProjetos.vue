@@ -133,7 +133,6 @@
                     <div class="form-group" style="width: 20rem; margin-left: 2rem;">
                         <label for="data">Data de Início</label>
                         <input id="data" type="date" ref="dtInicio" v-model="novoProjeto.dtInicio" class="form-control">
-
                     </div>
                 </div>
 
@@ -179,7 +178,7 @@
 
     <!-- modal editar projeto -->
     <div style="overflow: auto" class="modal-mask" v-if="modalEditarProjeto" @click="fecharModalFora">
-        <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; "
+        <div style="max-height: 87%; width: 50rem; padding: 3rem; margin-bottom: 3rem;"
             class="modal-container">
             <div>
                 <div style="display: flex; justify-content: space-between">
@@ -371,7 +370,6 @@
     <!--END MODAL-->
 </template>
 
-
 <script>
 import { ref } from 'vue';
 import axios from 'axios'
@@ -409,7 +407,7 @@ export default {
             modalFinalizarProjeto: false,
             novoProjeto: {
                 "nome": "",
-                "dtInicio": new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                "dtInicio": new Date().toISOString().split('T')[0],
                 "gerente_id": "",
                 "setor_id": "",
             },
@@ -779,26 +777,13 @@ export default {
 </script>
 
 <style scoped>
+
 input:disabled {
     color: black
 }
 
 select:disabled {
     color: black
-}
-
-@media (max-width: 1800px) {
-    .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
-    }
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
 }
 
 .fa-solid {

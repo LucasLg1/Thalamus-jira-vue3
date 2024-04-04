@@ -52,7 +52,7 @@
                                 @mouseover="mostrarBotao(item.id, true)" @click="verBacklogs(item.id, item.nome)"
                                 @mouseleave="mostrarBotao(item.id, false)">
 
-                                <td style="vertical-align: middle; text-align: left;">{{ item.nome }}</td>
+                                <td style="vertical-align: middle; text-align: left; width: 13rem">{{ item.nome }}</td>
                                 <td style="vertical-align: middle;">
                                     <select v-model="item.status" class="form-select"
                                         :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
@@ -128,7 +128,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- MODAL compartilhar Plano-->
 
@@ -218,7 +217,6 @@
     </div>
     <!--END MODAL FINALIZAR PLANO-->
 
-
     <!-- MODAL EXCLUIR PLANO DE AÇÃO -->
     <div style="overflow: auto" class="modal-mask" v-if="modalExcluirPlano" @click="fecharModalFora">
         <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; "
@@ -237,7 +235,6 @@
         </div>
     </div>
     <!-- MODAL EXCLUIR PLANO DE AÇÃO -->
-
 
     <!-- MODAL EDITAR PLANO DE AÇÃO -->
     <div style="overflow: auto" class="modal-mask" v-if="modalEditarPlano" @click="fecharModalFora">
@@ -311,7 +308,6 @@
     </div>
     <!-- END MODAL EDITAR PLANO DE AÇÃO -->
 
-
     <!-- MODAL NOVO PLANO DE AÇÃO -->
 
     <div style="overflow: auto" class="modal-mask" v-if="modalNovoPA" @click="fecharModalFora">
@@ -373,10 +369,8 @@
             </div>
         </div>
     </div>
-
     <!-- END MODAL NOVO PLANO DE AÇÃO -->
 </template>
-
 
 <script>
 import { devURL } from '../../services/api'
@@ -405,7 +399,7 @@ export default {
             planosAcao: [],
             novoPlanoAcao: {
                 "nome": '',
-                "dtInicio": new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1) + '-' + new Date().getDate(),
+                "dtInicio": new Date().toISOString().split('T')[0],
                 "gerente_id": '',
                 "setor_id": '',
                 "programa_id": ''
@@ -635,14 +629,12 @@ export default {
             }
         },
 
-
         editarPlano(itemAlterado, novoValor) {
 
             axios.put(`${this.prodURL}/planoAcao/atualizar/${this.planoEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
-
 
         mostrarBotao(id, mostrar) {
             if (mostrar) {
@@ -652,8 +644,6 @@ export default {
                 document.getElementById('botaoEdicao' + id).style.visibility = 'hidden';
             }
         },
-
-
 
         adicionarPlanoAcao() {
             axios.post(`${this.prodURL}/planoAcao/cadastrar`, {
@@ -772,20 +762,6 @@ input:disabled {
 
 select:disabled {
     color: black
-}
-
-@media (max-width: 1800px) {
-    .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
-    }
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
 }
 
 .fa-solid {
