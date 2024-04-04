@@ -373,10 +373,7 @@
 </template>
 
 <script>
-import { devURL } from '../../services/api'
-import { prodURL } from '../../services/api'
-
-import axios from 'axios'
+import api from '../../services/api'
 
 export default {
     name: "ControlePCM",
@@ -394,8 +391,6 @@ export default {
 
 
             modalNovoPA: false,
-            devURL: devURL,
-            prodURL: prodURL,
             planosAcao: [],
             novoPlanoAcao: {
                 "nome": '',
@@ -464,7 +459,7 @@ export default {
                     }
                     this.planoEditado.permissao.push(novaPermissão);
 
-                    axios.post(`http://192.168.0.5:8000/api/permissao/planoAcao/${this.planoEditado.id}`, {
+                    api.post(`/permissao/planoAcao/${this.planoEditado.id}`, {
                         usuarios: this.planoEditado.permissao
                     })
                         .then(() => {
@@ -477,7 +472,7 @@ export default {
                 }
                 if (ação == 'remover') {
                     this.planoEditado.permissao = this.planoEditado.permissao.filter(pessoa => pessoa.usuario_id !== parseInt(item.usuario_id));
-                    axios.post(`http://192.168.0.5:8000/api/permissao/planoAcao/${this.planoEditado.id}`, {
+                    api.post(`/permissao/planoAcao/${this.planoEditado.id}`, {
                         usuarios: this.planoEditado.permissao
                     })
                         .then(() => {
@@ -490,7 +485,7 @@ export default {
                 }
                 if (ação == 'atualizar') {
 
-                    axios.post(`http://192.168.0.5:8000/api/permissao/planoAcao/${this.planoEditado.id}`, {
+                    api.post(`/permissao/planoAcao/${this.planoEditado.id}`, {
                         usuarios: this.planoEditado.permissao
                         // .filter(item => item.usuario_id !== parseInt(this.idUsuario))
                     })
@@ -544,7 +539,7 @@ export default {
                 }, 1500)
                 return
             }
-            axios.put(`${this.prodURL}/planoAcao/atualizar/${this.planoEditado.id}`, {
+            api.put(`/planoAcao/atualizar/${this.planoEditado.id}`, {
                 dtTermino: this.dataTerminoPlano,
                 status: "Concluído"
             })
@@ -567,7 +562,7 @@ export default {
         },
 
         getProgramas() {
-            axios.get(`${this.prodURL}/programa/listar`, {})
+            api.get(`/programa/listar`, {})
                 .then((response) => {
                     this.programas = response.data;
                 })
@@ -580,7 +575,7 @@ export default {
         excluirPlano() {
             const userId = localStorage.getItem('id')
 
-            axios.put(`${this.prodURL}/planoAcao/excluir/${this.planoEditado.id}`, {
+            api.put(`/planoAcao/excluir/${this.planoEditado.id}`, {
                 usuario_id: userId
             })
                 .then(() => {
@@ -608,7 +603,7 @@ export default {
             if (novoValor !== "Concluído") {
 
 
-                axios.put(`${this.prodURL}/planoAcao/atualizar/${idProjeto}`, {
+                api.put(`/planoAcao/atualizar/${idProjeto}`, {
                     [itemAlterado]: novoValor,
                     dtTermino: null
                 })
@@ -618,7 +613,7 @@ export default {
             }
             if (novoValor == "Concluído") {
                 var dataAtual = new Date().toISOString().split('T')[0];
-                axios.put(`${this.prodURL}/planoAcao/atualizar/${idProjeto}`, {
+                api.put(`${this.prodURL}/planoAcao/atualizar/${idProjeto}`, {
 
                     [itemAlterado]: novoValor,
                     dtTermino: dataAtual
@@ -631,7 +626,7 @@ export default {
 
         editarPlano(itemAlterado, novoValor) {
 
-            axios.put(`${this.prodURL}/planoAcao/atualizar/${this.planoEditado.id}`, {
+            api.put(`/planoAcao/atualizar/${this.planoEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
@@ -646,7 +641,7 @@ export default {
         },
 
         adicionarPlanoAcao() {
-            axios.post(`${this.prodURL}/planoAcao/cadastrar`, {
+            api.post(`/planoAcao/cadastrar`, {
 
                 nome: this.novoPlanoAcao.nome,
                 dtInicio: this.novoPlanoAcao.dtInicio,
@@ -676,7 +671,7 @@ export default {
         },
 
         getGerenteseSetor() {
-            axios.get(`${this.prodURL}/usuario`, {
+            api.get(`/usuario`, {
 
             })
                 .then((response) => {
@@ -690,7 +685,7 @@ export default {
                     console.error(error);
                 });
 
-            axios.get(`${this.prodURL}/setor`, {
+            api.get(`/setor`, {
 
             })
                 .then((response) => {
@@ -702,7 +697,7 @@ export default {
         },
 
         getPlanoAcao() {
-            axios.get(`${this.prodURL}/planoAcao/listar`, {
+            api.get(`/planoAcao/listar`, {
 
             })
                 .then((response) => {

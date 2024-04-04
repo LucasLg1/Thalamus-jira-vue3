@@ -180,7 +180,7 @@
 
 <script>
 import draggableVue from "@/vuedraggableVue";
-import axios from "axios";
+import api from "../../services/api";
 
 
 export default {
@@ -282,7 +282,7 @@ export default {
         },
 
         getSprints() {
-            axios.get(`http://192.168.0.5:8000/api/sprint/buscar/${this.idProjeto}`, {
+            api.get(`/sprint/buscar/${this.idProjeto}`, {
             })
                 .then((response) => {
                     this.sprints = response.data
@@ -338,7 +338,7 @@ export default {
 
                 if (JSON.stringify(this.backlogsPendentes).includes(JSON.stringify(backlog))) {
 
-                    axios.put(`http://192.168.0.5:8000/api/sprintTarefa/atualizar/${idBacklog}`, {
+                    api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
                         usuario_id: 1,
                         status: 'Pendente',
                         dtInicioReal: null,
@@ -347,7 +347,7 @@ export default {
                 } else {
                     if (JSON.stringify(this.backlogsEmAndamento).includes(JSON.stringify(backlog))) {
 
-                        axios.put(`http://192.168.0.5:8000/api/sprintTarefa/atualizar/${idBacklog}`, {
+                        api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
                             usuario_id: 1,
                             status: 'Em andamento',
                             dtInicioReal: data
@@ -355,7 +355,7 @@ export default {
                     } else {
                         if (JSON.stringify(this.backlogsConcluidos).includes(JSON.stringify(backlog))) {
 
-                            axios.put(`http://192.168.0.5:8000/api/sprintTarefa/atualizar/${idBacklog}`, {
+                            api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
                                 usuario_id: 1,
                                 status: 'Concluído',
                                 dtFimReal: data

@@ -293,7 +293,7 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 1rem;margin-left: 1rem ;width: 100%; display: none;">
+                <!-- <div style="margin-top: 1rem;margin-left: 1rem ;width: 100%; display: none;">
                     <div style="width: 100%; justify-content: space-between; display: flex;">
                         <label>
                             Anexos:
@@ -325,7 +325,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
 
         </div>
@@ -335,7 +335,7 @@
 
 <script>
 import { ref } from 'vue';
-import axios from "axios";
+import api from "../../services/api";
 
 export default {
     components: {
@@ -412,7 +412,7 @@ export default {
                 }
 
                 // Envie a requisição usando Axios
-                axios.post('http://192.168.0.5:8000/api/sprintTarefa/anexo/adicionar', formData)
+                api.post('/sprintTarefa/anexo/adicionar', formData)
                     .then(response => {
                         this.backlogeditado.anexos.push({
                             path: response.data.anexos_salvos[0].path,
@@ -428,7 +428,7 @@ export default {
         },
 
         excluirAnexo(id) {
-            axios.delete(`http://192.168.0.5:8000/api/sprintTarefa/anexo/remover/${id}`);
+            api.delete(`/sprintTarefa/anexo/remover/${id}`);
             this.backlogeditado.anexos = this.backlogeditado.anexos.filter(anexo => anexo.id !== id)
         },
 
@@ -524,7 +524,7 @@ export default {
             //         console.error(error);
             //     });
 
-            axios.get('http://192.168.0.5:8000/api/usuario/', {
+            api.get('/usuario/', {
             })
                 .then((response) => {
                     this.gerente = response.data
@@ -548,7 +548,7 @@ export default {
         },
 
         getBacklogs() {
-            axios.get(`http://192.168.0.5:8000/api/planoAcao/buscar/${this.idProjeto}`)
+            api.get(`/planoAcao/buscar/${this.idProjeto}`)
                 .then((response) => {
                     this.sprints = response.data;
 
@@ -582,7 +582,7 @@ export default {
 
             if (status == 'Em andamento') {
 
-                axios.put(`http://192.168.0.5:8000/api/planoAcaoTarefa/atualizar/${idBacklog}`, {
+                api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
                     usuario_id: this.idUsuario,
                     dtInicioReal: data
                 })
@@ -593,7 +593,7 @@ export default {
 
             } if (status == 'Concluído') {
 
-                axios.put(`http://192.168.0.5:8000/api/planoAcaoTarefa/atualizar/${idBacklog}`, {
+                api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
                     usuario_id: this.idUsuario,
                     dtFimReal: data
 
@@ -604,7 +604,7 @@ export default {
 
             } if (status == 'Pendente') {
 
-                axios.put(`http://192.168.0.5:8000/api/planoAcaoTarefa/atualizar/${idBacklog}`, {
+                api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
                     usuario_id: this.idUsuario,
                     dtInicioReal: null,
                     dtFimReal: null
@@ -629,7 +629,7 @@ export default {
 
         editarBacklog(itemAlterado, idBacklog, novoValor) {
 
-            axios.put(`http://192.168.0.5:8000/api/planoAcaoTarefa/atualizar/${idBacklog}`, {
+            api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
                 usuario_id: this.idUsuario,
                 [itemAlterado]: novoValor
             })
@@ -689,7 +689,7 @@ export default {
 
             if (this.somenteBacklogs().length !== 0) {
 
-                axios.post(`http://192.168.0.5:8000/api/planoAcaoTarefa/cadastrar`, {
+                api.post(`/planoAcaoTarefa/cadastrar`, {
 
                     planoAcao_id: id,
                     codigo: 'Tarefa - ' + (parseInt((this.somenteBacklogs()[0].codigo).match(/\d+$/)[0]) + 1),
@@ -720,7 +720,7 @@ export default {
                         console.error(error);
                     });
             } else {
-                axios.post(`http://192.168.0.5:8000/api/planoAcaoTarefa/cadastrar`, {
+                api.post(`/planoAcaoTarefa/cadastrar`, {
 
                     planoAcao_id: id,
                     codigo: 'Tarefa - 1',
@@ -739,7 +739,7 @@ export default {
 
         apagarBacklog(idBacklog) {
 
-            axios.put(`http://192.168.0.5:8000/api/planoAcaoTarefa/excluir/${idBacklog}`, {
+            api.put(`/planoAcaoTarefa/excluir/${idBacklog}`, {
                 usuario_id: this.idUsuario
             })
                 .then(() => {

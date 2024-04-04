@@ -320,8 +320,8 @@
 
 
 <script>
-import { devURL, prodURL, permissoes } from '../../services/api'
-import axios from 'axios'
+import {  permissoes } from '../../services/api'
+import api from '../../services/api'
 
 export default {
     name: "ControleProgramas",
@@ -345,8 +345,6 @@ export default {
                 "gerente_nome": '',
                 "dtFim": ''
             },
-            devURL: devURL,
-            prodURL: prodURL,
             gerente: [],
             modalEditarPrograma: false,
             programaEditado: null,
@@ -375,7 +373,7 @@ export default {
                 }, 1500)
                 return
             }
-            axios.put(`${this.prodURL}/programa/atualizar/${this.programaEditado.id}`, {
+            api.put(`/programa/atualizar/${this.programaEditado.id}`, {
                 dtFim: this.dataTerminoPrograma,
                 status: "Concluído"
             })
@@ -412,7 +410,7 @@ export default {
         excluirPrograma() {
             const userId = localStorage.getItem('id')
 
-            axios.put(`${this.prodURL}/programa/excluir/${this.programaEditado.id}`, {
+            api.put(`/programa/excluir/${this.programaEditado.id}`, {
                 usuario_id: userId
             })
                 .then(() => {
@@ -427,7 +425,7 @@ export default {
 
         associarProjeto(event) {
             const projetoId = event.target.value;
-            axios.post(`${this.prodURL}/programa/associar/${this.programaEditado.id}`, {
+            api.post(`/programa/associar/${this.programaEditado.id}`, {
                 id: projetoId,
                 projeto: 1
             })
@@ -449,7 +447,7 @@ export default {
 
         associarPlanoAcao(event) {
             const planoAcaoId = event.target.value;
-            axios.post(`${this.prodURL}/programa/associar/${this.programaEditado.id}`, {
+            api.post(`/programa/associar/${this.programaEditado.id}`, {
                 id: planoAcaoId,
                 projeto: 0
             })
@@ -469,7 +467,7 @@ export default {
         },
 
         desassociarPlano(tipo, id) {
-            axios.post(`${this.prodURL}/programa/associar/excluir/${this.programaEditado.id}`, {
+            api.post(`/programa/associar/excluir/${this.programaEditado.id}`, {
                 id: id,
                 projeto: tipo === 'projeto' ? 1 : 0
             })
@@ -493,7 +491,7 @@ export default {
 
 
         getProjetosPlanoAcao() {
-            axios.get(`${this.prodURL}/planoacao-projeto/listar/sem-programa`)
+            api.get(`/planoacao-projeto/listar/sem-programa`)
                 .then((response) => {
                     const data = response.data;
                     this.projetos = data.projeto;
@@ -505,7 +503,7 @@ export default {
         },
 
         programasAssociados(id) {
-            axios.get(`${this.prodURL}/programa/buscar/${id}`)
+            api.get(`/programa/buscar/${id}`)
                 .then(response => {
                     this.programaEditado = response.data;
                     this.modalProjetosAssociados = true;
@@ -526,7 +524,7 @@ export default {
         },
 
         editarPrograma(itemAlterado, novoValor) {
-            axios.put(`${this.prodURL}/programa/atualizar/${this.programaEditado.id}`, {
+            api.put(`/programa/atualizar/${this.programaEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
@@ -535,7 +533,7 @@ export default {
         editarProgramaInline(idProjeto, itemAlterado, novoValor) {
 
             if (novoValor !== "Concluído") {
-                axios.put(`${this.prodURL}/programa/atualizar/${idProjeto}`, {
+                api.put(`/programa/atualizar/${idProjeto}`, {
                     [itemAlterado]: novoValor,
                     dtTermino: null
                 })
@@ -545,7 +543,7 @@ export default {
             }
             if (novoValor == "Concluído") {
                 var dataAtual = new Date().toISOString().split('T')[0];
-                axios.put(`${this.prodURL}/programa/atualizar/${idProjeto}`, {
+                api.put(`/programa/atualizar/${idProjeto}`, {
 
                     [itemAlterado]: novoValor,
                     dtFim: dataAtual
@@ -557,7 +555,7 @@ export default {
         },
 
         adicionarPrograma() {
-            axios.post(`${this.prodURL}/programa/cadastrar`, {
+            api.post(`/programa/cadastrar`, {
                 nome: this.novoPrograma.nome,
                 dtInicio: this.novoPrograma.dtInicio,
                 dtFim: this.novoPrograma.dtFim,
@@ -585,7 +583,7 @@ export default {
         },
 
         getProgramas() {
-            axios.get(`${this.prodURL}/programa/listar`, {})
+            api.get(`/programa/listar`, {})
                 .then((response) => {
                     this.programas = response.data;
                     this.filtrarProgramas()
@@ -596,7 +594,7 @@ export default {
         },
 
         getGerente() {
-            axios.get(`${this.prodURL}/usuario`, {
+            api.get(`/usuario`, {
 
             })
                 .then((response) => {

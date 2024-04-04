@@ -7,7 +7,7 @@ ADD . /build
 WORKDIR /build
 
 RUN npm install \
-    && npm run build --prod --aot=false -c=${AMBIENTE} --base-href=/
+    && npm run build --mode ${AMBIENTE} --base-href=/
 
 FROM nginx:1.25.4-alpine
 

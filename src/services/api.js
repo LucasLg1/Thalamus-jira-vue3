@@ -1,8 +1,11 @@
 import axios from "axios";
 
-const prodURL = 'http://192.168.0.5:8000/api';
-const baseURL = 'http://192.168.0.6:8082';
-const devURL = 'http://192.168.0.6:8000/api';
+const api = axios.create({
+  baseURL:  process.env.VUE_APP_ROOT_API,
+  devURL: process.env.VUE_APP_ROOT_DEV,
+});
+
+
 const permissoes = [
   {
     "usuario_id": 12,
@@ -58,34 +61,12 @@ const permissoes = [
     "usuario_id": 3,
     "nivel": 2,
     "nome": "Mariana Mozzer Arantes"
-  },
-  {
-    "usuario_id": 1,
-    "nivel": 1,
-    "nome": "Natalie Da Costa Vieira Dias"
-  },
-  {
-    "usuario_id": 9,
-    "nivel": 3,
-    "nome": "Raiane de Cassia Baldez Mendes"
-  },
-  {
-    "usuario_id": 5,
-    "nivel": 1,
-    "nome": "Raul Daniel Dias"
   }
-]
-
-;
-
-const api = axios.create({
-  baseURL: baseURL,
-  devURL: devURL,
-});
+];
 
 //local de armazenamento das fotos de visitante e colaborador
 export const urlFoto = {
-  caminhoFoto: `http://192.168.0.5:8000/storage/`,
+  caminhoFoto: process.env.VUE_APP_ROOT_STORAGE,
 };
 
 api.interceptors.request.use(
@@ -101,8 +82,6 @@ api.interceptors.request.use(
   }
 );
 
-export { devURL };
-export { prodURL };
-export { permissoes }
+export { permissoes}
 
 export default api;

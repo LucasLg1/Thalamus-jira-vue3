@@ -107,8 +107,8 @@
 </template>
 <script>
 
-import axios from 'axios';
-import { devURL, prodURL, permissoes } from '../../services/api'
+import api from '../../services/api';
+import { permissoes } from '../../services/api'
 
 export default {
     name: "ControlePCM",
@@ -120,8 +120,6 @@ export default {
             listaPCMsFiltrada: null,
 
             PCMs: null,
-            devURL: devURL,
-            prodURL: prodURL,
             idUsuario: localStorage.getItem('id'),
 
             teste: null
@@ -137,7 +135,7 @@ export default {
 
         atualizarPCM(itemEditado, valor, id) {
             if (valor == 'Aprovado') {
-                axios.put(`${this.prodURL}/pcm/atualizar/${id}`, {
+                api.put(`/pcm/atualizar/${id}`, {
                     [itemEditado]: valor,
                     aprovada: 1
                 })
@@ -149,7 +147,7 @@ export default {
                     });
             }
             if (valor == 'Reprovado') {
-                axios.put(`${this.prodURL}/pcm/atualizar/${id}`, {
+                api.put(`/pcm/atualizar/${id}`, {
                     [itemEditado]: valor,
                     aprovada: 0
                 })
@@ -184,7 +182,7 @@ export default {
             });
             var novoCodigo = parseInt(PCMsOrdenados[0].codigo.substring(3));
 
-            axios.post(`${this.prodURL}/pcm/cadastrar`, {
+            api.post(`/pcm/cadastrar`, {
 
                 codigo: `PCM${novoCodigo + 1}`,
                 dtInicio: new Date().toISOString().split('T')[0],
@@ -231,7 +229,7 @@ export default {
         },
 
         getPCMs() {
-            axios.get(`${this.prodURL}/pcm/listar`, {})
+            api.get(`/pcm/listar`, {})
                 .then((response) => {
                     this.PCMs = response.data;
                     this.filtrarPCMs()

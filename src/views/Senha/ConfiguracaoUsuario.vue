@@ -45,7 +45,6 @@ export default {
             local: '',     
             localData: [],
             localSelecionado: null,
-            apiUrl: api.defaults.baseURL,
         }
     },
 
@@ -66,8 +65,8 @@ export default {
     methods: {
         async buscaLocal() {
             try {
-                const response = await fetch(`${this.apiUrl}/local`);
-                this.localData = await response.json();
+                const response = await api.get('/local');
+                this.localData = response.data;
             } catch (error) {
                 console.error('Error ao buscar empresas', error);
                 toaster.show(`Erro buscar empresa`, { type: "error" });

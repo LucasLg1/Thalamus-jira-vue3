@@ -32,10 +32,10 @@
                 <br>
                 <div class="col-sm-12 text-center">
                     <button class="button-default" value="Entrar">
-                                                              <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
-                                                              <span v-if="!loading">Entrar</span>
-                                                              <span v-if="loading">Processando...</span>
-                                                            </button>
+                                                                  <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
+                                                                  <span v-if="!loading">Entrar</span>
+                                                                  <span v-if="loading">Processando...</span>
+                                                                </button>
                 </div>
     
                 <div class="col-sm-12" style="text-align: center; font-size: 15px;">
@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { createToaster } from "@meforma/vue-toaster";
 import api from '../../services/api';
-import { devURL } from '../../services/api'
-import { prodURL } from '../../services/api'
+
 
 
 const toaster = createToaster({
@@ -79,9 +77,7 @@ export default {
             menuUrl: '',
             localSelecionado: null,
             localData: [],
-            apiUrl: api.defaults.baseURL,
-            devURL: devURL,
-            prodURL: prodURL
+
 
         }
     },
@@ -115,7 +111,7 @@ export default {
 
             try {
                 // const response = await axios.post('http://192.168.0.5:8000/api/login', {
-                const response = await axios.post( `${this.prodURL}/login`, {
+                const response = await api.post(`/login`, {
                     email: this.email,
                     password: this.password,
                 });
@@ -131,9 +127,9 @@ export default {
 
                 // Atualizar permissões do usuário
                 // const menuUrl = `http://192.168.0.5:8000/api/menu/usuario/${userId}`;
-                const menuUrl = `${this.prodURL}/menu/usuario/${userId}`;
+                const menuUrl = `/menu/usuario/${userId}`;
 
-                const menuResponse = await axios.get(menuUrl);
+                const menuResponse = await api.get(menuUrl);
                 const userPermissions = menuResponse.data.map((item) => item.nome.toLowerCase());
 
                 // Chamar a ação para atualizar as permissões no Vuex
@@ -151,13 +147,16 @@ export default {
 
         async buscaLocal() {
             try {
-                const response = await fetch(`${this.prodURL}/local`);
-                this.localData = await response.json();
+                const response = await api.get('/local');
+            
+
+                this.localData = response.data;
             } catch (error) {
-                console.error('Error ao buscar empresas', error);
-                toaster.show(`Erro buscar empresa`, { type: "error" });
+                console.error('Erro ao buscar empresas', error);
+                toaster.show(`Erro ao buscar empresa`, { type: "error" });
             }
         },
+
 
         salvarLocalSelecionado() {
             localStorage.setItem('localSelecionado', this.localSelecionado);
@@ -171,6 +170,7 @@ export default {
 .fa-solid {
     margin-left: 0rem !important;
 }
+
 /* .reset-margin {
   margin-left: 0px !important;
   margin-bottom: 0px;
