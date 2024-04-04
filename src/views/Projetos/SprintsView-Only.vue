@@ -606,11 +606,7 @@ export default {
         },
 
         getBacklogs() {
-<<<<<<< Updated upstream
             api.get(`sprint/buscar/${this.idProjeto}`, {})
-=======
-            api.get(`buscar/${this.idProjeto}`, {})
->>>>>>> Stashed changes
                 .then((response) => {
                     function compararSprints(a, b) {
                         if (a.nome === "Backlogs") {

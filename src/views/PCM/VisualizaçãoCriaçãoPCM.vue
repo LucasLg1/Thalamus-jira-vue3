@@ -427,32 +427,19 @@ export default {
         },
 
         atualizarPCM(itemEditado, valor) {
-<<<<<<< Updated upstream
-            api.put(`/pcm/atualizar/${this.idPCM}`, {
-                [itemEditado]: valor,
-            })
-                .then(() => { })
-=======
             api.put(`pcm/atualizar/${this.idPCM}`, {
                     [itemEditado]: valor,
                 })
                 .then(() => {})
->>>>>>> Stashed changes
                 .catch((error) => {
                     console.error(error);
                 });
         },
 
         getSetores() {
-<<<<<<< Updated upstream
-            api.get(`/usuario`, {
-
-            })
-=======
             api.get(`usuario`, {
 
                 })
->>>>>>> Stashed changes
                 .then((response) => {
                     this.usuarios = response.data;
                     this.usuarios = this.usuarios.map((item) => ({
