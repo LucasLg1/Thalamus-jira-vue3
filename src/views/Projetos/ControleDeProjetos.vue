@@ -178,7 +178,7 @@
 
     <!-- modal editar projeto -->
     <div style="overflow: auto" class="modal-mask" v-if="modalEditarProjeto" @click="fecharModalFora">
-        <div style="max-height: 87%; width: 50rem; padding: 3rem; margin-bottom: 3rem;"
+        <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; "
             class="modal-container">
             <div>
                 <div style="display: flex; justify-content: space-between">
@@ -369,6 +369,7 @@
     </div>
     <!--END MODAL-->
 </template>
+
 
 <script>
 import { ref } from 'vue';
@@ -777,13 +778,26 @@ export default {
 </script>
 
 <style scoped>
-
 input:disabled {
     color: black
 }
 
 select:disabled {
     color: black
+}
+
+@media (max-width: 1800px) {
+    .container {
+        margin-left: 12rem !important;
+        max-width: 1100px !important;
+    }
+
+    .botaoHome {
+        font-size: 30px;
+        margin-left: 6rem !important;
+        cursor: pointer;
+        position: absolute;
+    }
 }
 
 .fa-solid {
