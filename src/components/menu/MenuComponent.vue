@@ -257,7 +257,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .navbar-nav {
     display: flex;
     justify-content: center;
