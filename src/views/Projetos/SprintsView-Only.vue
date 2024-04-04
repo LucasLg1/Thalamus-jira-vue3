@@ -541,7 +541,7 @@ export default {
                     }
                 }
 
-                api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                     sprint_id: idSprint,
                 })
                     .then(() => {
@@ -606,7 +606,11 @@ export default {
         },
 
         getBacklogs() {
+<<<<<<< Updated upstream
             api.get(`sprint/buscar/${this.idProjeto}`, {})
+=======
+            api.get(`buscar/${this.idProjeto}`, {})
+>>>>>>> Stashed changes
                 .then((response) => {
                     function compararSprints(a, b) {
                         if (a.nome === "Backlogs") {
@@ -681,7 +685,7 @@ export default {
 
         editarBacklog(itemAlterado, idBacklog, novoValor) {
 
-            api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+            api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                 [itemAlterado]: novoValor,
             })
                 .then(() => {
@@ -696,7 +700,7 @@ export default {
 
         editarSprint(itemAlterado, idSprint, novoValor) {
 
-            api.put(`/sprint/atualizar/${idSprint}`, {
+            api.put(`sprint/atualizar/${idSprint}`, {
                 [itemAlterado]: novoValor,
             })
                 .then(() => {
@@ -785,7 +789,7 @@ export default {
             var sprint = this.sprints.find(sprint => sprint.id === this.idSprint)
             if (sprint.dtTermino !== null) {
 
-                api.put(`/sprint/atualizar/${this.idSprint}`, {
+                api.put(`sprint/atualizar/${this.idSprint}`, {
                     dtInicio: null,
                     dtTermino: data
                 })
@@ -826,7 +830,7 @@ export default {
                 return
             }
 
-            api.put(`/sprint/atualizar/${this.idSprint}`, {
+            api.put(`sprint/atualizar/${this.idSprint}`, {
                 dtInicio: data,
                 dtTermino: this.dataTerminoSprint,
             })
@@ -851,7 +855,7 @@ export default {
                 nomeSprint = 'Sprint - 1';
             }
 
-            api.post(`/sprint/cadastrar`, {
+            api.post(`sprint/cadastrar`, {
                 nome: nomeSprint,
                 projeto_id: this.idProjeto
             })
@@ -867,7 +871,7 @@ export default {
 
             if (this.somenteBacklogs().length !== 0) {
 
-                api.post(`/sprintTarefa/cadastrar`, {
+                api.post(`sprintTarefa/cadastrar`, {
                     sprint_id: id,
                     codigo: 'Tarefa - ' + (parseInt((this.somenteBacklogs()[0].codigo).match(/\d+$/)[0]) + 1),
                     descricao: descricao
@@ -879,7 +883,7 @@ export default {
                         console.error(error);
                     });
             } else {
-                api.post(`/sprintTarefa/cadastrar`, {
+                api.post(`sprintTarefa/cadastrar`, {
                     sprint_id: id,
                     codigo: 'Tarefa - 1',
                     descricao: descricao
@@ -895,7 +899,7 @@ export default {
 
         apagarBacklog(idBacklog) {
 
-            api.put(`/sprintTarefa/excluir/${idBacklog}`, {
+            api.put(`sprintTarefa/excluir/${idBacklog}`, {
                 usuario_id: 1
             })
                 .then(() => {
@@ -907,7 +911,7 @@ export default {
         },
 
         apagarSprint(id) {
-            api.put(`/sprint/excluir/${id}`, {
+            api.put(`sprint/excluir/${id}`, {
                 usuario_id: 1
             })
                 .then(() => {

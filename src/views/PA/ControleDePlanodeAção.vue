@@ -459,7 +459,7 @@ export default {
                     }
                     this.planoEditado.permissao.push(novaPermissão);
 
-                    api.post(`/permissao/planoAcao/${this.planoEditado.id}`, {
+                    api.post(`permissao/planoAcao/${this.planoEditado.id}`, {
                         usuarios: this.planoEditado.permissao
                     })
                         .then(() => {
@@ -472,7 +472,7 @@ export default {
                 }
                 if (ação == 'remover') {
                     this.planoEditado.permissao = this.planoEditado.permissao.filter(pessoa => pessoa.usuario_id !== parseInt(item.usuario_id));
-                    api.post(`/permissao/planoAcao/${this.planoEditado.id}`, {
+                    api.post(`permissao/planoAcao/${this.planoEditado.id}`, {
                         usuarios: this.planoEditado.permissao
                     })
                         .then(() => {
@@ -485,7 +485,7 @@ export default {
                 }
                 if (ação == 'atualizar') {
 
-                    api.post(`/permissao/planoAcao/${this.planoEditado.id}`, {
+                    api.post(`permissao/planoAcao/${this.planoEditado.id}`, {
                         usuarios: this.planoEditado.permissao
                         // .filter(item => item.usuario_id !== parseInt(this.idUsuario))
                     })
@@ -539,7 +539,7 @@ export default {
                 }, 1500)
                 return
             }
-            api.put(`/planoAcao/atualizar/${this.planoEditado.id}`, {
+            api.put(`planoAcao/atualizar/${this.planoEditado.id}`, {
                 dtTermino: this.dataTerminoPlano,
                 status: "Concluído"
             })
@@ -562,7 +562,7 @@ export default {
         },
 
         getProgramas() {
-            api.get(`/programa/listar`, {})
+            api.get(`programa/listar`, {})
                 .then((response) => {
                     this.programas = response.data;
                 })
@@ -575,7 +575,7 @@ export default {
         excluirPlano() {
             const userId = localStorage.getItem('id')
 
-            api.put(`/planoAcao/excluir/${this.planoEditado.id}`, {
+            api.put(`planoAcao/excluir/${this.planoEditado.id}`, {
                 usuario_id: userId
             })
                 .then(() => {
@@ -603,7 +603,7 @@ export default {
             if (novoValor !== "Concluído") {
 
 
-                api.put(`/planoAcao/atualizar/${idProjeto}`, {
+                api.put(`planoAcao/atualizar/${idProjeto}`, {
                     [itemAlterado]: novoValor,
                     dtTermino: null
                 })
@@ -613,7 +613,7 @@ export default {
             }
             if (novoValor == "Concluído") {
                 var dataAtual = new Date().toISOString().split('T')[0];
-                api.put(`${this.prodURL}/planoAcao/atualizar/${idProjeto}`, {
+                api.put(`planoAcao/atualizar/${idProjeto}`, {
 
                     [itemAlterado]: novoValor,
                     dtTermino: dataAtual
@@ -626,7 +626,7 @@ export default {
 
         editarPlano(itemAlterado, novoValor) {
 
-            api.put(`/planoAcao/atualizar/${this.planoEditado.id}`, {
+            api.put(`planoAcao/atualizar/${this.planoEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
@@ -641,7 +641,7 @@ export default {
         },
 
         adicionarPlanoAcao() {
-            api.post(`/planoAcao/cadastrar`, {
+            api.post(`planoAcao/cadastrar`, {
 
                 nome: this.novoPlanoAcao.nome,
                 dtInicio: this.novoPlanoAcao.dtInicio,
@@ -671,7 +671,7 @@ export default {
         },
 
         getGerenteseSetor() {
-            api.get(`/usuario`, {
+            api.get(`usuario`, {
 
             })
                 .then((response) => {
@@ -685,7 +685,7 @@ export default {
                     console.error(error);
                 });
 
-            api.get(`/setor`, {
+            api.get(`setor`, {
 
             })
                 .then((response) => {
@@ -697,7 +697,7 @@ export default {
         },
 
         getPlanoAcao() {
-            api.get(`/planoAcao/listar`, {
+            api.get(`planoAcao/listar`, {
 
             })
                 .then((response) => {

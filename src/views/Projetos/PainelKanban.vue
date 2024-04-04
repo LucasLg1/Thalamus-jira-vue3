@@ -282,7 +282,7 @@ export default {
         },
 
         getSprints() {
-            api.get(`/sprint/buscar/${this.idProjeto}`, {
+            api.get(`sprint/buscar/${this.idProjeto}`, {
             })
                 .then((response) => {
                     this.sprints = response.data
@@ -338,7 +338,7 @@ export default {
 
                 if (JSON.stringify(this.backlogsPendentes).includes(JSON.stringify(backlog))) {
 
-                    api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                    api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                         usuario_id: 1,
                         status: 'Pendente',
                         dtInicioReal: null,
@@ -347,7 +347,7 @@ export default {
                 } else {
                     if (JSON.stringify(this.backlogsEmAndamento).includes(JSON.stringify(backlog))) {
 
-                        api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                        api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                             usuario_id: 1,
                             status: 'Em andamento',
                             dtInicioReal: data
@@ -355,7 +355,7 @@ export default {
                     } else {
                         if (JSON.stringify(this.backlogsConcluidos).includes(JSON.stringify(backlog))) {
 
-                            api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                            api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                                 usuario_id: 1,
                                 status: 'Concluído',
                                 dtFimReal: data

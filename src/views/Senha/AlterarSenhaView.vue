@@ -146,7 +146,7 @@ export default {
                 console.log(this.reset_token)
 
                 //axios.post('http://192.168.0.6:8000/api/usuario/senha/alterar', {
-                api.post('/usuario/senha/alterar', {
+                api.post('usuario/senha/alterar', {
                         current_password: this.current_password,
                         new_password: this.new_password,
                         new_password_confirmation: this.new_password_confirmation

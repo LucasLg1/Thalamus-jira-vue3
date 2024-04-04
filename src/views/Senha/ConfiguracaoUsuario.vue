@@ -65,7 +65,7 @@ export default {
     methods: {
         async buscaLocal() {
             try {
-                const response = await api.get('/local');
+                const response = await api.get('local');
                 this.localData = response.data;
             } catch (error) {
                 console.error('Error ao buscar empresas', error);

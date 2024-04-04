@@ -135,7 +135,7 @@ export default {
 
         atualizarPCM(itemEditado, valor, id) {
             if (valor == 'Aprovado') {
-                api.put(`/pcm/atualizar/${id}`, {
+                api.put(`pcm/atualizar/${id}`, {
                     [itemEditado]: valor,
                     aprovada: 1
                 })
@@ -147,7 +147,7 @@ export default {
                     });
             }
             if (valor == 'Reprovado') {
-                api.put(`/pcm/atualizar/${id}`, {
+                api.put(`pcm/atualizar/${id}`, {
                     [itemEditado]: valor,
                     aprovada: 0
                 })
@@ -182,7 +182,7 @@ export default {
             });
             var novoCodigo = parseInt(PCMsOrdenados[0].codigo.substring(3));
 
-            api.post(`/pcm/cadastrar`, {
+            api.post(`pcm/cadastrar`, {
 
                 codigo: `PCM${novoCodigo + 1}`,
                 dtInicio: new Date().toISOString().split('T')[0],
@@ -229,7 +229,7 @@ export default {
         },
 
         getPCMs() {
-            api.get(`/pcm/listar`, {})
+            api.get(`pcm/listar`, {})
                 .then((response) => {
                     this.PCMs = response.data;
                     this.filtrarPCMs()
