@@ -379,7 +379,7 @@ export default {
                 }, 1500)
                 return
             }
-            api.put(`/programa/atualizar/${this.programaEditado.id}`, {
+            api.put(`programa/atualizar/${this.programaEditado.id}`, {
                 dtFim: this.dataTerminoPrograma,
                 status: "Concluído"
             })
@@ -416,7 +416,7 @@ export default {
         excluirPrograma() {
             const userId = localStorage.getItem('id')
 
-            api.put(`/programa/excluir/${this.programaEditado.id}`, {
+            api.put(`programa/excluir/${this.programaEditado.id}`, {
                 usuario_id: userId
             })
                 .then(() => {
@@ -431,7 +431,7 @@ export default {
 
         associarProjeto(event) {
             const projetoId = event.target.value;
-            api.post(`/programa/associar/${this.programaEditado.id}`, {
+            api.post(`programa/associar/${this.programaEditado.id}`, {
                 id: projetoId,
                 projeto: 1
             })
@@ -453,7 +453,7 @@ export default {
 
         associarPlanoAcao(event) {
             const planoAcaoId = event.target.value;
-            api.post(`/programa/associar/${this.programaEditado.id}`, {
+            api.post(`programa/associar/${this.programaEditado.id}`, {
                 id: planoAcaoId,
                 projeto: 0
             })
@@ -473,7 +473,7 @@ export default {
         },
 
         desassociarPlano(tipo, id) {
-            api.post(`/programa/associar/excluir/${this.programaEditado.id}`, {
+            api.post(`programa/associar/excluir/${this.programaEditado.id}`, {
                 id: id,
                 projeto: tipo === 'projeto' ? 1 : 0
             })
@@ -497,7 +497,7 @@ export default {
 
 
         getProjetosPlanoAcao() {
-            api.get(`/planoacao-projeto/listar/sem-programa`)
+            api.get(`planoacao-projeto/listar/sem-programa`)
                 .then((response) => {
                     const data = response.data;
                     this.projetos = data.projeto;
@@ -509,7 +509,7 @@ export default {
         },
 
         programasAssociados(id) {
-            api.get(`/programa/buscar/${id}`)
+            api.get(`programa/buscar/${id}`)
                 .then(response => {
                     this.programaEditado = response.data;
                     this.modalProjetosAssociados = true;
@@ -530,7 +530,7 @@ export default {
         },
 
         editarPrograma(itemAlterado, novoValor) {
-            api.put(`/programa/atualizar/${this.programaEditado.id}`, {
+            api.put(`programa/atualizar/${this.programaEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
@@ -539,7 +539,7 @@ export default {
         editarProgramaInline(idProjeto, itemAlterado, novoValor) {
 
             if (novoValor !== "Concluído") {
-                api.put(`/programa/atualizar/${idProjeto}`, {
+                api.put(`programa/atualizar/${idProjeto}`, {
                     [itemAlterado]: novoValor,
                     dtTermino: null
                 })
@@ -549,7 +549,7 @@ export default {
             }
             if (novoValor == "Concluído") {
                 var dataAtual = new Date().toISOString().split('T')[0];
-                api.put(`/programa/atualizar/${idProjeto}`, {
+                api.put(`programa/atualizar/${idProjeto}`, {
 
                     [itemAlterado]: novoValor,
                     dtFim: dataAtual
@@ -561,7 +561,7 @@ export default {
         },
 
         adicionarPrograma() {
-            api.post(`/programa/cadastrar`, {
+            api.post(`programa/cadastrar`, {
                 nome: this.novoPrograma.nome,
                 dtInicio: this.novoPrograma.dtInicio,
                 dtFim: this.novoPrograma.dtFim,
@@ -589,7 +589,7 @@ export default {
         },
 
         getProgramas() {
-            api.get(`/programa/listar`, {})
+            api.get(`programa/listar`, {})
                 .then((response) => {
                     this.programas = response.data;
                     this.filtrarProgramas()
@@ -600,7 +600,7 @@ export default {
         },
 
         getGerente() {
-            api.get(`/usuario`, {
+            api.get(`usuario`, {
 
             })
                 .then((response) => {

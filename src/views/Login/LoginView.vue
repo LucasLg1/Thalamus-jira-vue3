@@ -111,7 +111,7 @@ export default {
 
             try {
                 // const response = await axios.post('http://192.168.0.5:8000/api/login', {
-                const response = await api.post(`/login`, {
+                const response = await api.post(`login`, {
                     email: this.email,
                     password: this.password,
                 });
@@ -127,7 +127,7 @@ export default {
 
                 // Atualizar permissões do usuário
                 // const menuUrl = `http://192.168.0.5:8000/api/menu/usuario/${userId}`;
-                const menuUrl = `/menu/usuario/${userId}`;
+                const menuUrl = `menu/usuario/${userId}`;
 
                 const menuResponse = await api.get(menuUrl);
                 const userPermissions = menuResponse.data.map((item) => item.nome.toLowerCase());
@@ -147,7 +147,7 @@ export default {
 
         async buscaLocal() {
             try {
-                const response = await api.get('/local');
+                const response = await api.get('local');
             
 
                 this.localData = response.data;

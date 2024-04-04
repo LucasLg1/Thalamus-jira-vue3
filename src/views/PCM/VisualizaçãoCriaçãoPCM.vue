@@ -427,19 +427,32 @@ export default {
         },
 
         atualizarPCM(itemEditado, valor) {
+<<<<<<< Updated upstream
             api.put(`/pcm/atualizar/${this.idPCM}`, {
                 [itemEditado]: valor,
             })
                 .then(() => { })
+=======
+            api.put(`pcm/atualizar/${this.idPCM}`, {
+                    [itemEditado]: valor,
+                })
+                .then(() => {})
+>>>>>>> Stashed changes
                 .catch((error) => {
                     console.error(error);
                 });
         },
 
         getSetores() {
+<<<<<<< Updated upstream
             api.get(`/usuario`, {
 
             })
+=======
+            api.get(`usuario`, {
+
+                })
+>>>>>>> Stashed changes
                 .then((response) => {
                     this.usuarios = response.data;
                     this.usuarios = this.usuarios.map((item) => ({
@@ -459,7 +472,7 @@ export default {
             //         console.error(error);
             //     });
 
-            api.get(`/setor`, {
+            api.get(`setor`, {
 
             })
                 .then((response) => {
@@ -471,7 +484,7 @@ export default {
         },
 
         getPCM() {
-            api.get(`/pcm/buscar/${this.idPCM}`, {})
+            api.get(`pcm/buscar/${this.idPCM}`, {})
                 .then(response => {
                     this.codigo = response.data.codigo;
                     this.finalidade = response.data.finalidade;

@@ -69,7 +69,7 @@ export default {
             }
 
             //axios.post('http://192.168.0.6:8000/api/enviar-codigo', {
-            api.post('/enviar-codigo', {
+            api.post('enviar-codigo', {
                 email: this.email,
 
             }).then(

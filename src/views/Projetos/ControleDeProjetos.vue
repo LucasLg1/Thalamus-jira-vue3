@@ -461,7 +461,7 @@ export default {
 
                 // Envie a requisição usando Axios
                 // axios.post('http://192.168.0.5:8000/api/projeto/anexo/adicionar', formData)
-                api.post(`/projeto/anexo/adicionar`, formData)
+                api.post(`projeto/anexo/adicionar`, formData)
                     .then(response => {
                         this.projetoEditado.anexos.push({
                             path: response.data.anexos_salvos[0].path,
@@ -477,7 +477,7 @@ export default {
         },
 
         excluirAnexo(id) {
-            api.delete(`/projeto/anexo/remover/${id}`);
+            api.delete(`projeto/anexo/remover/${id}`);
             this.projetoEditado.anexos = this.projetoEditado.anexos.filter(anexo => anexo.id !== id)
         },
 
@@ -522,7 +522,7 @@ export default {
                     }
                     this.projetoEditado.permissao.push(novaPermissão);
 
-                    api.post(`/permissao/projeto/${this.projetoEditado.id}`, {
+                    api.post(`permissao/projeto/${this.projetoEditado.id}`, {
                         usuarios: this.projetoEditado.permissao
                     })
                         .then(() => {
@@ -535,7 +535,7 @@ export default {
                 }
                 if (ação == 'remover') {
                     this.projetoEditado.permissao = this.projetoEditado.permissao.filter(pessoa => pessoa.usuario_id !== parseInt(item.usuario_id));
-                    api.post(`/permissao/projeto/${this.projetoEditado.id}`, {
+                    api.post(`permissao/projeto/${this.projetoEditado.id}`, {
                         usuarios: this.projetoEditado.permissao
                     })
                         .then(() => {
@@ -548,7 +548,7 @@ export default {
                 }
                 if (ação == 'atualizar') {
 
-                    api.post(`/permissao/projeto/${this.projetoEditado.id}`, {
+                    api.post(`permissao/projeto/${this.projetoEditado.id}`, {
                         usuarios: this.projetoEditado.permissao
                         // .filter(item => item.usuario_id !== parseInt(this.idUsuario))
                     })
@@ -593,7 +593,7 @@ export default {
                 }, 1500)
                 return
             }
-            api.put(`/projeto/atualizar/${this.projetoEditado.id}`, {
+            api.put(`projeto/atualizar/${this.projetoEditado.id}`, {
                 dtTermino: this.dataTerminoProjeto,
                 status: "Concluído"
             })
@@ -624,7 +624,7 @@ export default {
 
         editarProjeto(itemAlterado, novoValor) {
 
-            api.put(`/projeto/atualizar/${this.projetoEditado.id}`, {
+            api.put(`projeto/atualizar/${this.projetoEditado.id}`, {
                 [itemAlterado]: novoValor,
             })
         },
@@ -633,7 +633,7 @@ export default {
 
             if (novoValor !== "Concluído") {
 
-                api.put(`/projeto/atualizar/${idProjeto}`, {
+                api.put(`projeto/atualizar/${idProjeto}`, {
                     [itemAlterado]: novoValor,
                     dtTermino: null
                 })
@@ -644,7 +644,7 @@ export default {
             if (novoValor == "Concluído") {
                 var dataAtual = new Date().toISOString().split('T')[0];
                 // axios.put(`http://192.168.0.5:8000/api/projeto/atualizar/${idProjeto}`, {
-                api.put(`/projeto/atualizar/${idProjeto}`, {
+                api.put(`projeto/atualizar/${idProjeto}`, {
 
                     [itemAlterado]: novoValor,
                     dtTermino: dataAtual
@@ -657,7 +657,7 @@ export default {
 
         adicionarProjeto() {
             // axios.post('http://192.168.0.5:8000/api/projeto/cadastrar', {
-            api.post(`/projeto/cadastrar`, {
+            api.post(`projeto/cadastrar`, {
 
                 nome: this.novoProjeto.nome,
                 dtInicio: this.novoProjeto.dtInicio,
@@ -720,8 +720,7 @@ export default {
 
         getGerenteseSetor() {
             // axios.get('http://192.168.0.5:8000/api/usuario/', {
-            api.get(`/usuario`, {
-
+            api.get(`usuario`, {
             })
                 .then((response) => {
                     this.gerente = response.data
@@ -735,7 +734,7 @@ export default {
                 });
 
             // axios.get('http://192.168.0.5:8000/api/setor', {
-            api.get(`/setor`, {
+            api.get(`setor`, {
 
             })
                 .then((response) => {
@@ -749,7 +748,7 @@ export default {
         getProjetos() {
             var id = parseFloat(localStorage.getItem('id'))
             // axios.get(`http://192.168.0.5:8000/api/projeto/usuario/${id}`, {
-            api.get(`/projeto/usuario/${id}`, {
+            api.get(`projeto/usuario/${id}`, {
 
             })
                 .then((response) => {

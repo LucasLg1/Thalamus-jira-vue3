@@ -412,7 +412,7 @@ export default {
                 }
 
                 // Envie a requisição usando Axios
-                api.post('/sprintTarefa/anexo/adicionar', formData)
+                api.post('sprintTarefa/anexo/adicionar', formData)
                     .then(response => {
                         this.backlogeditado.anexos.push({
                             path: response.data.anexos_salvos[0].path,
@@ -428,7 +428,7 @@ export default {
         },
 
         excluirAnexo(id) {
-            api.delete(`/sprintTarefa/anexo/remover/${id}`);
+            api.delete(`sprintTarefa/anexo/remover/${id}`);
             this.backlogeditado.anexos = this.backlogeditado.anexos.filter(anexo => anexo.id !== id)
         },
 
@@ -524,7 +524,7 @@ export default {
             //         console.error(error);
             //     });
 
-            api.get('/usuario/', {
+            api.get('usuario/', {
             })
                 .then((response) => {
                     this.gerente = response.data
@@ -548,7 +548,7 @@ export default {
         },
 
         getBacklogs() {
-            api.get(`/planoAcao/buscar/${this.idProjeto}`)
+            api.get(`planoAcao/buscar/${this.idProjeto}`)
                 .then((response) => {
                     this.sprints = response.data;
 
@@ -582,7 +582,7 @@ export default {
 
             if (status == 'Em andamento') {
 
-                api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
+                api.put(`planoAcaoTarefa/atualizar/${idBacklog}`, {
                     usuario_id: this.idUsuario,
                     dtInicioReal: data
                 })
@@ -593,7 +593,7 @@ export default {
 
             } if (status == 'Concluído') {
 
-                api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
+                api.put(`planoAcaoTarefa/atualizar/${idBacklog}`, {
                     usuario_id: this.idUsuario,
                     dtFimReal: data
 
@@ -604,7 +604,7 @@ export default {
 
             } if (status == 'Pendente') {
 
-                api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
+                api.put(`planoAcaoTarefa/atualizar/${idBacklog}`, {
                     usuario_id: this.idUsuario,
                     dtInicioReal: null,
                     dtFimReal: null
@@ -629,7 +629,7 @@ export default {
 
         editarBacklog(itemAlterado, idBacklog, novoValor) {
 
-            api.put(`/planoAcaoTarefa/atualizar/${idBacklog}`, {
+            api.put(`planoAcaoTarefa/atualizar/${idBacklog}`, {
                 usuario_id: this.idUsuario,
                 [itemAlterado]: novoValor
             })
@@ -689,7 +689,7 @@ export default {
 
             if (this.somenteBacklogs().length !== 0) {
 
-                api.post(`/planoAcaoTarefa/cadastrar`, {
+                api.post(`planoAcaoTarefa/cadastrar`, {
 
                     planoAcao_id: id,
                     codigo: 'Tarefa - ' + (parseInt((this.somenteBacklogs()[0].codigo).match(/\d+$/)[0]) + 1),
@@ -720,7 +720,7 @@ export default {
                         console.error(error);
                     });
             } else {
-                api.post(`/planoAcaoTarefa/cadastrar`, {
+                api.post(`planoAcaoTarefa/cadastrar`, {
 
                     planoAcao_id: id,
                     codigo: 'Tarefa - 1',
@@ -739,7 +739,7 @@ export default {
 
         apagarBacklog(idBacklog) {
 
-            api.put(`/planoAcaoTarefa/excluir/${idBacklog}`, {
+            api.put(`planoAcaoTarefa/excluir/${idBacklog}`, {
                 usuario_id: this.idUsuario
             })
                 .then(() => {
