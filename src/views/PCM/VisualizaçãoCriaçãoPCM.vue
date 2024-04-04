@@ -1,6 +1,6 @@
 <template>
-    <br />
-    <br /><br />
+    <br/>
+    <br/><br />
     <div
         style="width: 100%;margin-top: 1rem;justify-content: space-between;display: flex;margin-bottom: none;border-bottom: 2px solid rgb(0, 0, 0);align-items: center;position: fixed;background-color: #faf9f6;z-index: 1;">
         <i @click="verPCMs" style="font-size: 30px; margin-left: 3rem; cursor: pointer"

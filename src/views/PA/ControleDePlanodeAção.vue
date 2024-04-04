@@ -228,7 +228,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn button-cancel" @click="fecharModalExcluirPlano">Cancelar</button>
                     &nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" @click="excluirPlano"
+                    <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary" @click="excluirPlano"
                         data-bs-dismiss="modal">Confirmar</button>
                 </div>
             </div>
@@ -311,7 +311,7 @@
     <!-- MODAL NOVO PLANO DE AÇÃO -->
 
     <div style="overflow: auto" class="modal-mask" v-if="modalNovoPA" @click="fecharModalFora">
-        <div style="max-height: 80%; width: 70%; padding: 3rem; " class="modal-container">
+        <div style="max-height: 80%; max-width: 900px ;width: 70%; padding: 3rem;" class="modal-container">
             <div>
                 <div style="display: flex; justify-content: space-between">
                     <h3 class="titulo">Cadastrar Plano de Ação </h3>
@@ -353,7 +353,7 @@
 
 
                 </div>
-                <div class="form-group" style="width: 30rem;">
+                <div class="form-group" style="width: 20rem;">
                     <label for="programa">Programa</label>
                     <select id="programa" v-model="novoPlanoAcao.programa_id" class="form-select">
                         <option v-for="item in programas" :key="item.id" :value="item.id">
@@ -363,7 +363,7 @@
                 </div>
 
                 <div style="display: flex; justify-content: right;">
-                    <button @click="adicionarPlanoAcao" style="height: 2.5rem;"
+                    <button @click="adicionarPlanoAcao" style="height: 2.5rem; background-color: #F89E31; border: none;"
                         class="btn btn-primary float-right mr-2">Salvar</button>
                 </div>
             </div>

@@ -114,7 +114,7 @@
     </div>
     <!-- modal novo projeto -->
     <div style="overflow: auto" class="modal-mask" v-if="modalNovoProjeto" @click="fecharModalFora">
-        <div style="max-height: 80%; max-width: 900px ;width: 70%; padding: 3rem; " class="modal-container">
+        <div style="max-height: 80%; max-width: 900px ;width: 70%; padding: 3rem;" class="modal-container">
             <div>
                 <div style="display: flex; justify-content: space-between">
                     <h3 class="titulo">Cadastrar Projeto </h3>
@@ -167,7 +167,7 @@
                 </div>
 
                 <div style="display: flex; justify-content: right;">
-                    <button style="height: 2.5rem;" class="btn btn-primary float-right mr-2"
+                    <button style="height: 2.5rem; background-color: #F89E31; border: none;" class="btn btn-primary float-right mr-2"
                         @click="adicionarProjeto">Salvar</button>
                 </div>
             </div>

@@ -147,7 +147,7 @@
                     <button type="button" class="btn button-cancel"
                         @click="fecharModalExcluirPrograma">Cancelar</button>
                     &nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" @click="excluirPrograma"
+                    <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary" @click="excluirPrograma"
                         data-bs-dismiss="modal">Confirmar</button>
                 </div>
             </div>
@@ -277,7 +277,7 @@
     <!-- MODAL NOVO PROGRAMA -->
 
     <div style="overflow: auto" class="modal-mask" v-if="modalNovoPrograma" @click="fecharModalFora">
-        <div style="max-height: 80%; width: 70%; padding: 3rem; " class="modal-container">
+        <div style="max-height: 80%; max-width: 900px ;width: 70%; padding: 3rem;" class="modal-container">
             <div>
                 <div style="display: flex; justify-content: space-between">
                     <h3 class="titulo">Cadastrar Programa </h3>
@@ -313,7 +313,7 @@
                     </div>
                 </div>
                 <div style="display: flex; justify-content: right;">
-                    <button @click="adicionarPrograma" style="height: 2.5rem;"
+                    <button @click="adicionarPrograma" style="height: 2.5rem; background-color: #F89E31; border: none;"
                         class="btn btn-primary float-right mr-2">Salvar</button>
                 </div>
             </div>
