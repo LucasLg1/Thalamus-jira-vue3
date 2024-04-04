@@ -43,7 +43,8 @@
                                 @mouseover="mostrarBotao(item.id, true)" @click="programasAssociados(item.id)"
                                 @mouseleave="mostrarBotao(item.id, false)">
                                 <td style="vertical-align: middle;">{{ item.nome }}</td>
-                                <td style="vertical-align: middle;"><select v-model="item.status" class="form-select"
+                                <td style="vertical-align: middle; display: flex; align-items: center; justify-content: center; border: none">
+                                    <select v-model="item.status" class="form-select"
                                         :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', }"
                                         style="width: 10rem; outline: none; text-align: center; border: none; background-color: transparent; "
                                         @click.stop @change="editarProgramaInline(item.id, 'status', item.status)">
@@ -53,13 +54,18 @@
                                         <option style="color: rgb(0, 192, 0);">Concluído</option>
                                     </select></td>
                                 <td style="vertical-align: middle;">
-                                    <input v-if="item.dtInicio" style="text-align: center;" type="date"
-                                        :value="formatarDataHora(item.dtInicio)" disabled>
+
+                                        {{ item.dtInicio ?
+                                `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
+                                : '' }}
+
                                 </td>
                                 <td style="vertical-align: middle;">
-                                    <input v-if="item.dtFim" style="text-align: center;" type="date"
-                                        :value="formatarDataHora(item.dtFim)" disabled>
-                                    <strong v-if="!item.dtFim">-</strong>
+
+                                    {{ item.dtTermino ?
+                                `${formatarDataHora(item.dtTermino).split('-')[2]}/${formatarDataHora(item.dtTermino).split('-')[1]}/${formatarDataHora(item.dtTermino).split('-')[0]}`
+                                : '-' }}
+
                                 </td>
                                 <td style="vertical-align: middle;">{{ item.gerente_nome }}</td>
                                 <td style="vertical-align: middle;">
@@ -80,7 +86,7 @@
                                                     @click="modalFinalizarPrograma = true, this.programaEditado = item">
                                                     Finalizar
                                                 </v-list-item>
-                                                <v-list-item :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                                <v-list-item :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" style="color: red;"
                                                     @click="modalExcluirPrograma = true, this.programaEditado = item">
                                                     Excluir
                                                 </v-list-item>
@@ -631,6 +637,10 @@ export default {
 </script>
 
 <style scoped>
+.botaoAdicionarSprint:hover {
+    transition: 50ms linear;
+    transform: scale(1.1);
+}
 input:disabled{
     color:black
 }

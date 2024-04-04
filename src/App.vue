@@ -104,8 +104,6 @@ nav a.router-link-exact-active {
     margin-top: 0px;
 }
 
-
-
 .footer {
     position: absolute;
     z-index: 3;
@@ -122,19 +120,19 @@ nav a.router-link-exact-active {
     cursor: pointer;
 }
 
-.button-default:hover {
+/* .button-default:hover {
     background-color: var(--botao-hover) !important;
-}
+} */
 
-.btn-primary {
+/* .btn-primary {
     background-color: var(--botao) !important;
     margin: 6px 0 !important;
     border: none !important;
-}
+} */
 
-.btn-primary:hover {
+/* .btn-primary:hover {
     background-color: var(--botao-hover) !important;
-}
+} */
 
 .button-cadastrar {
     background-color: var(--botao) !important;

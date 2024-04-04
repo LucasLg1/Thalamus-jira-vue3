@@ -3,7 +3,7 @@
     <div
         style="width: 100%;margin-top: 1rem; justify-content: space-between; display: flex; margin-bottom: none; border-bottom: 2px solid rgb(0, 0, 0); align-items: center; position: fixed; background-color: #FAF9F6; z-index: 1;">
         
-        <i @click="verProjetos" style="font-size: 30px; margin-left: 2cap; cursor: pointer;"
+        <i @click="verProjetos" style="font-size: 30px; margin-left: 2rem; cursor: pointer;"
             class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela de projetos'"></i>
 
         <i @click="verProjetos" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome"
@@ -1162,6 +1162,9 @@ export default {
 </script>
 
 <style scoped>
+.fa-solid {
+    margin-left: 3rem;
+}
 
 @media (max-width: 1800px) {
     .container {

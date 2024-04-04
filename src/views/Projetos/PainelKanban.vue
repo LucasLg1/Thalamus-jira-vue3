@@ -3,7 +3,7 @@
     <div
         style="width: 100%; margin-top: 1rem; justify-content: space-between; display: flex; margin-bottom: none; border-bottom: 2px solid rgb(0, 0, 0); align-items: center; position: fixed; background-color: #FAF9F6; z-index: 1;">
 
-        <i @click="verBacklogs" style="font-size: 30px; margin-left: 3rem; cursor: pointer;"
+        <i @click="verBacklogs" style="font-size: 30px; margin-left: 2rem; cursor: pointer;"
             class="fa-solid bi bi-list-task botaoAdicionarSprint" :title="'Ir para tela de sprints'"></i>
 
         <i @click="verBacklogs" class="bi bi-list-task botaoAdicionarSprint botaoHome"
@@ -13,7 +13,7 @@
         <i @click="verPainel" style="font-size: 30px; margin-right: 3rem; cursor: pointer; visibility: hidden;"
             class="bi bi-kanban botaoAdicionarSprint"></i>
     </div>
-    <br>
+    <br><br><br><br>
     <div style="width: 100%; justify-content: center; align-content: center; display: flex;">
         <div class="container" style="margin-top: 0px !important; padding-top: 0px !important;">
 
@@ -381,48 +381,30 @@ export default {
 .fa-solid {
     margin-left: 3rem;
 }
+
 @media (max-width: 1800px) {
     .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
+        margin-left: 12rem ;
+        max-width: 1100px ;
     }
 
     .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
+    margin-left: 200px !important;
 }
-@media (max-width: 1800px) {
+}
 
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 13rem !important;
-        cursor: pointer;
-        position: absolute;
-        display: none !important
-    }
+@media (max-width: 1800px) {
 
     .conteudoKanban {
         max-width: 1250px;
         margin-left: 6rem;
     }
 
-    .container {
-        margin-left: 13.5rem !important;
-    }
-
-    .fa-solid {
-        margin-left: 13.5rem !important;
-    }
-
-
 }
 
 .botaoHome {
     font-size: 30px !important;
-    margin-left: 250px !important;
+    margin-left: 200px !important;
     cursor: pointer !important;
     position: absolute !important;
 }

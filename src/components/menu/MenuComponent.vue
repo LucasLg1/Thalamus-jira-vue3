@@ -1,7 +1,7 @@
 <template>
     <div class="menu " id="menu">
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="color: white; ">
-            <a class="navbar-brand" @click="logo">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="color: white;">
+            <a class="navbar-brand" @click="logo" style="margin-left: 1rem">
                 <img src="https://roboflex.com.br/wp-content/uploads/2023/05/logotipo-roboflex.png" alt="Logo"
                     style="width: 75%; ">
             </a>
@@ -257,7 +257,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .navbar-nav {
     display: flex;
     justify-content: center;
@@ -325,15 +325,16 @@ navbar {
 }
 
 .menu-block.active {
-    background-color: #f8f9fa;
+    background-color: #f8f9fa4f;
 }
 
 .menu-block {
     background-color: #6c757d;
+    text-align: center;
 }
 
 .menu-block:hover {
-    background-color: #f8f9fa;
+    background-color: #f8f9fa4f;
 }
 
 .content {
@@ -377,9 +378,9 @@ submenu a {
     text-decoration: none;
 }
 
-.submenu-link:hover {
+/* .submenu-link:hover {
     color: rgb(131, 131, 131) !important;
-}
+} */
 
 .icons {
     display: flex;

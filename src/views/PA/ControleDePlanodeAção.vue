@@ -751,6 +751,10 @@ export default {
 </script>
 
 <style scoped>
+.botaoAdicionarSprint:hover {
+    transition: 50ms linear;
+    transform: scale(1.1);
+}
 input:disabled {
     color: black
 }

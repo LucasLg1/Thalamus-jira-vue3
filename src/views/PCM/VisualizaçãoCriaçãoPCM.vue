@@ -1,14 +1,18 @@
 <template>
     <br />
     <br /><br />
-    <div style="width: 100%;margin-top: 1rem;justify-content: space-between;display: flex;margin-bottom: none;border-bottom: 2px solid rgb(0, 0, 0);align-items: center;position: fixed;background-color: #faf9f6;z-index: 1;">
-        <i @click="verPCMs" style="font-size: 30px; margin-left: 3rem; cursor: pointer" class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela inicial'"></i>
-    
-        <i @click="verPCMs" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome" :title="'Ir para tela de inicial'"></i>
+    <div
+        style="width: 100%;margin-top: 1rem;justify-content: space-between;display: flex;margin-bottom: none;border-bottom: 2px solid rgb(0, 0, 0);align-items: center;position: fixed;background-color: #faf9f6;z-index: 1;">
+        <i @click="verPCMs" style="font-size: 30px; margin-left: 3rem; cursor: pointer"
+            class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela inicial'"></i>
+
+        <i @click="verPCMs" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome"
+            :title="'Ir para tela de inicial'"></i>
         <h2>
             <input type="text" v-model="codigo" @change="atualizarPCM('codigo', codigo)" style="text-align: center" />
         </h2>
-        <i style="font-size: 30px; margin-right: 3rem; cursor: pointer; visibility: hidden" class="bi bi-kanban botaoAdicionarSprint" :title="'Ir para painel KanBan'"></i>
+        <i style="font-size: 30px; margin-right: 3rem; cursor: pointer; visibility: hidden"
+            class="bi bi-kanban botaoAdicionarSprint" :title="'Ir para painel KanBan'"></i>
     </div>
     <br /><br /><br />
     <div class="container" style="padding: 2rem 0rem 0rem 0rem">
@@ -19,62 +23,81 @@
             <div style=" display: flex; align-content: center; justify-content: center; margin-left: 5rem;">
                 <div style=" display: flex; align-items: center; width: fit-content; flex-flow: column;">
                     <strong>
-                              <br />
-                              Finalidade
-                              <br />
-                            </strong>
-                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem" v-model="finalidade" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @change="atualizarPCM('finalidade', finalidade)">
-                              <option>Criação</option>
-                              <option>Mudança</option>
-                            </select>
+                        <br />
+                        Finalidade
+                        <br />
+                    </strong>
+                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem" v-model="finalidade"
+                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        @change="atualizarPCM('finalidade', finalidade)">
+                        <option>Criação</option>
+                        <option>Mudança</option>
+                    </select>
                 </div>
-                <div style=" display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
+                <div
+                    style=" display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
                     <strong>
-                              <br />
-                              Área
-                              <br />
-                            </strong>
-                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center;" v-model="area" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @change="atualizarPCM('area', area)">
-                              <option>Processo</option>
-                              <option>Produto</option>
-                            </select>
+                        <br />
+                        Área
+                        <br />
+                    </strong>
+                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center;"
+                        v-model="area" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        @change="atualizarPCM('area', area)">
+                        <option>Processo</option>
+                        <option>Produto</option>
+                    </select>
                 </div>
-                <div style=" display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column; text-align: center">
+                <div
+                    style=" display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column; text-align: center">
                     <strong style="width: 15rem; text-align: center">
-                              Setor para encaminhamento da demanda
-                            </strong>
-                    <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center;" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @change="atualizarPCM('setor_id', setor_id)" v-model="setor_id">
-                              <option v-for="setor in setores" :key="setor.id" :value="setor.id">
-                                {{ setor.nome }}
-                              </option>
-                            </select>
+                        Setor para encaminhamento da demanda
+                    </strong>
+                    <select class="form-select"
+                        style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center;"
+                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        @change="atualizarPCM('setor_id', setor_id)" v-model="setor_id">
+                        <option v-for="setor in setores" :key="setor.id" :value="setor.id">
+                            {{ setor.nome }}
+                        </option>
+                    </select>
                 </div>
-                <div style=" display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
+                <div
+                    style=" display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
                     <strong>
-                              <br />
-                              Data de abertura
-                              <br />
-                            </strong>
-                    <input v-model="dtInicio" type="date" class="form-control" style="margin-top: 0.5rem; text-align: center" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @focusout="atualizarPCM('dtInicio', dtInicio)" />
+                        <br />
+                        Data de abertura
+                        <br />
+                    </strong>
+                    <input v-model="dtInicio" type="date" class="form-control"
+                        style="margin-top: 0.5rem; text-align: center"
+                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        @focusout="atualizarPCM('dtInicio', dtInicio)" />
                 </div>
             </div>
-    
+
             <div class="input-group" style="margin-top: 1rem">
                 <span class="input-group-text"><b>Descrição do Problema:</b> </span>
-                <textarea class="form-control" v-model="descricao_problema" style="height: 8rem" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @focusout="atualizarPCM('descricao_problema', descricao_problema)"></textarea>
+                <textarea class="form-control" v-model="descricao_problema" style="height: 8rem"
+                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                    @focusout="atualizarPCM('descricao_problema', descricao_problema)"></textarea>
             </div>
             <div class="input-group" style="margin-top: 1rem">
                 <span class="input-group-text" style="width: 13rem"><b>Possível solução: </b>
-                          </span>
-                <textarea class="form-control" v-model="possivel_solucao" style="height: 6rem" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @focusout="atualizarPCM('possivel_solucao', possivel_solucao)"></textarea>
+                </span>
+                <textarea class="form-control" v-model="possivel_solucao" style="height: 6rem"
+                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                    @focusout="atualizarPCM('possivel_solucao', possivel_solucao)"></textarea>
             </div>
             <div class="input-group" style="margin-top: 1rem">
                 <span class="input-group-text" style="width: 13rem"><b>Propósito da mudança:</b>
-                          </span>
-                <textarea class="form-control" v-model="proposito_mudanca" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @focusout="atualizarPCM('proposito_mudanca', proposito_mudanca)">
+                </span>
+                <textarea class="form-control" v-model="proposito_mudanca"
+                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                    @focusout="atualizarPCM('proposito_mudanca', proposito_mudanca)">
                         </textarea>
             </div>
-    
+
             <div style="
                           display: flex;
                           align-content: center;
@@ -83,28 +106,35 @@
                         ">
                 <div style="display: flex; align-items: center; flex-flow: column">
                     <strong>Data limite de implementação</strong>
-                    <input v-model="dtLimiteImplementacao" @change="atualizarPCM('dtLimiteImplementacao', dtLimiteImplementacao)" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" type="date" class="form-control" style="width: 9rem; margin-left: 0.5rem; margin-top: 0.5rem; text-align: center"
-                    />
+                    <input v-model="dtLimiteImplementacao"
+                        @change="atualizarPCM('dtLimiteImplementacao', dtLimiteImplementacao)"
+                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" type="date"
+                        class="form-control"
+                        style="width: 9rem; margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" />
                 </div>
                 <div style="display: flex; align-items: center; margin-left: 1rem; flex-flow: column">
                     <strong>Responsável pela solicitação</strong>
-                    <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" v-model="solicitante_id" @change="atualizarPCM('solicitante_id', solicitante_id)">
-                              <option v-for="item in usuarios" :key="item.id" :value="item.id">
-                                {{ nomeEsobrenome(item.nomeCompleto) }}
-                              </option>
-                            </select>
+                    <select class="form-select"
+                        style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
+                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        v-model="solicitante_id" @change="atualizarPCM('solicitante_id', solicitante_id)">
+                        <option v-for="item in usuarios" :key="item.id" :value="item.id">
+                            {{ nomeEsobrenome(item.nomeCompleto) }}
+                        </option>
+                    </select>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="container" style="padding: 2rem 0rem 0rem 0rem">
         <div style="text-align: center">
             <h5><b>Área do Responsável</b></h5>
         </div>
         <div style="border: 1px black solid; padding: 20px; border-radius: 20px">
             <div>
-                <div style=" border: 1px solid black; padding-bottom: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                <div
+                    style=" border: 1px solid black; padding-bottom: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                     <table class="table">
                         <thead>
                             <tr>
@@ -124,23 +154,33 @@
                                         {{ item.descricao }}
                                     </div>
                                 </td>
-    
+
                                 <td style="border: 1px solid black; vertical-align: middle">
                                     <div style="display: flex" v-if="item !== 'Estimativa de Custo da Mudança'">
-                                        <input type="radio" class="btn-check" :name="'options' + index" :id="'optionSim' + index" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" autocomplete="off" v-model="item.concordo" @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
+                                        <input type="radio" class="btn-check" :name="'options' + index"
+                                            :id="'optionSim' + index"
+                                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                            autocomplete="off" v-model="item.concordo"
+                                            @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
                                             value="1" />
                                         <label class="btn" :for="'optionSim' + index">Sim</label>
-                                        <input type="radio" class="btn-check" :name="'options' + index" :id="'optionNão' + index" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" autocomplete="off" v-model="item.concordo" @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
+                                        <input type="radio" class="btn-check" :name="'options' + index"
+                                            :id="'optionNão' + index"
+                                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                            autocomplete="off" v-model="item.concordo"
+                                            @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
                                             value="0" />
                                         <label class="btn" :for="'optionNão' + index">Não</label>
                                     </div>
                                 </td>
-    
+
                                 <td style="border: 1px solid black; border-right: none">
-                                    <textarea class="form-control" v-model="item.justificativa" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"></textarea>
+                                    <textarea class="form-control" v-model="item.justificativa"
+                                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                        @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"></textarea>
                                 </td>
                             </tr>
-    
+
                             <tr>
                                 <th style="
                                     border: 1px solid black;
@@ -152,100 +192,134 @@
                                 <td style="border: 1px solid black; vertical-align: middle">
                                     <div>Estimativa de Custo da Mudança</div>
                                 </td>
-    
+
                                 <td style="border: 1px solid black; vertical-align: middle">
                                     <strong>
-                                        <money3 
-                                        v-model="estimativa_custo" 
-                                        :disabled="permissãoCusto" 
-                                        v-bind="config" 
-                                        style="width: 8rem; border: none; outline: none">
+                                        <money3 v-model="estimativa_custo"
+                                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                            @focusout="atualizarPCM('estimativa_custo', estimativa_custo)"
+                                            v-bind="config" style="width: 8rem; border: none; outline: none">
                                         </money3>
                                     </strong>
-    
+
                                 </td>
-    
+
                                 <td style="border: 1px solid black; border-right: none">
-                                    <textarea v-model="custo_justificativa" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @change="atualizarPCM('custo_justificativa', custo_justificativa)" class="form-control"></textarea>
+                                    <textarea v-model="custo_justificativa"
+                                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                        @change="atualizarPCM('custo_justificativa', custo_justificativa)"
+                                        class="form-control"></textarea>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-    
+
                     <div style="display: flex; align-content: center; justify-content: center">
                         <div style="display: flex;align-items: center;width: fit-content;flex-flow: column;">
                             <strong> Parecer do Responsável </strong>
-                            <select v-model="parecer_responsavel" class="form-select" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3" @change="atualizarPCM('parecer_responsavel', parecer_responsavel)" style="margin-left: 0.5rem; margin-top: 0.5rem"
-                                :style="{
-                        color: parecer_responsavel == 'Proposta viável' ? 'green' : 'red',
-                      }">
-                                  <option style="color: green">Proposta viável</option>
-                                  <option style="color: red">Proposta inviável</option>
-                                </select>
+                            <select v-model="parecer_responsavel" class="form-select"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
+                                @change="atualizarPCM('parecer_responsavel', parecer_responsavel)"
+                                style="margin-left: 0.5rem; margin-top: 0.5rem" :style="{
+                color: parecer_responsavel == 'Proposta viável' ? 'green' : 'red',
+            }">
+                                <option style="color: green">Proposta viável</option>
+                                <option style="color: red">Proposta inviável</option>
+                            </select>
                         </div>
-                        <div style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
+                        <div
+                            style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
                             <strong> Nome </strong>
-                            <select class="form-select" style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3" v-model="responsavel_id" @change="atualizarPCM('responsavel_id', responsavel_id)">
-                                  <option v-for="item in usuarios" :key="item.id" :value="item.id">
+                            <select class="form-select" style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
+                                v-model="responsavel_id" @change="atualizarPCM('responsavel_id', responsavel_id)">
+                                <option v-for="item in usuarios" :key="item.id" :value="item.id">
                                     {{ nomeEsobrenome(item.nomeCompleto) }}
-                                  </option>
-                                </select>
+                                </option>
+                            </select>
                         </div>
                     </div>
-    
+
                     <div class="input-group" style="margin-top: 1rem; padding-inline: 10px">
                         <span class="input-group-text" style="width: 13rem"><b>Justificativa:</b>
-                              </span>
-                        <textarea v-model="responsavel_justificativa" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3" @focusout="
-                        atualizarPCM('responsavel_justificativa', responsavel_justificativa)
-                        " class="form-control"></textarea>
+                        </span>
+                        <textarea v-model="responsavel_justificativa"
+                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3" @focusout="
+                atualizarPCM('responsavel_justificativa', responsavel_justificativa)
+                " class="form-control"></textarea>
                     </div>
                 </div>
-    
+
                 <div style="border: 1px solid black;padding: 5px;border-radius: 10px;margin-top: 1rem;">
                     <div style="display: flex; align-content: center; justify-content: center">
                         <div style="display: flex; align-items: center; width: 10rem; flex-flow: column">
                             <strong> Meio da mudança </strong>
-                            <select v-model="meio_mudanca" @change="atualizarPCM('meio_mudanca', meio_mudanca)" class="form-select" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" style="margin-top: 0.5rem">
-                                  <option>Plano de Ação</option>
-                                  <option>Projeto</option>
-                                </select>
+                            <select v-model="meio_mudanca" @change="atualizarPCM('meio_mudanca', meio_mudanca)"
+                                class="form-select"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                style="margin-top: 0.5rem">
+                                <option>Plano de Ação</option>
+                                <option>Projeto</option>
+                            </select>
                         </div>
-                        <div style="  display: flex;  align-items: center;  width: fit-content;  margin-left: 2rem;  flex-flow: column;">
+                        <div
+                            style="  display: flex;  align-items: center;  width: fit-content;  margin-left: 2rem;  flex-flow: column;">
                             <strong> Necessidade de Cadastro no Omie? </strong>
                             <div style="display: flex; margin-top: 0.5rem">
-                                <input type="radio" class="btn-check" name="cadastroOmie" id="omieSim" autocomplete="off" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" v-model="cadastro_omie" @change="atualizarPCM('cadastro_omie', cadastro_omie)" value="1"
-                                />
+                                <input type="radio" class="btn-check" name="cadastroOmie" id="omieSim"
+                                    autocomplete="off"
+                                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                    v-model="cadastro_omie" @change="atualizarPCM('cadastro_omie', cadastro_omie)"
+                                    value="1" />
                                 <label class="btn" for="omieSim">Sim</label>
-    
-                                <input type="radio" class="btn-check" name="cadastroOmie" id="omieNão" autocomplete="off" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" v-model="cadastro_omie" @change="atualizarPCM('cadastro_omie', cadastro_omie)" value="0"
-                                />
+
+                                <input type="radio" class="btn-check" name="cadastroOmie" id="omieNão"
+                                    autocomplete="off"
+                                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                    v-model="cadastro_omie" @change="atualizarPCM('cadastro_omie', cadastro_omie)"
+                                    value="0" />
                                 <label class="btn" for="omieNão">Não</label>
                             </div>
                         </div>
                     </div>
-    
-                    <div v-if="cadastro_omie == '1'" style="display: flex;align-content: center;justify-content: center;margin-top: 1rem;">
+
+                    <div v-if="cadastro_omie == '1'"
+                        style="display: flex;align-content: center;justify-content: center;margin-top: 1rem;">
                         <div style="display: flex;align-items: center;margin-left: 1rem;flex-flow: column;">
                             <strong>Responsável pelo cadastro no sistema</strong>
-                            <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" v-model="responsavelCadastro_id" @change="atualizarPCM('responsavelCadastro_id', responsavelCadastro_id)">
-                                  <option v-for="item in usuarios" :key="item.id" :value="item.id">
+                            <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                v-model="responsavelCadastro_id"
+                                @change="atualizarPCM('responsavelCadastro_id', responsavelCadastro_id)">
+                                <option v-for="item in usuarios" :key="item.id" :value="item.id">
                                     {{ nomeEsobrenome(item.nomeCompleto) }}
-                                  </option>
-                                </select>
+                                </option>
+                            </select>
                         </div>
-                        <div style=" display: flex; align-items: center; width: fit-content;  margin-left: 1rem;  flex-flow: column; ">
+                        <div
+                            style=" display: flex; align-items: center; width: fit-content;  margin-left: 1rem;  flex-flow: column; ">
                             <strong> Data </strong>
-                            <input type="date" class="form-control" style="width: 9rem; margin-left: 0.5rem" v-model="dtCadastro" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" @change="atualizarPCM('dtCadastro', dtCadastro)" />
+                            <input type="date" class="form-control" style="width: 9rem; margin-left: 0.5rem"
+                                v-model="dtCadastro"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                @change="atualizarPCM('dtCadastro', dtCadastro)" />
                         </div>
-                        <div style="  display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
+                        <div
+                            style="  display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
                             <strong>Código</strong>
-                            <input type="text" v-model="codigo_cadastro" @change="atualizarPCM('codigo_cadastro', codigo_cadastro)" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" class="form-control" style="width: 10rem; margin-left: 0.5rem" />
+                            <input type="text" v-model="codigo_cadastro"
+                                @change="atualizarPCM('codigo_cadastro', codigo_cadastro)"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                class="form-control" style="width: 10rem; margin-left: 0.5rem" />
                         </div>
-    
-                        <div style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
+
+                        <div
+                            style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
                             <strong>Nome</strong>
-                            <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text" class="form-control" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" style="width: 10rem; margin-left: 0.5rem" />
+                            <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text"
+                                class="form-control"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                style="width: 10rem; margin-left: 0.5rem" />
                         </div>
                     </div>
                 </div>
@@ -354,28 +428,28 @@ export default {
 
         atualizarPCM(itemEditado, valor) {
             api.put(`/pcm/atualizar/${this.idPCM}`, {
-                    [itemEditado]: valor,
-                })
-                .then(() => {})
+                [itemEditado]: valor,
+            })
+                .then(() => { })
                 .catch((error) => {
                     console.error(error);
                 });
         },
 
         getSetores() {
-            // api.get(`/usuario`, {
+            api.get(`/usuario`, {
 
-            //     })
-            //     .then((response) => {
-            //         this.usuarios = response.data;
-            //         this.usuarios = this.usuarios.map((item) => ({
-            //             id: item.id,
-            //             nomeCompleto: item.name,
-            //         }));
-            //     })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     });
+            })
+                .then((response) => {
+                    this.usuarios = response.data;
+                    this.usuarios = this.usuarios.map((item) => ({
+                        id: item.id,
+                        nomeCompleto: item.name,
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
 
             // api.get('/setor')
             //     .then(response => {
@@ -387,7 +461,7 @@ export default {
 
             api.get(`/setor`, {
 
-                })
+            })
                 .then((response) => {
                     this.setores = response.data
                 })
@@ -444,6 +518,7 @@ export default {
         margin-left: 13rem;
         max-width: 1100px;
     }
+
     .botaoHome {
         margin-left: 200px !important;
     }

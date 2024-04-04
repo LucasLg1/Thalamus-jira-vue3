@@ -582,7 +582,7 @@ export default {
             //         console.error(error);
             //     });
 
-            api.get('/usuario/', {
+            api.get('usuario/', {
             })
                 .then((response) => {
                     this.gerente = response.data
@@ -606,7 +606,7 @@ export default {
         },
 
         getBacklogs() {
-            api.get(`/buscar/${this.idProjeto}`, {})
+            api.get(`sprint/buscar/${this.idProjeto}`, {})
                 .then((response) => {
                     function compararSprints(a, b) {
                         if (a.nome === "Backlogs") {
@@ -640,7 +640,7 @@ export default {
 
             if (status == 'Em andamento') {
 
-                api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                     dtInicioReal: data,
                 })
                     .then(() => {
@@ -649,7 +649,7 @@ export default {
 
             } if (status == 'Concluído') {
 
-                api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                     dtFimReal: data,
                 })
                     .then(() => {
@@ -658,7 +658,7 @@ export default {
 
             } if (status == 'Pendente') {
 
-                api.put(`/sprintTarefa/atualizar/${idBacklog}`, {
+                api.put(`sprintTarefa/atualizar/${idBacklog}`, {
                     dtInicioReal: null,
                     dtFimReal: null,
                 })

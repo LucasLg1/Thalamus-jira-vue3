@@ -337,47 +337,27 @@ export default {
 
 @media (max-width: 1800px) {
     .container {
-        margin-left: 12rem !important;
-        max-width: 1100px !important;
+        margin-left: 12rem ;
+        max-width: 1100px ;
     }
 
     .botaoHome {
-        font-size: 30px;
-        margin-left: 6rem !important;
-        cursor: pointer;
-        position: absolute;
-    }
+    margin-left: 200px !important;
+}
 }
 
 @media (max-width: 1800px) {
-
-    .botaoHome {
-        font-size: 30px;
-        margin-left: 13rem !important;
-        cursor: pointer;
-        position: absolute;
-        display: none !important
-    }
 
     .conteudoKanban {
         max-width: 1250px;
         margin-left: 6rem;
     }
 
-    .container {
-        margin-left: 13.5rem !important;
-    }
-
-    .fa-solid {
-        margin-left: 13.5rem !important;
-    }
-
-
 }
 
 .botaoHome {
     font-size: 30px !important;
-    margin-left: 250px !important;
+    margin-left: 200px !important;
     cursor: pointer !important;
     position: absolute !important;
 }
