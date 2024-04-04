@@ -57,7 +57,7 @@
                                     <select v-model="item.status" class="form-select"
                                         :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
                                         :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', 'cursor': (item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : '' }"
-                                        style="width: 10rem; outline: none; text-align: center; border: none; background-color: transparent; "
+                                        style="width: 8rem; outline: none; text-align: center; border: none; background-color: transparent; "
                                         @click.stop @change="editarPlanoInline(item.id, 'status', item.status)">
                                         <option style="color: red;">Proposto</option>
                                         <option style="color: rgb(255, 145, 0);">Pendente</option>
