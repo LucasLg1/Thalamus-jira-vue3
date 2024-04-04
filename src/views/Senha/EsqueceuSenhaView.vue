@@ -31,6 +31,7 @@
             <label style="text-align: center; color: rgb(116, 112, 112);">Você receberá um código token por e-mail para cadastrar uma nova senha</label>
         </div>
     </div>
+    <br><br>
 </template>
 
 <script>

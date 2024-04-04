@@ -1,4 +1,6 @@
-<template>    <div class="container">
+<template>
+<br><br>    
+<div class="container">
         <div class="d-flex row justify-content-center">
             <div class="">
                 <h2 class="titulo" style="text-align: center;">Alterar empresa</h2>
