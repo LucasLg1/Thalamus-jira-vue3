@@ -1,7 +1,7 @@
 <template>
     <br><br><br>
     <div
-    style="width: 100%; margin-top: 1rem; justify-content: space-between; display: flex; margin-bottom: none; border-bottom: 2px solid rgb(0, 0, 0); align-items: center; position: fixed; background-color: #FAF9F6; z-index: 1;">
+        style="width: 100%; margin-top: 1rem; justify-content: space-between; display: flex; margin-bottom: none; border-bottom: 2px solid rgb(0, 0, 0); align-items: center; position: fixed; background-color: #FAF9F6; z-index: 1;">
         <i @click="verBacklogs" style="font-size: 30px; margin-left: 2rem; cursor: pointer;"
             class=" fa-solid bi bi-list-task botaoAdicionarSprint" :title="'Ir para tela de sprints'"></i>
 
@@ -20,118 +20,116 @@
                     você.
                 </h6>
             </div>
-                <div style="display: flex; flex-flow: row; justify-content: center;">
-                    <div class="colunas">
-                        <h3 style="text-align: center;">Pendente</h3>
-                        <draggableVue class="list-group bloco" :list="backlogsPendentes" group="backlogs"
-                            itemKey="codigo">
-                            <template #item="{ element }">
-                                <div class="list-group-item card">
-                                    <label>
-                                        <div style="margin-bottom: 1rem;">
-                                            <b style="font-size: 22px;">
-                                                {{ element.codigo }} <br>
-                                            </b>
-                                            <b>
-                                                {{ element.nomeSprint }}
-                                            </b>
+            <div style="display: flex; flex-flow: row; justify-content: center;">
+                <div class="colunas">
+                    <h3 style="text-align: center;">Pendente</h3>
+                    <draggableVue class="list-group bloco" :list="backlogsPendentes" group="backlogs" itemKey="codigo">
+                        <template #item="{ element }">
+                            <div class="list-group-item card">
+                                <label>
+                                    <div style="margin-bottom: 1rem;">
+                                        <b style="font-size: 22px;">
+                                            {{ element.codigo }} <br>
+                                        </b>
+                                        <b>
+                                            {{ element.nomeSprint }}
+                                        </b>
 
-                                            <i style="color: rgb(255, 145, 0); font-size: 20px; position: absolute; top: 0; right: 0; margin-right: 0.5rem;"
-                                                class="bi bi-stop-circle-fill"></i><br>
+                                        <i style="color: rgb(255, 145, 0); font-size: 20px; position: absolute; top: 0; right: 0; margin-right: 0.5rem;"
+                                            class="bi bi-stop-circle-fill"></i><br>
 
-                                        </div>
+                                    </div>
 
-                                        <b> Fim previsto: </b> <input style="outline: none;" type="date"
-                                            v-model="element.dtFim" disabled><br><b>Responsável:</b>
-                                        {{ element.responsavel }}
-                                        <br>
-                                        <b>Descrição: </b>
-                                        <textarea cols="40" v-model="element.descricao" readonly
-                                            style="cursor: auto; width: 100%; height: fit-content;"></textarea>
-
-                                    </label>
+                                    <b> Fim previsto: </b> <input style="outline: none;" type="date"
+                                        v-model="element.dtFim" disabled><br><b>Responsável:</b>
+                                    {{ element.responsavel }}
                                     <br>
-                                </div>
-                            </template>
-                        </draggableVue>
-                    </div>
-                    <div class="colunas">
-                        <h3 style="text-align: center;">Em andamento</h3>
-                        <draggableVue class="list-group bloco" :list="backlogsEmAndamento" group="backlogs"
-                            itemKey="codigo">
+                                    <b>Descrição: </b>
+                                    <textarea cols="40" v-model="element.descricao" readonly
+                                        style="cursor: auto; width: 100%; height: fit-content;"></textarea>
 
-                            <template #item="{ element }">
-                                <div class="list-group-item card">
+                                </label>
+                                <br>
+                            </div>
+                        </template>
+                    </draggableVue>
+                </div>
+                <div class="colunas">
+                    <h3 style="text-align: center;">Em andamento</h3>
+                    <draggableVue class="list-group bloco" :list="backlogsEmAndamento" group="backlogs"
+                        itemKey="codigo">
 
-                                    <label>
-                                        <div style="margin-bottom: 1rem;">
-                                            <b style="font-size: 22px;">
-                                                {{ element.codigo }} <br>
-                                            </b>
-                                            <b>
-                                                {{ element.nomeSprint }}
-                                            </b>
+                        <template #item="{ element }">
+                            <div class="list-group-item card">
+
+                                <label>
+                                    <div style="margin-bottom: 1rem;">
+                                        <b style="font-size: 22px;">
+                                            {{ element.codigo }} <br>
+                                        </b>
+                                        <b>
+                                            {{ element.nomeSprint }}
+                                        </b>
 
 
-                                            <i style="color: rgb(0, 47, 255); font-size: 20px; position: absolute; top: 0; right: 0; margin-right: 0.5rem;"
-                                                class="bi bi-fast-forward-circle-fill"></i><br>
+                                        <i style="color: rgb(0, 47, 255); font-size: 20px; position: absolute; top: 0; right: 0; margin-right: 0.5rem;"
+                                            class="bi bi-fast-forward-circle-fill"></i><br>
 
-                                        </div>
+                                    </div>
 
-                                        <b>Fim previsto: </b><input style="outline: none;" type="date"
-                                            v-model="element.dtFim" disabled><br><b>Responsável:</b>
-                                        {{ element.responsavel }}
-                                        <br>
-                                        <b>Descrição: </b>
-                                        <textarea cols="40" v-model="element.descricao" readonly
-                                            style="cursor: auto; width: 100%; height: fit-content;"></textarea>
-
-                                    </label>
+                                    <b>Fim previsto: </b><input style="outline: none;" type="date"
+                                        v-model="element.dtFim" disabled><br><b>Responsável:</b>
+                                    {{ element.responsavel }}
                                     <br>
-                                </div>
-                            </template>
-                        </draggableVue>
-                    </div>
+                                    <b>Descrição: </b>
+                                    <textarea cols="40" v-model="element.descricao" readonly
+                                        style="cursor: auto; width: 100%; height: fit-content;"></textarea>
 
-                    <div class="colunas">
-                        <h3 style="text-align: center;">Concluído</h3>
-                        <draggableVue class="list-group bloco" :list="backlogsConcluidos" group="backlogs"
-                            itemKey="codigo">
+                                </label>
+                                <br>
+                            </div>
+                        </template>
+                    </draggableVue>
+                </div>
 
-                            <template #item="{ element }">
-                                <div class="list-group-item card">
+                <div class="colunas">
+                    <h3 style="text-align: center;">Concluído</h3>
+                    <draggableVue class="list-group bloco" :list="backlogsConcluidos" group="backlogs" itemKey="codigo">
 
-                                    <label>
-                                        <div style="margin-bottom: 1rem;">
-                                            <b style="font-size: 22px;">
-                                                {{ element.codigo }} <br>
-                                            </b>
-                                            <b>
-                                                {{ element.nomeSprint }}
-                                            </b>
-                                            <i style="color: rgb(0, 255, 0); font-size: 20px; position: absolute; top: 0; right: 0; margin-right: 0.5rem;"
-                                                class="bi bi-check-circle-fill"></i><br>
+                        <template #item="{ element }">
+                            <div class="list-group-item card">
 
-                                        </div>
+                                <label>
+                                    <div style="margin-bottom: 1rem;">
+                                        <b style="font-size: 22px;">
+                                            {{ element.codigo }} <br>
+                                        </b>
+                                        <b>
+                                            {{ element.nomeSprint }}
+                                        </b>
+                                        <i style="color: rgb(0, 255, 0); font-size: 20px; position: absolute; top: 0; right: 0; margin-right: 0.5rem;"
+                                            class="bi bi-check-circle-fill"></i><br>
 
-                                        <b>Fim previsto:</b> <input style="outline: none;" type="date"
-                                            v-model="element.dtFim" disabled><br><b>Responsável:</b>
-                                        {{ element.responsavel }}
-                                        <br>
-                                        <b>Descrição: </b>
-                                        <textarea cols="40" v-model="element.descricao" readonly
-                                            style="cursor: auto; width: 100%; height: fit-content;"></textarea>
-                                    </label>
+                                    </div>
+
+                                    <b>Fim previsto:</b> <input style="outline: none;" type="date"
+                                        v-model="element.dtFim" disabled><br><b>Responsável:</b>
+                                    {{ element.responsavel }}
                                     <br>
-                                </div>
-                            </template>
-                        </draggableVue>
-                    </div>
+                                    <b>Descrição: </b>
+                                    <textarea cols="40" v-model="element.descricao" readonly
+                                        style="cursor: auto; width: 100%; height: fit-content;"></textarea>
+                                </label>
+                                <br>
+                            </div>
+                        </template>
+                    </draggableVue>
                 </div>
             </div>
-            <br><br>
         </div>
-        <br><br><br><br><br>
+        <br><br>
+    </div>
+    <br><br><br><br><br>
 </template>
 
 <script>
@@ -337,27 +335,23 @@ export default {
 
 @media (max-width: 1800px) {
     .container {
-        margin-left: 12rem ;
-        max-width: 1100px ;
+        margin-left: 12rem;
+        max-width: 1100px;
     }
 
     .botaoHome {
-    margin-left: 200px !important;
-}
-}
-
-@media (max-width: 1800px) {
+        margin-left: 200px !important;
+    }
 
     .conteudoKanban {
         max-width: 1250px;
         margin-left: 6rem;
     }
-
 }
 
 .botaoHome {
     font-size: 30px !important;
-    margin-left: 200px !important;
+    margin-left: 250px;
     cursor: pointer !important;
     position: absolute !important;
 }

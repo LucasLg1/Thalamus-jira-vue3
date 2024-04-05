@@ -7,7 +7,7 @@
 
         <i @click="verProjetos" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome"
             :title="'Ir para tela de projetos'"></i>
-            
+
         <h2 style="margin-left: 5rem;">{{ nomeDoProjeto }}</h2>
         <i @click="verPainel" style="font-size: 30px; margin-right: 3rem; cursor: pointer;"
             class="bi bi-kanban botaoAdicionarSprint" :title="'Ir para painel KanBan'"></i>
@@ -18,7 +18,7 @@
         <!-- TABELA 1 -->
         <h3 style="text-align: center; margin-top: 1rem;">
             Backlogs</h3>
-        <div v-for="(item, index) in  sprints " :key="item" class="divPaiTabela">
+        <div v-for="(item, index) in sprints " :key="item" class="divPaiTabela">
             <div class="divFundoTabela">
                 <div class="row">
                     <div style="width: 20%;">
@@ -26,13 +26,13 @@
                             <h5>
                                 <span style="display: flex;">
                                     <div style="background-color: rgba(255, 145, 0, 0.600)" class="hPoints">{{
-            somarHP(item)[0] }}
+                                        somarHP(item)[0] }}
                                     </div>
                                     <div style="background-color: rgba(0, 47, 255, 0.600)" class="hPoints">{{
-            somarHP(item)[1] }}
+                                        somarHP(item)[1] }}
                                     </div>
                                     <div style="background-color: rgba(0, 255, 0, 0.600)" class="hPoints">{{
-            somarHP(item)[2] }}
+                                        somarHP(item)[2] }}
                                     </div>
                                 </span>
                             </h5>
@@ -84,14 +84,17 @@
                             </template>
 
                             <v-list>
-                                <v-list-item>
-                                    <button style="margin: 0.2rem; color: grey; cursor: not-allowed;"
-                                        @click="abrirModalIniciarSprint(item.id)" disabled>{{
-            item.dtTermino == null ? 'Iniciar Sprint' : 'Finalizar Sprint' }}
-                                    </button><br />
-                                    <button style="margin: 0.2rem; color: grey; cursor: not-allowed;"
-                                        @click="abrirModalIniciarSprint(item.id)" disabled>Editar Sprint
-                                    </button><br />
+                                <v-list-item style="margin: 0.2rem; color: grey; cursor: not-allowed;"
+                                        @click="abrirModalIniciarSprint(item.id)" disabled>
+                                    {{ item.dtTermino == null ? 'Iniciar Sprint' : 'Finalizar Sprint' }}
+                                    <br/>
+                                    </v-list-item>
+                                    <v-list-item style="margin: 0.2rem; color: grey; cursor: not-allowed;"
+                                        @click="abrirModalIniciarSprint(item.id)" disabled>
+                                    Editar Sprint
+                                    <br/>
+                                    </v-list-item>
+                                    <v-list-item>
                                     <v-menu>
 
                                         <template v-slot:activator="{ props }">
@@ -108,7 +111,7 @@
                                                         serão excluídos.</p>
                                                     <div style="display: flex; width: 100%;">
                                                         <Button @click="apagarSprint(item.id)"
-                                                            style="border: 1px solid black; width: 50%; background-color: red; color: white;">Excluir</Button>
+                                                            style="border: 1px solid black; width: 50%; background-color: red; color: red;">Excluir</Button>
                                                         <button
                                                             style="border: 1px solid black; width: 50%; margin-left: 0.5rem; background-color: green; color: white;">Cancelar</button>
                                                     </div>
@@ -140,8 +143,7 @@
 
                         <div style="width: 3rem; text-align: center;">
                             <strong>
-                                <select
-                                    style="text-align: center; padding-left: 0.2rem; padding-right: 0.2rem;"
+                                <select style="text-align: center; padding-left: 0.2rem; padding-right: 0.2rem;"
                                     disabled>
                                     <option selected>H.P.</option>
                                 </select>
@@ -194,8 +196,8 @@
                             </div>
 
                             <div style="width: 30%; padding-left: 0.5rem; padding-right: 1rem">
-                                <input :disabled="desativarEdicao" :title="element.descricao" type="text" v-model="element.descricao"
-                                    style="width:100%; outline: none; cursor: help;">
+                                <input :disabled="desativarEdicao" :title="element.descricao" type="text"
+                                    v-model="element.descricao" style="width:100%; outline: none; cursor: help;">
                             </div>
 
                             <div style="width: 3rem; text-align: center">
@@ -222,7 +224,7 @@
                                 <select v-model="element.responsavel_id" class="form-select" disabled
                                     @change="editarBacklog('responsavel_id', element.id, element.responsavel_id)"
                                     style="width: 100%; outline: none; text-align: left; padding: 0.5rem; border: none; background-color: transparent; cursor: not-allowed;">
-                                    <option v-for=" item  in  gerente " :key="item.id" :value="item.id">
+                                    <option v-for=" item in gerente " :key="item.id" :value="item.id">
                                         {{ nomeEsobrenome(item.nomeCompleto) }}
                                     </option>
                                 </select>
@@ -266,10 +268,10 @@
 
                                     <v-list>
                                         <v-list-item style="margin: 0.2rem;"
-                                                    @click="abrirModalEditarBacklog(element.id, item.id, false)">
-                                                Editar Tarefa
-                                            </v-list-item>
-                                            <v-list-item>
+                                            @click="abrirModalEditarBacklog(element.id, item.id, false)">
+                                            Editar Tarefa
+                                        </v-list-item>
+                                        <v-list-item>
                                             <v-menu>
 
                                                 <template v-slot:activator="{ props }">
@@ -365,7 +367,7 @@
                     <h2>
                         {{ backlogeditado.codigo }}
                     </h2>
-                    <textarea class="form-control" v-model="backlogeditado.descricao" style="width: 25rem;"
+                    <textarea disabled  class="form-control" v-model="backlogeditado.descricao" style="width: 25rem;"
                         @focusout="editarBacklog('descricao', backlogeditado.id, backlogeditado.descricao)"></textarea>
                 </div>
                 <div style="width: min-content;margin-top: 1rem;">
@@ -373,10 +375,10 @@
                         Responsável:
                     </h4>
 
-                    <select v-model="backlogeditado.responsavel_id" class="form-select"
+                    <select disabled v-model="backlogeditado.responsavel_id" class="form-select"
                         @change="editarBacklog('responsavel_id', backlogeditado.id, backlogeditado.responsavel_id)"
                         style="width: 20rem; text-align: left; border: 1px solid; border-radius: 5px; font-size: larger; ">
-                        <option v-for=" item  in  gerente " :key="item.id" :value="item.id">
+                        <option v-for=" item in gerente " :key="item.id" :value="item.id">
                             {{ item.nomeCompleto }}
                         </option>
                     </select>
@@ -386,13 +388,13 @@
             <div style="display: flex; margin-top: 1rem;">
                 <div>
                     <label>Inicio Previsto:</label>
-                    <input v-model="backlogeditado.dtInicio" class="form-control" type="date"
+                    <input  v-model="backlogeditado.dtInicio" class="form-control" type="date"
                         style="width: min-content;"
                         @change="editarBacklog('dtInicio', backlogeditado.id, backlogeditado.dtInicio)">
                 </div>
                 <div style="margin-left: 1rem;">
                     <label>Fim Previsto:</label>
-                    <input v-model="backlogeditado.dtFim" class="form-control" type="date" style="width: min-content;"
+                    <input  v-model="backlogeditado.dtFim" class="form-control" type="date" style="width: min-content;"
                         @change="editarBacklog('dtFim', backlogeditado.id, backlogeditado.dtFim)">
                 </div>
             </div>
@@ -400,13 +402,13 @@
             <div style="display: flex; margin-top: 1rem;">
                 <div>
                     <label>Inicio Real:</label>
-                    <input v-model="backlogeditado.dtInicioReal" class="form-control" type="date"
+                    <input disabled v-model="backlogeditado.dtInicioReal" class="form-control" type="date"
                         @change="editarBacklog('dtInicioReal', backlogeditado.id, backlogeditado.dtInicioReal)"
                         style="width: min-content;">
                 </div>
                 <div style="margin-left: 1rem;">
                     <label>Fim Real:</label>
-                    <input v-model="backlogeditado.dtFimReal" class="form-control" type="date"
+                    <input disabled v-model="backlogeditado.dtFimReal" class="form-control" type="date"
                         style="width: min-content;"
                         @change="editarBacklog('dtFimReal', backlogeditado.id, backlogeditado.dtFimReal)">
                 </div>
@@ -678,11 +680,13 @@ export default {
 
             this.backlogeditado = sprint.backlogs.find(backlog => backlog.id === idBacklog);
         },
-
         editarBacklog(itemAlterado, idBacklog, novoValor) {
 
+            // axios.put(`http://192.168.0.5:8000/api/sprintTarefa/atualizar/${idBacklog}`, {
             api.put(`sprintTarefa/atualizar/${idBacklog}`, {
-                [itemAlterado]: novoValor,
+
+                usuario_id: this.idUsuario,
+                [itemAlterado]: novoValor
             })
                 .then(() => {
                     if (itemAlterado == 'status') {
@@ -923,24 +927,23 @@ export default {
 </script>
 
 <style scoped>
-
 @media (max-width: 1800px) {
     .container {
-        margin-left: 12rem ;
-        max-width: 1100px ;
+        margin-left: 12rem;
+        max-width: 1100px;
     }
 
     .botaoHome {
-    margin-left: 200px !important;
-}
+        margin-left: 200px !important;
+    }
 
 }
 
 .botaoHome {
-    font-size: 30px ;
+    font-size: 30px;
     margin-left: 250px;
-    cursor: pointer ;
-    position: absolute ;
+    cursor: pointer;
+    position: absolute;
 }
 
 .hPoints {

@@ -17,11 +17,27 @@
                     <div style="width: 100%;">
                         <h3 style="text-align: center; margin: 0;">Propostas de Criação ou Mudança</h3>
                     </div>
-                    <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM"
+                    <!-- <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM"
                         v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1"
                         class="botaoAdicionarSprint">
                         <i class="bi bi-plus-circle"></i>
-                    </button>
+                    </button> -->
+                    <v-menu v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1">
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                style="width: max-content; font-size: 20px; height: fit-content ;background-color: transparent; box-shadow: none"
+                                class="botaoAdicionarSprint" icon="bi bi-plus-circle" v-bind="props"></v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item @click="novoPCM">
+                                Novo documento
+                            </v-list-item>
+                            <v-list-item @click="''">
+                                Cancelar
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </div>
             </div>
 
@@ -59,8 +75,8 @@
                                 <td style="text-align: center; vertical-align: middle;">
 
                                     {{ item.dtInicio ?
-            `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
-            : '' }}
+                                        `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
+                                        : '' }}
 
                                 </td>
 
@@ -171,16 +187,21 @@ export default {
         },
 
         novoPCM() {
-            var PCMsOrdenados = this.PCMs.sort((a, b) => {
-                if (a.codigo < b.codigo) {
-                    return 1; // retorna 1 para indicar que a deve vir depois de b
-                } else if (a.codigo > b.codigo) {
-                    return -1; // retorna -1 para indicar que a deve vir antes de b
-                } else {
-                    return 0; // retorna 0 se os valores são iguais
-                }
-            });
-            var novoCodigo = parseInt(PCMsOrdenados[0].codigo.substring(3));
+            var novoCodigo = 'Aguardando Importação!';
+            // if (this.PCMs.length > 0) {
+            //     var PCMsOrdenados = this.PCMs.sort((a, b) => {
+            //         if (a.codigo < b.codigo) {
+            //             return 1; // retorna 1 para indicar que a deve vir depois de b
+            //         } else if (a.codigo > b.codigo) {
+            //             return -1; // retorna -1 para indicar que a deve vir antes de b
+            //         } else {
+            //             return 0; // retorna 0 se os valores são iguais
+            //         }
+            //     });
+            //      novoCodigo = parseInt(PCMsOrdenados[0].codigo.substring(3));
+            // } else {
+            //      novoCodigo = 240252;
+            // }
 
             api.post(`pcm/cadastrar`, {
 
@@ -257,6 +278,7 @@ export default {
     transition: 50ms linear;
     transform: scale(1.1);
 }
+
 .fa-solid {
     margin-left: 0rem !important;
 }

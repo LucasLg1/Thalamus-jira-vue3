@@ -384,27 +384,24 @@ export default {
 
 @media (max-width: 1800px) {
     .container {
-        margin-left: 12rem ;
-        max-width: 1100px ;
+        margin-left: 12rem;
+        max-width: 1100px;
     }
 
     .botaoHome {
-    margin-left: 200px !important;
-}
-}
-
-@media (max-width: 1800px) {
+        margin-left: 200px !important;
+    }
 
     .conteudoKanban {
         max-width: 1250px;
         margin-left: 6rem;
     }
-
 }
+
 
 .botaoHome {
     font-size: 30px !important;
-    margin-left: 200px !important;
+    margin-left: 250px;
     cursor: pointer !important;
     position: absolute !important;
 }
