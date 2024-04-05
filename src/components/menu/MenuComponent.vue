@@ -16,8 +16,9 @@
                 <div>
                     <div class="navbar-nav ml-auto">
                         <b-nav-item-dropdown right style="color: white;">
-                            <template v-slot:button-content><i style="color: white;"
-                                    class="fa-solid fa-circle-user"></i>
+                            <template v-slot:button-content>
+                                <!-- <img :src="'http://192.168.0.5:8000/storage/pessoa_img/lucasLima.jpg'" class="cropped1"> -->
+                                <i style="color: white;" class="fa-solid fa-circle-user"></i>
                                 <span class="username" style="color: white;">&nbsp; Olá, {{ userName }}</span>
                             </template>
                             <b-dropdown-item style="color: black" @click="configuracoesUsuario()">
@@ -258,6 +259,16 @@ export default {
 </script>
 
 <style>
+.cropped1 {
+    width: 35px;
+    /* width of container */
+    height: 35px;
+    /* height of container */
+    object-fit: cover;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
 .navbar-nav {
     display: flex;
     justify-content: center;
