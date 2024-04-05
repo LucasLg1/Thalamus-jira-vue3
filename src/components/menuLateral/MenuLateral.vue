@@ -10,13 +10,13 @@
                                 <span style="text-decoration: none; color: rgb(255, 255, 255);">Programas</span>
                             </div>
                             <div class="categorias1"  @click="verPCM">
-                                <span style="text-decoration: none; color: rgb(255, 255, 255);">PCM</span>
+                                <span style="text-decoration: none; color: rgb(255, 255, 255);">PCMs</span>
                             </div>
                             <div class="categorias1" @click="verProjetos">
                                 <span style="text-decoration: none; color: rgb(255, 255, 255);">Projetos</span>
                             </div>
                             <div class="categorias1" @click="verPA">
-                                <span style="text-decoration: none; color: rgb(255, 255, 255);">Plano de Ação</span>
+                                <span style="text-decoration: none; color: rgb(255, 255, 255);">Planos de Ação</span>
                             </div>
                     </div>
                 </div>
