@@ -109,6 +109,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <!-- {{ permissoes }} -->
                 </div>
             </div>
         </div>
@@ -200,7 +201,7 @@ export default {
             //     });
             //      novoCodigo = parseInt(PCMsOrdenados[0].codigo.substring(3));
             // } else {
-            //      novoCodigo = 240252;
+            //      novoCodigo = 'ERRO';
             // }
 
             api.post(`pcm/cadastrar`, {
@@ -208,7 +209,8 @@ export default {
                 codigo: `PCM${novoCodigo + 1}`,
                 dtInicio: new Date().toISOString().split('T')[0],
                 impacto_viabilidade: [],
-                status: 'Aguardando Aprovação'
+                status: 'Aguardando Aprovação',
+                usuario_id: this.idUsuario
             })
                 .then((response) => {
                     this.verPCM(response.data.id)

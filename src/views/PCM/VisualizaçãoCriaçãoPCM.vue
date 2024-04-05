@@ -1,6 +1,6 @@
 <template>
-    <br/>
-    <br/><br />
+    <br />
+    <br /><br />
     <div
         style="width: 100%;margin-top: 1rem;justify-content: space-between;display: flex;margin-bottom: none;border-bottom: 2px solid rgb(0, 0, 0);align-items: center;position: fixed;background-color: #faf9f6;z-index: 1;">
         <i @click="verPCMs" style="font-size: 30px; margin-left: 3rem; cursor: pointer"
@@ -27,7 +27,8 @@
                         Finalidade
                         <br />
                     </strong>
-                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" v-model="finalidade"
+                    <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center"
+                        v-model="finalidade"
                         :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                         @change="atualizarPCM('finalidade', finalidade)">
                         <option>Criação</option>
@@ -221,8 +222,8 @@
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
                                 @change="atualizarPCM('parecer_responsavel', parecer_responsavel)"
                                 style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" :style="{
-                color: parecer_responsavel == 'Proposta viável' ? 'green' : 'red',
-            }">
+                                    color: parecer_responsavel == 'Proposta viável' ? 'green' : 'red',
+                                }">
                                 <option style="color: green">Proposta viável</option>
                                 <option style="color: red">Proposta inviável</option>
                             </select>
@@ -230,7 +231,8 @@
                         <div
                             style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
                             <strong> Nome </strong>
-                            <select class="form-select" style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem; text-align: center"
+                            <select class="form-select"
+                                style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem; text-align: center"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
                                 v-model="responsavel_id" @change="atualizarPCM('responsavel_id', responsavel_id)">
                                 <option v-for="item in usuarios" :key="item.id" :value="item.id">
@@ -245,8 +247,8 @@
                         </span>
                         <textarea v-model="responsavel_justificativa"
                             :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3" @focusout="
-                atualizarPCM('responsavel_justificativa', responsavel_justificativa)
-                " class="form-control"></textarea>
+                                atualizarPCM('responsavel_justificativa', responsavel_justificativa)
+                                " class="form-control"></textarea>
                     </div>
                 </div>
 
@@ -260,6 +262,17 @@
                                 style="margin-top: 0.5rem;text-align: center">
                                 <option>Plano de Ação</option>
                                 <option>Projeto</option>
+                            </select>
+                        </div>
+                        <div
+                            style="display: flex; align-items: center; width: 15rem; flex-flow: column; margin-left: 2rem;">
+                            <strong>Plano de ação associado </strong>
+                            <select class="form-select"
+                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                style="margin-top: 0.5rem;text-align: center">
+                                <option>Thalamus</option>
+                                <option>Catraca</option>
+                                <option>Binboca</option>
                             </select>
                         </div>
                         <div
@@ -283,11 +296,11 @@
                         </div>
                     </div>
 
-                    <div v-if="cadastro_omie == '1'"
-                        style="display: flex;align-content: center;justify-content: center;margin-top: 1rem;">
+                    <div style="display: flex;align-content: center;justify-content: center;margin-top: 1rem;">
                         <div style="display: flex;align-items: center;margin-left: 1rem;flex-flow: column;">
                             <strong>Responsável pelo cadastro no sistema</strong>
-                            <select class="form-select" style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
+                            <select class="form-select"
+                                style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                 v-model="responsavelCadastro_id"
                                 @change="atualizarPCM('responsavelCadastro_id', responsavelCadastro_id)">
@@ -299,18 +312,17 @@
                         <div
                             style=" display: flex; align-items: center; width: fit-content;  margin-left: 1rem;  flex-flow: column; ">
                             <strong> Data </strong>
-                            <input type="date" class="form-control" style="width: 9rem; margin-left: 0.5rem; text-align: center"
-                                v-model="dtCadastro"
+                            <input type="date" class="form-control"
+                                style="width: 9rem; margin-left: 0.5rem; text-align: center" v-model="dtCadastro"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                                 @change="atualizarPCM('dtCadastro', dtCadastro)" />
                         </div>
                         <div
                             style="  display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
                             <strong>Código</strong>
-                            <input type="text" v-model="codigo_cadastro"
-                                @change="atualizarPCM('codigo_cadastro', codigo_cadastro)"
+                            <input type="text" v-model="codigo" @change="atualizarPCM('codigo', codigo)"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
-                                class="form-control" style="width: 10rem; margin-left: 0.5rem; text-align: center" />
+                                class="form-control" style="width: 15rem; margin-left: 0.5rem; text-align: center" />
                         </div>
 
                         <div
@@ -319,7 +331,7 @@
                             <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text"
                                 class="form-control"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
-                                style="width: 10rem; margin-left: 0.5rem; text-align: center" />
+                                style="width: 15rem; margin-left: 0.5rem; text-align: center" />
                         </div>
                     </div>
                 </div>
@@ -428,9 +440,9 @@ export default {
 
         atualizarPCM(itemEditado, valor) {
             api.put(`pcm/atualizar/${this.idPCM}`, {
-                    [itemEditado]: valor,
-                })
-                .then(() => {})
+                [itemEditado]: valor,
+            })
+                .then(() => { })
                 .catch((error) => {
                     console.error(error);
                 });
@@ -439,7 +451,7 @@ export default {
         getSetores() {
             api.get(`usuario`, {
 
-                })
+            })
                 .then((response) => {
                     this.usuarios = response.data;
                     this.usuarios = this.usuarios.map((item) => ({

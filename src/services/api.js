@@ -1,68 +1,67 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:  process.env.VUE_APP_ROOT_API,
+  baseURL: process.env.VUE_APP_ROOT_API,
   devURL: process.env.VUE_APP_ROOT_DEV,
 });
 
+let permissoes
 
-const permissoes = [
-  {
-    "usuario_id": 12,
-    "nivel": 1,
-    "nome": "Alessandro José Ribeiro da Silveira"
-  },
-  {
-    "usuario_id": 6,
-    "nivel": 1,
-    "nome": "Artur Wilson Dias"
-  },
-  {
-    "usuario_id": 2,
-    "nivel": 1,
-    "nome": "Brenda Larissa Alves Teodoro"
-  },
-  {
-    "usuario_id": 8,
-    "nivel": 1,
-    "nome": "Carlos Alexandre Lourenço Jardim"
-  },
-  {
-    "usuario_id": 7,
-    "nivel": 3,
-    "nome": "Darley Wilson Dias"
-  },
-  {
-    "usuario_id": 14,
-    "nivel": 3,
-    "nome": "Emerson Mozzer"
-  },
-  {
-    "usuario_id": 11,
-    "nivel": 1,
-    "nome": "Fábio Henrique Resende Vieira"
-  },
-  {
-    "usuario_id": 10,
-    "nivel": 1,
-    "nome": "Isabela Resende Lourenço"
-  },
-  {
-    "usuario_id": 13,
-    "nivel": 1,
-    "nome": "Leyrislayne Santos do Nascimento"
-  },
-  {
-    "usuario_id": 4,
-    "nivel": 3,
-    "nome": "Lucas Lima Gonçalves"
-  },
-  {
-    "usuario_id": 3,
-    "nivel": 2,
-    "nome": "Mariana Mozzer Arantes"
-  }
-];
+var promiseAprovadores = api.get('grupo/2/usuarios')
+  .then((response) => {
+    return response.data.map(item => ({
+      "usuario_id": item.id,
+      "nivel": 3,
+      "nome": item.name
+    }));
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+var promiseCriadores = api.get('grupo/3/usuarios')
+  .then((response) => {
+    return response.data.map(item => ({
+      "usuario_id": item.id,
+      "nivel": 2,
+      "nome": item.name
+    }));
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+var promiseLeitores = api.get('grupo/4/usuarios')
+  .then((response) => {
+    return response.data.map(item => ({
+      "usuario_id": item.id,
+      "nivel": 1,
+      "nome": item.name
+    }));
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+
+  Promise.all([promiseAprovadores, promiseCriadores, promiseLeitores])
+  .then(([aprovadores, criadores, leitores]) => {
+    var mergedArray = [...aprovadores, ...criadores, ...leitores];
+    const usuariosMap = {};
+    // Preencha o mapeamento
+    mergedArray.forEach(usuario => {
+        const { usuario_id, nivel } = usuario;
+        if (!(usuario_id in usuariosMap) || nivel > usuariosMap[usuario_id].nivel) {
+            usuariosMap[usuario_id] = usuario;
+        }
+    });
+    // Converta o mapeamento de volta para uma array
+    permissoes = Object.values(usuariosMap);
+    console.log(permissoes)
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 //local de armazenamento das fotos de visitante e colaborador
 export const urlFoto = {
@@ -82,6 +81,5 @@ api.interceptors.request.use(
   }
 );
 
-export { permissoes}
-
 export default api;
+export { permissoes };
