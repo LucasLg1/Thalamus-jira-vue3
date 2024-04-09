@@ -28,12 +28,57 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Nome do Projeto </th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Data de Início</th>
-                                <th scope="col">Data de Termino</th>
-                                <th scope="col">Gerente Responsável</th>
-                                <th scope="col">Setor Beneficiado</th>
+                                <th scope="col">
+                                    <button @click="ordenarLista('nome')">
+                                        Nome do Projeto
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixonome"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimanome"></i>
+                                </th>
+                                <th scope="col">
+                                    <button @click="ordenarLista('status')">
+                                        Status
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixostatus"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimastatus"></i>
+                                </th>
+                                <th scope="col" style="width: 10rem;">
+                                    <button @click="ordenarLista('dtInicio')">
+                                        Data de Início
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixodtInicio"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimadtInicio"></i>
+                                </th>
+                                <th scope="col" style="width: 10rem;">
+                                    <div style="display: flex; align-items: center;">
+                                        <button @click="ordenarLista('dtTermino')">
+                                            Data de Termino
+                                        </button>
+                                        <i class="bi bi-caret-down-fill" style="display: none;"
+                                            id="setaBaixodtTermino"></i>
+                                        <i class="bi bi-caret-up-fill" style="display: none;"
+                                            id="setaCimadtTermino"></i>
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div style="display: flex; align-items: center;">
+                                        <button @click="ordenarLista('gerente')">
+                                            Gerente Responsável
+                                        </button>
+                                        <i class="bi bi-caret-down-fill" style="display: none;"
+                                            id="setaBaixogerente"></i>
+                                        <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimagerente"></i>
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div style="display: flex; align-items: center;">
+                                        <button @click="ordenarLista('setor')">
+                                            Setor Beneficiado
+                                        </button>
+                                        <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixosetor"></i>
+                                        <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimasetor"></i>
+                                    </div>
+                                </th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -54,15 +99,15 @@
                                 <td style="text-align: center; vertical-align: middle; width: 9rem;">
 
                                     {{ item.dtInicio ?
-                                `${item.dtInicio.split('-')[2]}/${item.dtInicio.split('-')[1]}/${item.dtInicio.split('-')[0]}`
-                                : '' }}
+                                        `${item.dtInicio.split('-')[2]}/${item.dtInicio.split('-')[1]}/${item.dtInicio.split('-')[0]}`
+                                        : '' }}
 
                                 </td>
                                 <td style="text-align: center; vertical-align: middle; width: 9rem;">
 
                                     {{ item.dtTermino ?
-                                `${item.dtTermino.split('-')[2]}/${item.dtTermino.split('-')[1]}/${item.dtTermino.split('-')[0]}`
-                                : '-' }}
+                                        `${item.dtTermino.split('-')[2]}/${item.dtTermino.split('-')[1]}/${item.dtTermino.split('-')[0]}`
+                                        : '-' }}
 
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
@@ -167,8 +212,8 @@
                 </div>
 
                 <div style="display: flex; justify-content: right;">
-                    <button style="height: 2.5rem; background-color: #F89E31; border: none;" class="btn btn-primary float-right mr-2"
-                        @click="adicionarProjeto">Salvar</button>
+                    <button style="height: 2.5rem; background-color: #F89E31; border: none;"
+                        class="btn btn-primary float-right mr-2" @click="adicionarProjeto">Salvar</button>
                 </div>
             </div>
         </div>
@@ -178,8 +223,7 @@
 
     <!-- modal editar projeto -->
     <div style="overflow: auto" class="modal-mask" v-if="modalEditarProjeto" @click="fecharModalFora">
-        <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; "
-            class="modal-container">
+        <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem;" class="modal-container">
             <div>
                 <div style="display: flex; justify-content: space-between">
                     <h3 class="titulo">Editar: {{ projetoEditado.nome }} </h3>
@@ -221,7 +265,7 @@
                                 type="file" @change="handleFileUpload">
 
                             <ul style="list-style: none; padding-left: 0rem; overflow: auto; max-height: 8.5rem;">
-                                <li v-for="item in projetoEditado.anexos" :key="item"
+                                <li v-for="item in projetoEditado.anexos" :key="item" 
                                     @mouseover="mostrarBotaoExcluirAnexo(item.id, true)"
                                     @mouseleave="mostrarBotaoExcluirAnexo(item.id, false)">
                                     <div
@@ -230,7 +274,7 @@
                                             class="link">
                                             <i style="font-size: 25px;"
                                                 :class="'bi bi-filetype-' + item.nome.split('.')[1].toLowerCase()"></i>
-                                            {{ item.nome }}
+                                                {{ item.nome }}
                                         </a>
 
                                         <button class="botaoAdicionarSprint" style="color: red; visibility: hidden;"
@@ -263,17 +307,14 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="form-group" style="width: 20rem; margin-left: 2rem;">
-                            <label for="setor">Programa</label>
-                            <select id="setor" class="form-select">
+                        <!-- <div class="form-group" style="width: 20rem; margin-left: 2rem;">
+                            <label for="setor">PCM</label>
+                            <select id="setor" class="form-select" v-model="projetoEditado.pcm_codigo">
                                 <option>
-                                    Nenhum
-                                </option>
-                                <option>
-                                    Ciclo
+                                    {{ projetoEditado.pcm_codigo }}
                                 </option>
                             </select>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -333,7 +374,7 @@
                                 <div style="display: flex; ; align-items: center; padding: 5px; border-radius: 10px; margin-right: 3rem;"
                                     :style="{ 'color': (this.projetoEditado.permissao.map((item) => item.usuario_id)).includes(item.id) ? 'grey' : 'black', 'cursor': (this.projetoEditado.permissao.map((item) => item.usuario_id)).includes(item.id) ? 'not-allowed' : '' }">
                                     {{ item.nomeCompleto }} {{ (this.projetoEditado.permissao.map((item) =>
-                                item.usuario_id)).includes(item.id) ? '(Já adicionado)' : '' }}
+                                        item.usuario_id)).includes(item.id) ? '(Já adicionado)' : '' }}
                                 </div>
                             </li>
                         </ul>
@@ -346,7 +387,7 @@
                             <div
                                 style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%;">
                                 {{ item.nome }} {{ item.usuario_id == projetoEditado.gerente_id ? '(Gerente)' :
-                                item.usuario_id == this.idUsuario ? '(Você)' : '' }}
+                                    item.usuario_id == this.idUsuario ? '(Você)' : '' }}
                                 <select style="width: 7rem; text-align: center;" class="form-select"
                                     v-model="item.nivel" @change="atualizarPermissão(item, 'atualizar')"
                                     :disabled="item.usuario_id == projetoEditado.gerente_id || item.usuario_id == this.idUsuario">
@@ -416,14 +457,14 @@ export default {
             setores: [],
             projetoEditado: null,
             userName: ''
-        
+
         }
     },
 
     mounted() {
         this.getProjetos(),
-            this.getGerenteseSetor()
-        localStorage.removeItem('ultimaSprintEditada'),
+            this.getGerenteseSetor(),
+            localStorage.removeItem('ultimaSprintEditada'),
             sessionStorage.removeItem('ultimaSprintEditada')
 
     },
@@ -434,6 +475,80 @@ export default {
     },
 
     methods: {
+        ordenarLista(itemReferencia) {
+            for (var item of ['nome', 'status', 'dtInicio', 'dtTermino', 'gerente', 'setor']) {
+                if (item !== itemReferencia) {
+                    document.getElementById(`setaBaixo${item}`).style.display = 'none'
+                    document.getElementById(`setaCima${item}`).style.display = 'none'
+                }
+            }
+
+            if (itemReferencia == 'dtInicio' || itemReferencia == 'dtTermino') {
+
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'none') {
+
+                    this.projetos = this.projetos.sort((a, b) => {
+                        const dataInicioA = new Date(a[itemReferencia]);
+                        const dataInicioB = new Date(b[itemReferencia]);
+                        return dataInicioB - dataInicioA;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'inline'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'none'
+                    return
+                }
+
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'inline') {
+
+                    this.projetos = this.projetos.sort((a, b) => {
+                        const dataInicioA = new Date(a[itemReferencia]);
+                        const dataInicioB = new Date(b[itemReferencia]);
+                        return dataInicioA - dataInicioB;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'none'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'inline'
+                    return
+                }
+            } else {
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'none') {
+
+                    this.projetos = this.projetos.sort((a, b) => {
+                        const statusA = a[itemReferencia].toLowerCase();
+                        const statusB = b[itemReferencia].toLowerCase();
+
+                        if (statusA < statusB) {
+                            return -1;
+                        }
+                        if (statusA > statusB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'inline'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'none'
+                    return
+                }
+
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'inline') {
+
+                    this.projetos = this.projetos.sort((a, b) => {
+                        const statusA = a[itemReferencia].toLowerCase();
+                        const statusB = b[itemReferencia].toLowerCase();
+
+                        if (statusA > statusB) {
+                            return -1;
+                        }
+                        if (statusA < statusB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'none'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'inline'
+                    return
+                }
+            }
+
+        },
 
         filtrarProjetos() {
             if (!this.projetoSelecionado) {
@@ -754,6 +869,11 @@ export default {
                 .then((response) => {
                     this.projetos = response.data;
                     this.filtrarProjetos()
+                    
+                    document.getElementById(`setaBaixodtInicio`).style.display = 'none'
+                    document.getElementById(`setaCimadtInicio`).style.display = 'none'
+                    this.ordenarLista('dtInicio')
+
                 })
                 .catch((error) => {
                     console.error(error);
@@ -778,6 +898,7 @@ export default {
     transition: 50ms linear;
     transform: scale(1.1);
 }
+
 input:disabled {
     color: black
 }

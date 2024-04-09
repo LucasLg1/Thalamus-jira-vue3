@@ -63,7 +63,7 @@
                                     {{ item.codigo }}
                                 </td>
 
-                                <td style="text-align: center; vertical-align: middle; width: 15% ;">
+                                <td style="text-align: center; vertical-align: middle; width: 10rem ;">
                                     {{ item.nome }}
                                 </td>
 

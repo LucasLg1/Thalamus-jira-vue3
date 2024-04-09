@@ -36,14 +36,61 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Nome do Plano de Ação </th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Data de Início</th>
-                                <th scope="col">Data de Término</th>
-                                <th scope="col">Gerente Responsável</th>
-                                <th scope="col">Setor Envolvido</th>
+                                <th scope="col">
+                                    <button @click="ordenarLista('nome')">
+                                        Nome do Plano de Ação
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixonome"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimanome"></i>
+                                </th>
+                                <th scope="col">
+                                    <button @click="ordenarLista('status')">
+                                        Status
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixostatus"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimastatus"></i>
+                                </th>
+                                <th scope="col" style="width: 10rem;">
+                                    <button @click="ordenarLista('dtInicio')">
+                                        Data de Início
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixodtInicio"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimadtInicio"></i>
+                                </th>
+                                <th scope="col" style="width: 10rem;">
+                                    <div style="display: flex; align-items: center;">
+                                        <button @click="ordenarLista('dtTermino')">
+                                            Data de Termino
+                                        </button>
+                                        <i class="bi bi-caret-down-fill" style="display: none;"
+                                            id="setaBaixodtTermino"></i>
+                                        <i class="bi bi-caret-up-fill" style="display: none;"
+                                            id="setaCimadtTermino"></i>
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div style="display: flex; align-items: center;">
+                                        <button @click="ordenarLista('gerente_name')">
+                                            Gerente Responsável
+                                        </button>
+                                        <i class="bi bi-caret-down-fill" style="display: none;"
+                                            id="setaBaixogerente_name"></i>
+                                        <i class="bi bi-caret-up-fill" style="display: none;"
+                                            id="setaCimagerente_name"></i>
+                                    </div>
+                                </th>
+                                <th scope="col">
+                                    <div style="display: flex; align-items: center;">
+                                        <button @click="ordenarLista('setor_nome')">
+                                            Setor Envolvido
+                                        </button>
+                                        <i class="bi bi-caret-down-fill" style="display: none;"
+                                            id="setaBaixosetor_nome"></i>
+                                        <i class="bi bi-caret-up-fill" style="display: none;"
+                                            id="setaCimasetor_nome"></i>
+                                    </div>
+                                </th>
                                 <th scope="col"></th>
-
                             </tr>
                         </thead>
 
@@ -57,7 +104,7 @@
                                     <select v-model="item.status" class="form-select"
                                         :disabled="(item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1"
                                         :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', 'cursor': (item.permissao).find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1 ? 'not-allowed' : '' }"
-                                        style="width: 8rem; outline: none; text-align: center; border: none; background-color: transparent; "
+                                        style="width: fit-content; outline: none; text-align: center; border: none; background-color: transparent; "
                                         @click.stop @change="editarPlanoInline(item.id, 'status', item.status)">
                                         <option style="color: red;">Proposto</option>
                                         <option style="color: rgb(255, 145, 0);">Pendente</option>
@@ -68,15 +115,15 @@
                                 <td style="vertical-align: middle;">
 
                                     {{ item.dtInicio ?
-                                `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
-                                : '' }}
+                                        `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
+                                        : '' }}
 
                                 </td>
                                 <td style="vertical-align: middle;">
 
                                     {{ item.dtTermino ?
-                                `${formatarDataHora(item.dtTermino).split('-')[2]}/${formatarDataHora(item.dtTermino).split('-')[1]}/${formatarDataHora(item.dtTermino).split('-')[0]}`
-                                : '-' }}
+                                        `${formatarDataHora(item.dtTermino).split('-')[2]}/${formatarDataHora(item.dtTermino).split('-')[1]}/${formatarDataHora(item.dtTermino).split('-')[0]}`
+                                        : '-' }}
 
                                 </td>
                                 <td style="vertical-align: middle;">{{ nomeEsobrenome(item.gerente_name) }}</td>
@@ -157,7 +204,7 @@
                                 <div style="display: flex; ; align-items: center; padding: 5px; border-radius: 10px; margin-right: 3rem;"
                                     :style="{ 'color': (this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id) ? 'grey' : 'black', 'cursor': (this.planoEditado.permissao.map((item) => item.usuario_id)).includes(item.id) ? 'not-allowed' : '' }">
                                     {{ item.nomeCompleto }} {{ (this.planoEditado.permissao.map((item) =>
-                                item.usuario_id)).includes(item.id) ? '(Já adicionado)' : '' }}
+                                        item.usuario_id)).includes(item.id) ? '(Já adicionado)' : '' }}
                                 </div>
                             </li>
                         </ul>
@@ -172,7 +219,7 @@
                             <div
                                 style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%; margin-top: 0.3rem;">
                                 {{ item.nome }} {{ item.usuario_id == planoEditado.gerente_id ? '(Gerente)' :
-                                item.usuario_id == this.idUsuario ? '(Você)' : '' }}
+                                    item.usuario_id == this.idUsuario ? '(Você)' : '' }}
                                 <select style="width: 7rem; text-align: center;" class="form-select"
                                     v-model="item.nivel" @change="atualizarPermissão(item, 'atualizar')"
                                     :disabled="item.usuario_id == planoEditado.gerente_id || item.usuario_id == this.idUsuario">
@@ -228,8 +275,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn button-cancel" @click="fecharModalExcluirPlano">Cancelar</button>
                     &nbsp;&nbsp;
-                    <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary" @click="excluirPlano"
-                        data-bs-dismiss="modal">Confirmar</button>
+                    <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary"
+                        @click="excluirPlano" data-bs-dismiss="modal">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -294,9 +341,9 @@
 
                         <div class="form-group" style="width: 20rem; margin-left: 2rem;">
                             <label for="setor">Setor Beneficiado</label>
-                            <select v-model="planoEditado.setor_nome" class="form-select"
+                            <select v-model="planoEditado.setor_id" class="form-select"
                                 @change="editarPlano('setor_id', $event.target.value)">
-                                <option v-for="setor in setores" :key="setor.id" :value="setor.nome">{{ setor.nome }}
+                                <option v-for="setor in setores" :key="setor.id" :value="setor.id">{{ setor.nome }}
                                 </option>
                             </select>
                         </div>
@@ -426,6 +473,80 @@ export default {
     },
 
     methods: {
+        ordenarLista(itemReferencia) {
+            for (var item of ['nome', 'status', 'dtInicio', 'dtTermino', 'gerente_name', 'setor_nome']) {
+                if (item !== itemReferencia) {
+                    document.getElementById(`setaBaixo${item}`).style.display = 'none'
+                    document.getElementById(`setaCima${item}`).style.display = 'none'
+                }
+            }
+
+            if (itemReferencia == 'dtInicio' || itemReferencia == 'dtTermino') {
+
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'none') {
+
+                    this.planosAcao = this.planosAcao.sort((a, b) => {
+                        const dataInicioA = new Date(a[itemReferencia]);
+                        const dataInicioB = new Date(b[itemReferencia]);
+                        return dataInicioB - dataInicioA;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'inline'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'none'
+                    return
+                }
+
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'inline') {
+
+                    this.planosAcao = this.planosAcao.sort((a, b) => {
+                        const dataInicioA = new Date(a[itemReferencia]);
+                        const dataInicioB = new Date(b[itemReferencia]);
+                        return dataInicioA - dataInicioB;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'none'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'inline'
+                    return
+                }
+            } else {
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'none') {
+
+                    this.planosAcao = this.planosAcao.sort((a, b) => {
+                        const statusA = a[itemReferencia].toLowerCase();
+                        const statusB = b[itemReferencia].toLowerCase();
+
+                        if (statusA < statusB) {
+                            return -1;
+                        }
+                        if (statusA > statusB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'inline'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'none'
+                    return
+                }
+
+                if (document.getElementById(`setaBaixo${itemReferencia}`).style.display === 'inline') {
+
+                    this.planosAcao = this.planosAcao.sort((a, b) => {
+                        const statusA = a[itemReferencia].toLowerCase();
+                        const statusB = b[itemReferencia].toLowerCase();
+
+                        if (statusA > statusB) {
+                            return -1;
+                        }
+                        if (statusA < statusB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    document.getElementById(`setaBaixo${itemReferencia}`).style.display = 'none'
+                    document.getElementById(`setaCima${itemReferencia}`).style.display = 'inline'
+                    return
+                }
+            }
+
+        },
 
         nomeEsobrenome(nome) {
             const nomeESobrenome = nome.split(" ");
@@ -704,6 +825,9 @@ export default {
                     this.planosAcao = response.data;
                     this.planosAcao = this.planosAcao.filter(item => item.permissao.some(permissao => permissao.usuario_id === parseInt(this.idUsuario)))
                     this.filtrarPlanosdeAção()
+                    document.getElementById(`setaBaixodtInicio`).style.display = 'none'
+                    document.getElementById(`setaCimadtInicio`).style.display = 'none'
+                    this.ordenarLista('dtInicio')
                 })
                 .catch((error) => {
                     console.error(error);
@@ -755,6 +879,7 @@ export default {
     transition: 50ms linear;
     transform: scale(1.1);
 }
+
 input:disabled {
     color: black
 }

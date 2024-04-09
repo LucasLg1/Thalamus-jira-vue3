@@ -266,13 +266,14 @@
                         </div>
                         <div
                             style="display: flex; align-items: center; width: 15rem; flex-flow: column; margin-left: 2rem;">
-                            <strong>Plano de ação associado </strong>
-                            <select class="form-select"
+                            <strong>{{ meio_mudanca == 'Projeto' ? 'Projeto associado' : 'Plano de ação associado'
+                                }}</strong>
+                            <select class="form-select" v-model="planoAcao_ou_Projeto_id"
+                                @change="atualizarPCM(meio_mudanca == 'Projeto' ? 'projeto_id' : 'planoAcao_id', planoAcao_ou_Projeto_id)"
                                 :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
-                                style="margin-top: 0.5rem;text-align: center">
-                                <option>Thalamus</option>
-                                <option>Catraca</option>
-                                <option>Binboca</option>
+                                style="margin-top: 0.5rem;text-align: left">
+                                <option v-for="item in (meio_mudanca == 'Projeto' ? projetosSemPCM : planoDeAcaoSemPCM)"
+                                    :key="item.id" :value="item.id">{{ item.nome }}</option>
                             </select>
                         </div>
                         <div
@@ -353,6 +354,10 @@ export default {
 
     data() {
         return {
+            planoAcao_ou_Projeto_id: null,
+
+            projetosSemPCM: null,
+            planoDeAcaoSemPCM: null,
             idUsuario: localStorage.getItem('id'),
             idPCM: localStorage.getItem("idPCM"),
             permissoes: permissoes,
@@ -408,10 +413,23 @@ export default {
         if (this.permissoes.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1) {
             this.permissaoCusto = true
         }
+        this.getProjetosePlanoSemPCM()
 
     },
 
     methods: {
+        getProjetosePlanoSemPCM() {
+            api.get(`planoacao-projeto/listar/sem-pcm`)
+                .then((response) => {
+                    this.projetosSemPCM = response.data.projeto
+                    this.planoDeAcaoSemPCM = response.data.planoAcao
+                    console.log(response.data)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+
         objetoSemIndiceDescricao(item) {
             if (item) {
                 const { indice, descricao, ...resto } = item;
@@ -510,6 +528,22 @@ export default {
                     this.responsavelCadastro_nome = response.data.responsavelCadastro_nome;
                     this.dtCadastro = response.data.dtCadastro;
                     this.codigo_cadastro = response.data.codigo_cadastro;
+
+                    this.planoAcao_ou_Projeto_id = response.data.id_associacao;
+                    if (response.data.projeto == 1) {
+                        this.projetosSemPCM.push({
+                            "id": response.data.id_associacao, 
+                            "nome": response.data.nome_associacao
+                        })
+                    }
+
+                    if (response.data.projeto == 0) {
+                        this.planoDeAcaoSemPCM.push({
+                            "id": response.data.id_associacao, 
+                            "nome": response.data.nome_associacao
+                        })
+                    }
+
                 })
 
                 .catch((error) => {
