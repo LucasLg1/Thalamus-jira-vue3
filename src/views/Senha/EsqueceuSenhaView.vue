@@ -69,7 +69,6 @@ export default {
                 toaster.show(`Por favor, preencha o e-mail`, { type: "error" });
             }
 
-            //axios.post('http://192.168.0.6:8000/api/enviar-codigo', {
             api.post('enviar-codigo', {
                 email: this.email,
 

@@ -139,7 +139,6 @@ export default {
 
             }
 
-            //axios.post('http://192.168.0.6:8000/api/validar-codigo', { codigo: this.codigo })
             api.post('validar-codigo', { codigo: this.codigo })
                 .then(
                     response => {
@@ -187,7 +186,6 @@ export default {
             if (this.new_password === this.new_password_confirmation) {
                 this.validationState = true
 
-                //axios.post('http://192.168.0.6:8000/api/redefinir-senha', {
                 api.post('redefinir-senha', {
                         codigo: this.codigo,
                         new_password: this.new_password,
