@@ -35,8 +35,11 @@ import VisualizaçãoPlanodeAção from '@/views/PA/VisualizaçãoPlanodeAção.
 //Programas
 import controleProgramas from '@/views/Programas/ControleProgramas'
 import homeGestãoDeProjetos from '../views/Home/HomeGestãoDeProjetos.vue'
-
-
+//Protocolos
+import ControleDeProtocolo from '@/views/Protocolo/controleDeProtocolo.vue'
+import visualizaçãoProtocolo from '@/views/Protocolo/visualizaçãoProtocolo.vue'
+import GestaoDeTarefas from '@/views/Protocolo/gestaoDeTarefas.vue'
+import CriarPCM from '@/views/PCM/CriarPCM.vue'
 
 
 function guardMyroute(to, from, next) {
@@ -112,6 +115,26 @@ function guardMyroute3(to, from, next) {
 
 const routes = [
 
+  //Protocolos
+  {
+    path: '/protocolos',
+    name: 'controleProtocolos',
+    component: ControleDeProtocolo,
+    beforeEnter: guardMyroute,
+  },
+  {
+    path: '/protocolo',
+    name: 'visualizaçãoProtocolo',
+    component: visualizaçãoProtocolo,
+    beforeEnter: guardMyroute,
+  },
+  {
+    path: '/gestaoTarefas',
+    name: 'gestaoTarefas',
+    component: GestaoDeTarefas,
+    beforeEnter: guardMyroute,
+  },
+
   //Login
   {
     path: '/',
@@ -146,7 +169,12 @@ const routes = [
     component: ControlePCM,
     beforeEnter: guardMyroute,
   },
-
+  {
+    path: '/PCM/Criar',
+    name: 'CriarPCM',
+    component: CriarPCM,
+    beforeEnter: guardMyroute,
+  },
 
 
   //Plano de Ação

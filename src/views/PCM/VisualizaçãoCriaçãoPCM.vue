@@ -29,7 +29,7 @@
                     </strong>
                     <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center"
                         v-model="finalidade"
-                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                         @change="atualizarPCM('finalidade', finalidade)">
                         <option>Criação</option>
                         <option>Mudança</option>
@@ -43,7 +43,7 @@
                         <br />
                     </strong>
                     <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center;"
-                        v-model="area" :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        v-model="area" :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                         @change="atualizarPCM('area', area)">
                         <option>Processo</option>
                         <option>Produto</option>
@@ -56,7 +56,7 @@
                     </strong>
                     <select class="form-select"
                         style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center;"
-                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                         @change="atualizarPCM('setor_id', setor_id)" v-model="setor_id">
                         <option v-for="setor in setores" :key="setor.id" :value="setor.id">
                             {{ setor.nome }}
@@ -72,7 +72,7 @@
                     </strong>
                     <input v-model="dtInicio" type="date" class="form-control"
                         style="margin-top: 0.5rem; text-align: center"
-                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                         @focusout="atualizarPCM('dtInicio', dtInicio)" />
                 </div>
             </div>
@@ -80,21 +80,21 @@
             <div class="input-group" style="margin-top: 1rem">
                 <span class="input-group-text"><b>Descrição do Problema:</b> </span>
                 <textarea class="form-control" v-model="descricao_problema" style="height: 8rem"
-                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                     @focusout="atualizarPCM('descricao_problema', descricao_problema)"></textarea>
             </div>
             <div class="input-group" style="margin-top: 1rem">
                 <span class="input-group-text" style="width: 13rem"><b>Possível solução: </b>
                 </span>
                 <textarea class="form-control" v-model="possivel_solucao" style="height: 6rem"
-                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                     @focusout="atualizarPCM('possivel_solucao', possivel_solucao)"></textarea>
             </div>
             <div class="input-group" style="margin-top: 1rem">
                 <span class="input-group-text" style="width: 13rem"><b>Propósito da mudança:</b>
                 </span>
                 <textarea class="form-control" v-model="proposito_mudanca"
-                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                     @focusout="atualizarPCM('proposito_mudanca', proposito_mudanca)">
                         </textarea>
             </div>
@@ -109,7 +109,7 @@
                     <strong>Data limite de implementação</strong>
                     <input v-model="dtLimiteImplementacao"
                         @change="atualizarPCM('dtLimiteImplementacao', dtLimiteImplementacao)"
-                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" type="date"
+                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true" type="date"
                         class="form-control"
                         style="width: 9rem; margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" />
                 </div>
@@ -117,7 +117,7 @@
                     <strong>Responsável pela solicitação</strong>
                     <select class="form-select"
                         style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
-                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                         v-model="solicitante_id" @change="atualizarPCM('solicitante_id', solicitante_id)">
                         <option v-for="item in usuarios" :key="item.id" :value="item.id">
                             {{ nomeEsobrenome(item.nomeCompleto) }}
@@ -160,14 +160,14 @@
                                     <div style="display: flex" v-if="item !== 'Estimativa de Custo da Mudança'">
                                         <input type="radio" class="btn-check" :name="'options' + index"
                                             :id="'optionSim' + index"
-                                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                            :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                             autocomplete="off" v-model="item.concordo"
                                             @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
                                             value="1" />
                                         <label class="btn" :for="'optionSim' + index">Sim</label>
                                         <input type="radio" class="btn-check" :name="'options' + index"
                                             :id="'optionNão' + index"
-                                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                            :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                             autocomplete="off" v-model="item.concordo"
                                             @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
                                             value="0" />
@@ -177,7 +177,7 @@
 
                                 <td style="border: 1px solid black; border-right: none">
                                     <textarea class="form-control" v-model="item.justificativa"
-                                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                         @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"></textarea>
                                 </td>
                             </tr>
@@ -197,7 +197,7 @@
                                 <td style="border: 1px solid black; vertical-align: middle">
                                     <strong>
                                         <money3 v-model="estimativa_custo"
-                                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                            :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                             @focusout="atualizarPCM('estimativa_custo', estimativa_custo)"
                                             v-bind="config" style="width: 8rem; border: none; outline: none">
                                         </money3>
@@ -207,7 +207,7 @@
 
                                 <td style="border: 1px solid black; border-right: none">
                                     <textarea v-model="custo_justificativa"
-                                        :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                        :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                         @change="atualizarPCM('custo_justificativa', custo_justificativa)"
                                         class="form-control"></textarea>
                                 </td>
@@ -219,7 +219,7 @@
                         <div style="display: flex;align-items: center;width: fit-content;flex-flow: column;">
                             <strong> Parecer do Responsável </strong>
                             <select v-model="parecer_responsavel" class="form-select"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3 : true"
                                 @change="atualizarPCM('parecer_responsavel', parecer_responsavel)"
                                 style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" :style="{
                                     color: parecer_responsavel == 'Proposta viável' ? 'green' : 'red',
@@ -233,7 +233,7 @@
                             <strong> Nome </strong>
                             <select class="form-select"
                                 style="margin-left: 0.5rem; width: 13rem; margin-top: 0.5rem; text-align: center"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3 : true"
                                 v-model="responsavel_id" @change="atualizarPCM('responsavel_id', responsavel_id)">
                                 <option v-for="item in usuarios" :key="item.id" :value="item.id">
                                     {{ nomeEsobrenome(item.nomeCompleto) }}
@@ -246,7 +246,7 @@
                         <span class="input-group-text" style="width: 13rem"><b>Justificativa:</b>
                         </span>
                         <textarea v-model="responsavel_justificativa"
-                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3" @focusout="
+                            :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 3 : true" @focusout="
                                 atualizarPCM('responsavel_justificativa', responsavel_justificativa)
                                 " class="form-control"></textarea>
                     </div>
@@ -258,7 +258,7 @@
                             <strong> Meio da mudança </strong>
                             <select v-model="meio_mudanca" @change="atualizarPCM('meio_mudanca', meio_mudanca)"
                                 class="form-select"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                 style="margin-top: 0.5rem;text-align: center">
                                 <option>Plano de Ação</option>
                                 <option>Projeto</option>
@@ -270,7 +270,7 @@
                                 }}</strong>
                             <select class="form-select" v-model="planoAcao_ou_Projeto_id"
                                 @change="atualizarPCM(meio_mudanca == 'Projeto' ? 'projeto_id' : 'planoAcao_id', planoAcao_ou_Projeto_id)"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                 style="margin-top: 0.5rem;text-align: left">
                                 <option v-for="item in (meio_mudanca == 'Projeto' ? projetosSemPCM : planoDeAcaoSemPCM)"
                                     :key="item.id" :value="item.id">{{ item.nome }}</option>
@@ -282,14 +282,14 @@
                             <div style="display: flex; margin-top: 0.5rem">
                                 <input type="radio" class="btn-check" name="cadastroOmie" id="omieSim"
                                     autocomplete="off"
-                                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                     v-model="cadastro_omie" @change="atualizarPCM('cadastro_omie', cadastro_omie)"
                                     value="1" />
                                 <label class="btn" for="omieSim">Sim</label>
 
                                 <input type="radio" class="btn-check" name="cadastroOmie" id="omieNão"
                                     autocomplete="off"
-                                    :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                     v-model="cadastro_omie" @change="atualizarPCM('cadastro_omie', cadastro_omie)"
                                     value="0" />
                                 <label class="btn" for="omieNão">Não</label>
@@ -302,7 +302,7 @@
                             <strong>Responsável pelo cadastro no sistema</strong>
                             <select class="form-select"
                                 style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                 v-model="responsavelCadastro_id"
                                 @change="atualizarPCM('responsavelCadastro_id', responsavelCadastro_id)">
                                 <option v-for="item in usuarios" :key="item.id" :value="item.id">
@@ -315,14 +315,14 @@
                             <strong> Data </strong>
                             <input type="date" class="form-control"
                                 style="width: 9rem; margin-left: 0.5rem; text-align: center" v-model="dtCadastro"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                 @change="atualizarPCM('dtCadastro', dtCadastro)" />
                         </div>
                         <div
                             style="  display: flex; align-items: center; width: fit-content; margin-left: 1rem; flex-flow: column;">
                             <strong>Código</strong>
                             <input type="text" v-model="codigo" @change="atualizarPCM('codigo', codigo)"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                 class="form-control" style="width: 15rem; margin-left: 0.5rem; text-align: center" />
                         </div>
 
@@ -331,7 +331,7 @@
                             <strong>Nome</strong>
                             <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text"
                                 class="form-control"
-                                :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
+                                :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                 style="width: 15rem; margin-left: 0.5rem; text-align: center" />
                         </div>
                     </div>
@@ -343,7 +343,7 @@
 </template>
 
 <script>
-import { permissoes } from '../../services/api';
+// import { permissoes } from '../../services/api';
 import { Money3Component } from "v-money3";
 import api from '../../services/api'
 
@@ -360,9 +360,8 @@ export default {
             planoDeAcaoSemPCM: null,
             idUsuario: localStorage.getItem('id'),
             idPCM: localStorage.getItem("idPCM"),
-            permissoes: permissoes,
 
-            permissaoCusto: false,
+            permissoes: this.getPermissoes(),
             codigo: "PCM - Nº 99999",
             finalidade: "",
             area: "",
@@ -410,14 +409,71 @@ export default {
     created() {
         this.getSetores()
         this.getPCM()
-        if (this.permissoes.find(pessoa => pessoa.usuario_id == this.idUsuario).nivel == 1) {
-            this.permissaoCusto = true
-        }
         this.getProjetosePlanoSemPCM()
 
     },
 
     methods: {
+        getPermissoes() {
+            let permissoes
+
+            var promiseAprovadores = api.get('grupo/2/usuarios')
+                .then((response) => {
+                    return response.data.map(item => ({
+                        "usuario_id": item.id,
+                        "nivel": 3,
+                        "nome": item.name
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            var promiseCriadores = api.get('grupo/3/usuarios')
+                .then((response) => {
+                    return response.data.map(item => ({
+                        "usuario_id": item.id,
+                        "nivel": 2,
+                        "nome": item.name
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            var promiseLeitores = api.get('grupo/4/usuarios')
+                .then((response) => {
+                    return response.data.map(item => ({
+                        "usuario_id": item.id,
+                        "nivel": 1,
+                        "nome": item.name
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            Promise.all([promiseAprovadores, promiseCriadores, promiseLeitores])
+                .then(([aprovadores, criadores, leitores]) => {
+                    var mergedArray = [...aprovadores, ...criadores, ...leitores];
+                    const usuariosMap = {};
+                    // Preencha o mapeamento
+                    mergedArray.forEach(usuario => {
+                        const { usuario_id, nivel } = usuario;
+                        if (!(usuario_id in usuariosMap) || nivel > usuariosMap[usuario_id].nivel) {
+                            usuariosMap[usuario_id] = usuario;
+                        }
+                    });
+                    // Converta o mapeamento de volta para uma array
+                    permissoes = Object.values(usuariosMap);
+                    this.permissoes = permissoes
+                    console.log(permissoes)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+
         getProjetosePlanoSemPCM() {
             api.get(`planoacao-projeto/listar/sem-pcm`)
                 .then((response) => {

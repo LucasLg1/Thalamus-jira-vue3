@@ -6,18 +6,43 @@
             <div style="min-width: fit-content;">
                 <div style="min-width: fit-content;">
                     <div>
-                            <div class="categorias1" @click="verProgramas">
-                                <span style="text-decoration: none; color: rgb(255, 255, 255);">Programas</span>
-                            </div>
-                            <div class="categorias1"  @click="verPCM">
-                                <span style="text-decoration: none; color: rgb(255, 255, 255);">PCMs</span>
-                            </div>
-                            <div class="categorias1" @click="verProjetos">
-                                <span style="text-decoration: none; color: rgb(255, 255, 255);">Projetos</span>
-                            </div>
-                            <div class="categorias1" @click="verPA">
-                                <span style="text-decoration: none; color: rgb(255, 255, 255);">Planos de Ação</span>
-                            </div>
+                        <v-menu>
+                            <template v-slot:activator="{ props }">
+                                <v-btn class="categorias2" v-bind="props">
+                                    <span style="text-decoration: none; color: black;">
+                                        Adicionar <i class="bi bi-plus-circle"></i>
+                                    </span>
+                                </v-btn>
+                            </template>
+
+                            <v-list>
+                                <v-list-item @click="verPCMCriada('Programa'), this.tipo = 'Programa'">
+                                    Novo Programa
+                                </v-list-item>
+                                <v-list-item @click="verPCMCriada('Projeto'), this.tipo = 'Projeto'">
+                                    Novo Projeto
+                                </v-list-item>
+                                <v-list-item @click="verPCMCriada('Plano de Ação'), this.tipo = 'Plano de Ação'">
+                                    Novo Plano de Ação
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
+                        <div class="categorias1" @click="verPCM">
+                            <span style="text-decoration: none; color: rgb(255, 255, 255);">Aprovação</span>
+                        </div>
+                        <hr>
+                        <div class="categorias1" @click="verProgramas">
+                            <span style="text-decoration: none; color: rgb(255, 255, 255);">Programas</span>
+                        </div>
+                        <div class="categorias1" @click="verProjetos">
+                            <span style="text-decoration: none; color: rgb(255, 255, 255);">Projetos</span>
+                        </div>
+                        <div class="categorias1" @click="verPA">
+                            <span style="text-decoration: none; color: rgb(255, 255, 255);">Planos de Ação</span>
+                        </div>
+                        <!-- <div class="categorias1" @click="verProtocolos">
+                            <span style="text-decoration: none; color: rgb(255, 255, 255);">Protocolos</span>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -36,22 +61,31 @@ export default {
     data() {
         return {
             sgp: '',
-            devURL: api.defaults.devURL
+            devURL: api.defaults.devURL,
+            tipo: null
         }
+
     },
 
     methods: {
+        verPCMCriada(tipo) {
+            localStorage.setItem('Tipo', tipo);
+            this.$router.push({ name: "CriarPCM" })
+        },
+        verProtocolos() {
+            this.$router.push({ name: "controleProtocolos" })
+        },
         verProgramas() {
             this.$router.push('/Programas/controle');
-        },
-        verPCM() {
-            this.$router.push('/PCM/Controle');
         },
         verProjetos() {
             this.$router.push('/projetos');
         },
         verPA() {
             this.$router.push('/PA/Controle');
+        },
+        verPCM(){
+            this.$router.push({ name: "ControlePCM" })
         },
 
 
@@ -93,7 +127,7 @@ export default {
     /* scroll */
     padding: 20px;
     color: #f0f0f0;
-    z-index: 2 ;
+    z-index: 2;
 }
 
 /* @media only screen and (max-width: 768px) {
@@ -141,8 +175,20 @@ export default {
     transition: background-color 0.3s;
 }
 
+.categorias2 {
+    padding: 4px;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    width: 100%;
+    min-width: fit-content;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
 .categorias1:hover {
     transform: translateY(0.1px);
     box-shadow: 0 0 10px var(--second-color);
     cursor: pointer;
-}</style>
+}
+</style>

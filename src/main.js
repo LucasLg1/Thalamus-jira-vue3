@@ -16,11 +16,11 @@ import axios from 'axios';
 
 const app = createApp(App).use(store)
 const vuetify = createVuetify({
-    components,
-    directives,
-  })
+  components,
+  directives,
+})
 
-  axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
+axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
 
 
 app.use(router)

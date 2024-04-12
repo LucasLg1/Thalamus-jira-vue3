@@ -83,7 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in listaProjetosFiltrada" :key="item.id"
+                            <tr v-for="item in listaProjetosFiltrada" :key="item.id" class="linhaTabela"
                                 @mouseover="mostrarBotao(item.id, true)" @click="verBacklogs(item.id, item.nome)"
                                 @mouseleave="mostrarBotao(item.id, false)">
                                 <td style="vertical-align: middle;">{{ item.nome }}</td>
@@ -151,7 +151,6 @@
                                 </td>
                             </tr>
                         </tbody>
-
                     </table>
                 </div>
             </div>

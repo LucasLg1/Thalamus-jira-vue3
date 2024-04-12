@@ -1,7 +1,8 @@
 <template>
     <br><br><br><br>
     <div style="padding: 1rem;">
-        <div class="container" v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario)"
+        <div class="container"
+        v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario) : false"
             style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; ">
 
             <div class="col-sm-12" style="text-align: center;">
@@ -17,12 +18,10 @@
                     <div style="width: 100%;">
                         <h3 style="text-align: center; margin: 0;">Propostas de Criação ou Mudança</h3>
                     </div>
-                    <!-- <button :title="'Adicionar PCM'" style="width: max-content; font-size: 30px;" @click="novoPCM"
-                        v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1"
-                        class="botaoAdicionarSprint">
-                        <i class="bi bi-plus-circle"></i>
-                    </button> -->
-                    <v-menu v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1">
+
+                    <v-menu
+                    v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false"
+                    >
                         <template v-slot:activator="{ props }">
                             <v-btn
                                 style="width: max-content; font-size: 20px; height: fit-content ;background-color: transparent; box-shadow: none"
@@ -53,7 +52,8 @@
                                 <th scope="col">Data de abertura</th>
                                 <th scope="col">Aprovador</th>
                                 <th scope="col" style="width: 15rem;"
-                                    v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3"></th>
+                                v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3 : false"
+                                ></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,7 +85,8 @@
                                 </td>
 
                                 <td style="text-align: center; vertical-align: middle;"
-                                    v-if="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3">
+                                v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 3 : false"
+                                >
                                     <div style="display: flex;" @click.stop>
 
                                         <div style="margin-left: 1rem;">
@@ -109,7 +110,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <!-- {{ permissoes }} -->
                 </div>
             </div>
         </div>
@@ -125,14 +125,14 @@
 <script>
 
 import api from '../../services/api';
-import { permissoes } from '../../services/api'
+// import { permissoes } from '../../services/api'
 
 export default {
     name: "ControlePCM",
 
     data() {
         return {
-            permissoes: permissoes,
+            permissoes: this.getPermissoes(),
             PCMSelecionado: null,
             listaPCMsFiltrada: null,
 
@@ -149,6 +149,66 @@ export default {
     },
 
     methods: {
+
+        getPermissoes() {
+            let permissoes
+
+            var promiseAprovadores = api.get('grupo/2/usuarios')
+                .then((response) => {
+                    return response.data.map(item => ({
+                        "usuario_id": item.id,
+                        "nivel": 3,
+                        "nome": item.name
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            var promiseCriadores = api.get('grupo/3/usuarios')
+                .then((response) => {
+                    return response.data.map(item => ({
+                        "usuario_id": item.id,
+                        "nivel": 2,
+                        "nome": item.name
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            var promiseLeitores = api.get('grupo/4/usuarios')
+                .then((response) => {
+                    return response.data.map(item => ({
+                        "usuario_id": item.id,
+                        "nivel": 1,
+                        "nome": item.name
+                    }));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            Promise.all([promiseAprovadores, promiseCriadores, promiseLeitores])
+                .then(([aprovadores, criadores, leitores]) => {
+                    var mergedArray = [...aprovadores, ...criadores, ...leitores];
+                    const usuariosMap = {};
+                    // Preencha o mapeamento
+                    mergedArray.forEach(usuario => {
+                        const { usuario_id, nivel } = usuario;
+                        if (!(usuario_id in usuariosMap) || nivel > usuariosMap[usuario_id].nivel) {
+                            usuariosMap[usuario_id] = usuario;
+                        }
+                    });
+                    // Converta o mapeamento de volta para uma array
+                    permissoes = Object.values(usuariosMap);
+                    this.permissoes = permissoes
+                    console.log(permissoes)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
 
         atualizarPCM(itemEditado, valor, id) {
             if (valor == 'Aprovado') {
