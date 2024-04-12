@@ -28,7 +28,12 @@
                             </v-list>
                         </v-menu>
                         <div class="categorias1" @click="verPCM">
-                            <span style="text-decoration: none; color: rgb(255, 255, 255);">Aprovação</span>
+                            <span style="text-decoration: none; color: rgb(255, 255, 255);">
+                                <v-badge :content="1" floating dot color="rgb(255, 145, 0)" v-if="PCMs ? PCMs.some(item => item.status === 'Aguardando Aprovação') : false">
+                                    Aprovação
+                                </v-badge>
+                                <span v-else>Aprovação</span>
+                            </span>
                         </div>
                         <hr>
                         <div class="categorias1" @click="verProgramas">
@@ -62,7 +67,9 @@ export default {
         return {
             sgp: '',
             devURL: api.defaults.devURL,
-            tipo: null
+            tipo: null,
+            PCMs: null,
+
         }
 
     },
@@ -70,7 +77,11 @@ export default {
     methods: {
         verPCMCriada(tipo) {
             localStorage.setItem('Tipo', tipo);
-            this.$router.push({ name: "CriarPCM" })
+            if (this.$route.path === '/PCM/Criar') {
+                window.location.reload();
+            } else {
+                this.$router.push({ name: "CriarPCM" });
+            }
         },
         verProtocolos() {
             this.$router.push({ name: "controleProtocolos" })
@@ -84,8 +95,18 @@ export default {
         verPA() {
             this.$router.push('/PA/Controle');
         },
-        verPCM(){
+        verPCM() {
             this.$router.push({ name: "ControlePCM" })
+        },
+        getPCMs() {
+            api.get(`pcm/listar`, {})
+                .then((response) => {
+                    this.PCMs = response.data;
+                    this.filtrarPCMs()
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
 
 
@@ -101,7 +122,8 @@ export default {
     },
 
     mounted() {
-        this.getAllSidebar()
+        this.getAllSidebar(),
+            this.getPCMs()
     }
 }
 </script>

@@ -19,7 +19,7 @@
                         <h3 style="text-align: center; margin: 0;">Propostas de Criação ou Mudança</h3>
                     </div>
 
-                    <v-menu
+                    <!-- <v-menu
                     v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false"
                     >
                         <template v-slot:activator="{ props }">
@@ -36,7 +36,7 @@
                                 Cancelar
                             </v-list-item>
                         </v-list>
-                    </v-menu>
+                    </v-menu> -->
                 </div>
             </div>
 
@@ -90,7 +90,7 @@
                                     <div style="display: flex;" @click.stop>
 
                                         <div style="margin-left: 1rem;">
-                                            <button class="button-aprovar" :disabled="item.aprovada !== null"
+                                            <button class="button-aprovar" 
                                                 @click="atualizarPCM('status', 'Aprovado', item.id)">
                                                 Aprovar
                                                 <i class="fa-solid fa-thumbs-up"></i>
@@ -98,8 +98,7 @@
                                         </div>
                                         <div style="margin-left: 1rem;">
                                             <button type="button" class="button-reprovar"
-                                                @click="atualizarPCM('status', 'Reprovado', item.id)"
-                                                :disabled="item.aprovada !== null">
+                                                @click="atualizarPCM('status', 'Reprovado', item.id)">
                                                 Reprovar
                                                 <i class="fa-solid fa-thumbs-down"></i>
                                             </button>

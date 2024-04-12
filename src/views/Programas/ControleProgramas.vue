@@ -18,10 +18,10 @@
                     <div style="width: 100%;">
                         <h3 style="text-align: center; margin: 0;">Programas</h3>
                     </div>
-                    <button :title="'Adicionar Programa'" style="width: max-content; font-size: 30px;" v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false"
+                    <!-- <button :title="'Adicionar Programa'" style="width: max-content; font-size: 30px;" v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false"
                         @click="this.modalNovoPrograma = true" class="botaoAdicionarSprint">
                         <i class="bi bi-plus-circle"></i>
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <br>

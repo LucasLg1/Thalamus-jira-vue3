@@ -3,7 +3,7 @@
     <br /><br />
 
     <div class="container" style="padding: 2rem 0rem 0rem 0rem">
-        <i @click="verPCMs" style="font-size: 30px;position: absolute; cursor: pointer"
+        <i @click="voltarHome()" style="font-size: 30px;position: absolute; cursor: pointer"
             class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela inicial'"></i>
         <br><br>
         <div style="text-align: center;">
@@ -19,9 +19,9 @@
                         <br />
                     </strong>
                     <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center"
-                        v-model="finalidade" @change="atualizarPCM('finalidade', finalidade)">
+                        v-model="nivel" @change="atualizarPCM('nivel', nivel)">
                         <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
-                        <option>Estratégico</option>
+                        <option :hidden="tipo == 'Plano de Ação'">Estratégico</option>
                         <option>Operacional</option>
                     </select>
                 </div>
@@ -34,11 +34,11 @@
                         <br />
                     </strong>
                     <select class="form-select" style="margin-left: 0.5rem; margin-top: 0.5rem; text-align: center"
-                        v-model="tipo" @change="atualizarPCM('finalidade', finalidade)">
+                        v-model="tipo" @change="atualizarPCM('tipo', tipo)">
                         <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
                         <option>Programa</option>
                         <option>Projeto</option>
-                        <option>Plano de Ação</option>
+                        <option :hidden="nivel == 'Estratégico'">Plano de Ação</option>
                     </select>
                 </div>
 
@@ -98,36 +98,45 @@
             </div>
 
             <div class="input-group" style="margin-top: 1rem">
-                <span class="input-group-text"><b>Descrição do Problema:</b> </span>
-                <textarea class="form-control" v-model="descricao_problema" style="height: 8rem"
+                <span class="input-group-text" :class="{ shake: disabled }" id="descricao_problema"><b>Descrição do
+                        Problema:</b> </span>
+                <textarea class="form-control" :class="{ shake: disabled }" v-model="descricao_problema"
+                    style="height: 8rem" id="descricao_problema2"
                     @focusout="atualizarPCM('descricao_problema', descricao_problema)"></textarea>
                 <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
             </div>
             <div class="input-group" style="margin-top: 1rem">
-                <span class="input-group-text" style="width: 13rem"><b>Possível solução: </b>
+                <span class="input-group-text" :class="{ shake: disabled }" style="width: 13rem"
+                    id="possivel_solucao"><b>Possível solução: </b>
                 </span>
-                <textarea class="form-control" v-model="possivel_solucao" style="height: 6rem"
+                <textarea class="form-control" :class="{ shake: disabled }" v-model="possivel_solucao"
+                    style="height: 6rem" id="possivel_solucao2"
                     @focusout="atualizarPCM('possivel_solucao', possivel_solucao)"></textarea>
                 <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
             </div>
-            <div class="input-group" style="margin-top: 1rem">
-                <span class="input-group-text" style="width: 13rem"><b>Propósito da mudança:</b>
+            <div class="input-group" style="margin-top: 1rem;">
+                <span class="input-group-text" :class="{ shake: disabled }" style="width: 13rem;"
+                    id="proposito_mudanca"><b>Propósito da
+                        mudança:</b>
                 </span>
-                <textarea class="form-control" v-model="proposito_mudanca"
-                    @focusout="atualizarPCM('proposito_mudanca', proposito_mudanca)">
+                <textarea class="form-control" :class="{ shake: disabled }" v-model="proposito_mudanca"
+                    id="proposito_mudanca2" @focusout="atualizarPCM('proposito_mudanca', proposito_mudanca)">
             </textarea>
                 <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
             </div>
 
-            <div style="
-                          display: flex;
-                          align-content: center;
-                          justify-content: center;
-                          margin-top: 1rem;
-                        ">
-                <div style="display: flex; align-items: center; flex-flow: column">
+
+            <div style=" display: flex; align-content: center; justify-content: center; margin-top: 1rem;">
+                <div style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
+                    <strong>Nome do {{ tipo }}</strong>
+                    <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text" class="form-control"
+                        style="width: 15rem; margin-left: 0.5rem; text-align: center" />
+                    <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
+                </div>
+
+                <div style="display: flex; align-items: center; margin-left: 1rem; flex-flow: column">
                     <strong>Data limite de implementação</strong>
-                    <input v-model="dtLimiteImplementacao" type="date"
+                    <input v-model="dtLimiteImplementacao" type="date" :class="{ shake: disabled }" id="solicitante_id2"
                         @change="atualizarPCM('dtLimiteImplementacao', dtLimiteImplementacao)" class="form-control"
                         style="width: 9rem; margin-left: 0.5rem; margin-top: 0.5rem; text-align: center" />
                     <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
@@ -136,7 +145,8 @@
                     <strong>Responsável pela solicitação</strong>
                     <select class="form-select"
                         style="margin-left: 0.5rem; width: 15rem; margin-top: 0.5rem; text-align: center"
-                        v-model="solicitante_id" @change="atualizarPCM('solicitante_id', solicitante_id)">
+                        v-model="solicitante_id" :class="{ shake: disabled }" id="solicitante_id"
+                        @change="atualizarPCM('solicitante_id', solicitante_id)">
                         <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
                         <option v-for="item in usuarios" :key="item.id" :value="item.id">
                             {{ nomeEsobrenome(item.nomeCompleto) }}
@@ -144,10 +154,16 @@
                     </select>
                 </div>
             </div>
+            <div style="display: flex; justify-content: right; margin-top: 0.5rem;">
+                <button type="button" class="btn btn-light" @click="novoPCM()"
+                    style="border: 1px solid black;">Salvar</button>
+                <button type="button" class="btn btn-dark" @click="voltarHome()"
+                style="margin-left: 1rem;">Cancelar</button>
+            </div>
         </div>
     </div>
 
-    <div class="container" style="padding: 2rem 0rem 0rem 0rem">
+    <div class="container" style="padding: 2rem 0rem 0rem 0rem" v-if="false">
         <div style="text-align: center">
             <h5><b>Área do Responsável</b></h5>
         </div>
@@ -165,7 +181,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in impacto_viabilidade" :key="index">
+                            <tr v-for="(item, index) in impacto_viabilidade.slice(0, 2)" :key="index">
                                 <th style=" border: 1px solid black; border-left: none; vertical-align: middle;">
                                     {{ index + 1 }}.
                                 </th>
@@ -200,14 +216,12 @@
                             </tr>
 
                             <tr>
-                                <th style="
-                                    border: 1px solid black; border-left: none; vertical-align: middle;">
+                                <th style="border: 1px solid black; border-left: none; vertical-align: middle;">
                                     3.
                                 </th>
                                 <td style="border: 1px solid black; vertical-align: middle">
                                     <div>Estimativa de Custo da Mudança</div>
                                 </td>
-
                                 <td style="border: 1px solid black; vertical-align: middle">
                                     <strong>
                                         <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
@@ -216,7 +230,6 @@
                                             v-bind="config" style="width: 8rem; border: none; outline: none">
                                         </money3>
                                     </strong>
-
                                 </td>
 
                                 <td style="border: 1px solid black; border-right: none">
@@ -229,33 +242,15 @@
                         </tbody>
                     </table>
 
-
-                    <div style="display: flex; margin-inline: 1rem;">
-
-                        <div
-                            style="border: 1px solid black; padding: 5px; width: 40rem; border-radius: 10px; margin-top: 0.5rem;">
-                            <div style="display: flex;">
-                                <input type="checkbox">
-                                <label style="margin-left: 1rem;">
-                                    O cenário geral do mercado é viável à proposta.
-                                </label>
-                            </div>
-                        </div>
-                        <div
-                            style="margin-left: 1rem; border: 1px solid black; padding: 5px; width: 40rem; border-radius: 10px; margin-top: 0.5rem;">
+                    <div style="align-items: center; display: flex; margin-inline: 1rem;">
+                        <div v-for="item in impacto_viabilidade.slice(2)" :key="item.impactoViabilidade_id"
+                            style="border: 1px solid black; padding: 5px; width: 40rem; border-radius: 10px; margin-top: 0.5rem; margin-inline: 0.5rem;">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    A empresa possui capacidade interna para implementação da proposta.
-                                </label>
-                            </div>
-                        </div>
-                        <div
-                            style="margin-left: 1rem; border: 1px solid black; padding: 5px; width: 40rem; border-radius: 10px; margin-top: 0.5rem;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    A implementação da proposta será rentável à empresa.
+                                <input class="form-check-input" type="checkbox"
+                                    :id="'pergunta' + item.impactoViabilidade_id">
+                                <label class="form-check-label" :for="'pergunta' + item.impactoViabilidade_id">
+                                    {{ item.descricao }}
+                                    <!-- {{ objetoSemIndiceDescricao(item) }} -->
                                 </label>
                             </div>
                         </div>
@@ -367,19 +362,28 @@
                             <input type="text" v-model="codigo" @change="atualizarPCM('codigo', codigo)"
                                 class="form-control" style="width: 15rem; margin-left: 0.5rem; text-align: center" />
                         </div>
-
-                        <div
-                            style="display: flex;align-items: center;width: fit-content;margin-left: 1rem;flex-flow: column;">
-                            <strong>Nome</strong>
-                            <input v-model="nome" @focusout="atualizarPCM('nome', nome)" type="text"
-                                class="form-control" style="width: 15rem; margin-left: 0.5rem; text-align: center" />
-                            <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- modal confirmação de criação -->
+    <div style="overflow: auto" class="modal-mask" v-if="modalConfirmacao" @click="fecharModalFora">
+        <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; border: solid 1px black;"
+            class="modal-container">
+            <div>
+                <div style="display: flex; justify-content: space-between">
+                    <h4 class="titulo">{{ this.tipo }} submetido para aprovação!</h4>
+                </div>
+                <div class="modal-footer">
+                    &nbsp;&nbsp;
+                    <button type="button" style="background-color: rgb(0, 192, 0); border: none;" class="btn btn-primary"
+                        @click="voltarHome()" data-bs-dismiss="modal">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
     <br /><br /><br />
 </template>
 
@@ -395,23 +399,24 @@ export default {
 
     data() {
         return {
+            modalConfirmacao: false,
+
             planoAcao_ou_Projeto_id: null,
-
-            tipo: localStorage.getItem('Tipo'),
-
             projetosSemPCM: null,
             planoDeAcaoSemPCM: null,
             idUsuario: localStorage.getItem('id'),
             idPCM: localStorage.getItem("idPCM"),
             permissoes: this.getPermissoes(),
 
-            permissaoCusto: false,
-            codigo: "PCM - Nº 99999",
+
+            tipo: null,
+            nivel: null,
+            codigo: "",
             finalidade: "",
             area: "",
             setor_id: 0,
             nome: "",
-            dtInicio: null,
+            dtInicio: new Date().toISOString().split('T')[0],
             descricao_problema: null,
             possivel_solucao: null,
             proposito_mudanca: null,
@@ -426,26 +431,45 @@ export default {
             responsavel_justificativa: null,
             meio_mudanca: null,
             cadastro_omie: null,
-
             responsavelCadastro_id: null,
             responsavelCadastro_nome: null,
             dtCadastro: null,
+            disabled: false,
             codigo_cadastro: null,
-
             impacto_viabilidade: [
                 {
-                    "id": 1,
+                    "impactoViabilidade_id": 1,
                     "concordo": null,
                     "justificativa": "",
                     "descricao": 'Afetará a documentação de produtos já existentes? (B.O.M, Roteiro de Produção, Esquema elétrico, Estrutura, etc.)'
                 },
                 {
-                    "id": 6,
+                    "impactoViabilidade_id": 6,
                     "concordo": null,
                     "justificativa": "",
                     "descricao": 'O produto a ser alterado/criado possui ou deve possuir certificação? Se positivo, comunicar mudança à certificadora e aguardar a autorização da mesma.'
                 },
+                {
+                    "impactoViabilidade_id": 7,
+                    "concordo": null,
+                    "justificativa": "",
+                    "descricao": 'O cenário geral do mercado é viável à proposta.'
+                },
+                {
+                    "impactoViabilidade_id": 8,
+                    "concordo": null,
+                    "justificativa": "",
+                    "descricao": 'A empresa possui capacidade interna para implementação da proposta.'
+                },
+                {
+                    "impactoViabilidade_id": 9,
+                    "concordo": null,
+                    "justificativa": "",
+                    "descricao": 'A implementação da proposta será rentável à empresa.'
+                },
+
             ],
+
             setores: '',
             usuarios: null,
 
@@ -464,11 +488,161 @@ export default {
 
     created() {
         this.getSetores(),
-        this.getProjetosePlanoSemPCM(),
-        this.tipo = localStorage.getItem('Tipo')
+            this.getProjetosePlanoSemPCM(),
+            this.tipo = localStorage.getItem('Tipo')
     },
 
     methods: {
+        voltarHome(){
+            this.$router.push({ name: "home" })
+        },
+
+        validarCampos() {
+            var camposVazios = []
+            if (!this.descricao_problema) camposVazios.push('descricao_problema');
+            if (!this.possivel_solucao) camposVazios.push('possivel_solucao');
+            if (!this.proposito_mudanca) camposVazios.push('proposito_mudanca');
+            if (!this.solicitante_id) camposVazios.push('solicitante_id');
+            return camposVazios
+        },
+
+        novoPCM() {
+            // if (this.PCMs.length > 0) {
+            //     var PCMsOrdenados = this.PCMs.sort((a, b) => {
+            //         if (a.codigo < b.codigo) {
+            //             return 1; // retorna 1 para indicar que a deve vir depois de b
+            //         } else if (a.codigo > b.codigo) {
+            //             return -1; // retorna -1 para indicar que a deve vir antes de b
+            //         } else {
+            //             return 0; // retorna 0 se os valores são iguais
+            //         }
+            //     });
+            //      novoCodigo = parseInt(PCMsOrdenados[0].codigo.substring(3));
+            // } else {
+            //      novoCodigo = 'ERRO';
+            // }
+
+            var campoVazio = this.validarCampos()
+            if (campoVazio.length !== 0) {
+                campoVazio.forEach(item => {
+                    document.getElementById(item).style.border = 'solid 1px red';
+                    document.getElementById(item + '2').style.border = 'solid 1px red'
+                    this.disabled = true
+                    setTimeout(() => {
+                        this.disabled = false
+                    }, 1500)
+                    return
+                });
+            } else {
+                api.post(`pcm/cadastrar`, {
+
+                    tipo: this.tipo,
+                    nivel: this.nivel,
+                    codigo: 'TESTE',
+                    finalidade: this.finalidade,
+                    area: this.area,
+                    setor_id: this.setor_id,
+                    nome: this.nome,
+
+                    descricao_problema: this.descricao_problema,
+                    possivel_solucao: this.possivel_solucao,
+                    proposito_mudanca: this.proposito_mudanca,
+
+                    dtLimiteImplementacao: this.dtLimiteImplementacao,
+                    solicitante_id: this.solicitante_id,
+                    solicitante_nome: this.solicitante_nome,
+                    estimativa_custo: this.estimativa_custo,
+                    custo_justificativa: this.custo_justificativa,
+                    parecer_responsavel: this.parecer_responsavel,
+                    responsavel_id: this.responsavel_id,
+                    responsavel_nome: this.responsavel_nome,
+                    responsavel_justificativa: this.responsavel_justificativa,
+                    meio_mudanca: this.meio_mudanca,
+                    cadastro_omie: this.cadastro_omie,
+                    responsavelCadastro_id: this.responsavelCadastro_id,
+                    responsavelCadastro_nome: this.responsavelCadastro_nome,
+                    dtCadastro: this.dtCadastro,
+                    codigo_cadastro: this.codigo_cadastro,
+                    impacto_viabilidade: this.impacto_viabilidade,
+
+                    dtInicio: this.dtInicio,
+
+                    status: 'Aguardando Aprovação',
+                    usuario_id: this.idUsuario
+                })
+                    .then(() => {
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+                if (this.nivel == 'Operacional') {
+                    this.criarElemento();
+                }
+                if(this.nivel == 'Estratégico') {
+                    this.modalConfirmacao = true
+                }
+            }
+        },
+
+        criarElemento() {
+            if (this.tipo == 'Projeto') {
+                api.post(`projeto/cadastrar`, {
+
+                    nome: this.nome,
+                    dtInicio: this.dtInicio,
+                    gerente_id: this.solicitante_id,
+                    setor_id: this.setor_id,
+                    usuario_id: this.idUsuario,
+                    status: "Proposto"
+                })
+                    .then((response) => {
+                        this.$router.push({ name: "sprints" })
+                        sessionStorage.setItem('idProjeto', response.data.id)
+                        sessionStorage.setItem('nomeDoProjeto', this.nome)
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } if (this.tipo == 'Plano de Ação') {
+                api.post(`planoAcao/cadastrar`, {
+
+                    nome: this.nome,
+                    dtInicio: this.dtInicio,
+                    gerente_id: this.solicitante_id,
+                    setor_id: this.setor_id,
+                    usuario_id: this.idUsuario,
+                    status: "Proposto"
+                })
+
+                    .then((response) => {
+                        this.$router.push({ name: "PA" })
+                        sessionStorage.setItem('idProjeto', response.data.id)
+                        sessionStorage.setItem('nomeDoProjeto', this.nome)
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } if (this.tipo == 'Programa') {
+                api.post(`programa/cadastrar`, {
+                    nome: this.nome,
+                    dtInicio: this.dtInicio,
+                    gerente_id: this.solicitante_id,
+                    setor_id: this.setor_id,
+                    usuario_id: this.idUsuario,
+                    status: "Proposto"
+                })
+                    .then(() => {
+                        this.$router.push({ name: "controleProgramas" })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+
+        },
+
         getPermissoes() {
             let permissoes
 
@@ -665,6 +839,12 @@ export default {
         verPCMs() {
             this.$router.push({ name: "ControlePCM" });
         },
+
+        fecharModalFora(event) {
+            if (event.target.classList.contains('modal-mask')) {
+                this.modalConfirmacao = false;
+            }
+        },
     },
 };
 </script>
@@ -686,5 +866,56 @@ export default {
     margin-left: 250px;
     cursor: pointer;
     position: absolute;
+}
+
+.shake {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.modal-container {
+    max-height: 80%;
+    width: 70%;
+    padding: 3rem;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
