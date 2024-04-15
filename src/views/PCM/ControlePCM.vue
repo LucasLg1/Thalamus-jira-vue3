@@ -59,7 +59,7 @@
                         <tbody>
                             <tr @click="verPCM(item.id)" style="vertical-align: middle;"
                                 v-for="item in listaPCMsFiltrada" :key="item.id">
-                                <td style="text-align: center; vertical-align: middle;">
+                                <td style="text-align: center; vertical-align: middle; width: min-content;">
                                     {{ item.codigo }}
                                 </td>
 
@@ -103,7 +103,6 @@
                                                 <i class="fa-solid fa-thumbs-down"></i>
                                             </button>
                                         </div>
-
                                     </div>
                                 </td>
                             </tr>

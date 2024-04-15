@@ -29,7 +29,9 @@
                         </v-menu>
                         <div class="categorias1" @click="verPCM">
                             <span style="text-decoration: none; color: rgb(255, 255, 255);">
-                                <v-badge :content="1" floating dot color="rgb(255, 145, 0)" v-if="PCMs ? PCMs.some(item => item.status === 'Aguardando Aprovação') : false">
+                                <v-badge :content="1" floating dot color="rgb(255, 145, 0)" 
+                                v-if="PCMs !== null ? PCMs.some(item => item.status === 'Aguardando Aprovação') : false"
+                                >
                                     Aprovação
                                 </v-badge>
                                 <span v-else>Aprovação</span>
@@ -101,8 +103,7 @@ export default {
         getPCMs() {
             api.get(`pcm/listar`, {})
                 .then((response) => {
-                    this.PCMs = response.data;
-                    this.filtrarPCMs()
+                    this.PCMs = response.data;                  
                 })
                 .catch((error) => {
                     console.error(error);

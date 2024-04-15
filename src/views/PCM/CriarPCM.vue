@@ -5,7 +5,7 @@
     <div class="container" style="padding: 2rem 0rem 0rem 0rem">
         <i @click="voltarHome()" style="font-size: 30px;position: absolute; cursor: pointer"
             class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela inicial'"></i>
-        <br><br>
+        <br>
         <div style="text-align: center;">
             <h5><b>Área do Solicitante</b></h5>
         </div>
@@ -408,7 +408,6 @@ export default {
             idPCM: localStorage.getItem("idPCM"),
             permissoes: this.getPermissoes(),
 
-
             tipo: null,
             nivel: null,
             codigo: "",
@@ -577,6 +576,7 @@ export default {
                     });
                 if (this.nivel == 'Operacional') {
                     this.criarElemento();
+                    this.modalConfirmacao = true
                 }
                 if(this.nivel == 'Estratégico') {
                     this.modalConfirmacao = true
