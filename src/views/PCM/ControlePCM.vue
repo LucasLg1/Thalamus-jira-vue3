@@ -56,13 +56,7 @@
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixotipo"></i>
                                     <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimatipo"></i>
                                 </th>
-                                <!-- <th scope="col">
-                                    <button @click="ordenarLista('codigo')">
-                                        Código
-                                    </button>
-                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixocodigo"></i>
-                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimacodigo"></i>
-                                </th> -->
+                                
                                 <th scope="col">
                                     <button 
                                     >
@@ -71,6 +65,15 @@
                                     </button>
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixonome"></i>
                                     <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimanome"></i>
+                                </th>
+                                <th scope="col">
+                                    <button
+                                    >
+                                    <!-- @click="ordenarLista('codigo')" -->
+                                        Setor
+                                    </button>
+                                    <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixocodigo"></i>
+                                    <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimacodigo"></i>
                                 </th>
                                 <th scope="col">
                                     <button 
@@ -113,12 +116,14 @@
                                     {{ item.tipo }}
                                 </td>
 
-                                <!-- <td style="text-align: center; vertical-align: middle; width: min-content; width: 9rem;">
-                                    {{ item.codigo }}
-                                </td> -->
-
                                 <td style="text-align: center; vertical-align: middle; width: max-content ;">
                                     {{ item.nome }}
+                                </td>
+                                
+                                <td style="text-align: center; vertical-align: middle; width: min-content; width: 9rem;">
+                                    <select disabled>
+                                        <option v-for="item in setores" :key="item.id" :value="item.id">{{ item.nome }}</option>
+                                    </select>
                                 </td>
 
                                 <td style="text-align: center; vertical-align: middle;"
@@ -161,6 +166,7 @@
                         </tbody>
                     </table>
                     <!-- 
+                        {{ setores ? setores : null }}
                         {{ permissoes }}
                         {{ teste }}
                         {{ PCMs ? PCMs : null }} <br>
@@ -208,6 +214,7 @@
 
 import api from '../../services/api';
 import { getPermissoes } from '@/services/permissao-pcm';
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     name: "ControlePCM",
@@ -227,12 +234,13 @@ export default {
 
             teste: 'teste',
             usuarios: null,
+            setores: null
         }
     },
 
     created() {
         this.getPCMs();
-        this.getUsuarios();
+        this.getSetores();
         // this.idUsuario = localStorage.getItem('id')
     },
 
@@ -595,21 +603,16 @@ export default {
             this.$router.push({ name: "PCMv" })
         },
 
-        getUsuarios() {
-            api.get(`usuario`, {
+        async getSetores() {
+            try {
+                const { usuarios, setores } = await consultarSetores();
+                this.usuarios = usuarios;
+                this.setores = setores;
+            } catch (error) {
+                console.error(error);
+            }
+        },
 
-            })
-                .then((response) => {
-                    this.usuarios = response.data;
-                    this.usuarios = this.usuarios.map((item) => ({
-                        id: item.id,
-                        nomeCompleto: item.name,
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
     }
 
 }

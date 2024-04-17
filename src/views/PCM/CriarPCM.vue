@@ -376,7 +376,7 @@
 import { Money3Component } from "v-money3";
 import api from '../../services/api';
 import { getPermissoes } from '@/services/permissao-pcm';
-
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     name: "VisualizaçãoCriaçãoPCM",
@@ -623,38 +623,14 @@ export default {
                 });
         },
 
-        getSetores() {
-            api.get(`usuario`, {
-
-            })
-                .then((response) => {
-                    this.usuarios = response.data;
-                    this.usuarios = this.usuarios.map((item) => ({
-                        id: item.id,
-                        nomeCompleto: item.name,
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            // api.get('/setor')
-            //     .then(response => {
-            //         this.setores = response.data;
-            //     })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     });
-
-            api.get(`setor`, {
-
-            })
-                .then((response) => {
-                    this.setores = response.data
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        async getSetores() {
+            try {
+                const { usuarios, setores } = await consultarSetores();
+                this.usuarios = usuarios;
+                this.setores = setores;
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         // getPCM() {

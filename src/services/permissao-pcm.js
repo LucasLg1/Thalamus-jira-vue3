@@ -1,5 +1,4 @@
-// PermissoesService.js
-import api from './api'; // Supondo que você tenha um módulo API para fazer chamadas à API
+import api from './api';
 
 export function getPermissoes() {
     return Promise.all([

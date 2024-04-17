@@ -1,6 +1,6 @@
 <template>
-    <br/>
-    <br/><br />
+    <br />
+    <br /><br />
     <div
         style="width: 100%;margin-top: 1rem;justify-content: space-between;display: flex;margin-bottom: none;border-bottom: 2px solid rgb(0, 0, 0);align-items: center;position: fixed;background-color: #faf9f6;z-index: 1;">
         <i @click="voltarHome" style="font-size: 30px; margin-left: 3rem; cursor: pointer"
@@ -14,7 +14,7 @@
         <i style="font-size: 30px; margin-right: 3rem; cursor: pointer; visibility: hidden"
             class="bi bi-kanban botaoAdicionarSprint" :title="'Ir para painel KanBan'"></i>
     </div>
-    <br/><br/><br/>
+    <br /><br /><br />
 
     <div class="container" style="padding: 2rem 0rem 0rem 0rem">
         <!-- <i @click="voltarHome()" style="font-size: 30px;position: absolute; cursor: pointer"
@@ -401,6 +401,7 @@
 import { Money3Component } from "v-money3";
 import api from '../../services/api';
 import { getPermissoes } from '@/services/permissao-pcm';
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     name: "VisualizaçãoCriaçãoPCM",
@@ -662,7 +663,6 @@ export default {
                 });
         },
 
-
         objetoSemIndiceDescricao(item) {
             if (item) {
                 const { indice, descricao, ...resto } = item;
@@ -699,38 +699,14 @@ export default {
                 });
         },
 
-        getSetores() {
-            api.get(`usuario`, {
-
-            })
-                .then((response) => {
-                    this.usuarios = response.data;
-                    this.usuarios = this.usuarios.map((item) => ({
-                        id: item.id,
-                        nomeCompleto: item.name,
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            // api.get('/setor')
-            //     .then(response => {
-            //         this.setores = response.data;
-            //     })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     });
-
-            api.get(`setor`, {
-
-            })
-                .then((response) => {
-                    this.setores = response.data
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        async getSetores() {
+            try {
+                const { usuarios, setores } = await consultarSetores();
+                this.usuarios = usuarios;
+                this.setores = setores;
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         getPCM() {
