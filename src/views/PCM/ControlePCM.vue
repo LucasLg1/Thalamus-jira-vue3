@@ -38,7 +38,6 @@
 </v-menu> -->
                 </div>
             </div>
-
             <br>
             <div>
                 <div class="table responsive">
@@ -162,6 +161,7 @@
                         </tbody>
                     </table>
                     <!-- 
+                        {{ permissoes }}
                         {{ teste }}
                         {{ PCMs ? PCMs : null }} <br>
                     -->
@@ -208,7 +208,6 @@
 
 import api from '../../services/api';
 import { getPermissoes } from '@/services/permissao-pcm';
-// import { permissoes } from '../../services/api'
 
 export default {
     name: "ControlePCM",
