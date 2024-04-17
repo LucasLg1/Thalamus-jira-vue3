@@ -93,7 +93,7 @@
                                     {{ element.responsavel }}
                                     <br>
                                     <b>Descrição: </b>
-                                    <textarea cols="40" v-model="element.descricao" readonly
+                                    <textarea cols="40" :rows="parseInt(element.descricao.length/25) + 1" v-model="element.descricao" readonly
                                         style="cursor: auto; width: 100%; height: fit-content;"></textarea>
                                 </label>
                                 <br>
@@ -129,7 +129,7 @@
                                     {{ element.responsavel }}
                                     <br>
                                     <b>Descrição: </b>
-                                    <textarea cols="40" v-model="element.descricao" readonly
+                                    <textarea cols="40" :rows="parseInt(element.descricao.length/25) + 1" v-model="element.descricao" readonly
                                         style="cursor: auto; width: 100%; height: fit-content;"></textarea>
                                 </label>
                                 <br>
@@ -163,8 +163,8 @@
                                     {{ element.responsavel }}
                                     <br>
                                     <b>Descrição: </b>
-                                    <textarea cols="40" v-model="element.descricao" readonly
-                                        style="cursor: auto; width: 100%; height: fit-content;"></textarea>
+                                    <textarea cols="40" :rows="parseInt(element.descricao.length/25) + 1" v-model="element.descricao" readonly
+                                        style="cursor: auto; width: 100%; height: max-content;"></textarea>
                                 </label>
                                 <br>
                             </div>

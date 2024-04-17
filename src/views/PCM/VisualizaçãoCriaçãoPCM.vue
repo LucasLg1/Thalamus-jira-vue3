@@ -1,11 +1,25 @@
 <template>
-    <br />
-    <br /><br />
+    <br/>
+    <br/><br />
+    <div
+        style="width: 100%;margin-top: 1rem;justify-content: space-between;display: flex;margin-bottom: none;border-bottom: 2px solid rgb(0, 0, 0);align-items: center;position: fixed;background-color: #faf9f6;z-index: 1;">
+        <i @click="voltarHome" style="font-size: 30px; margin-left: 3rem; cursor: pointer"
+            class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela inicial'"></i>
+
+        <i @click="voltarHome" class="fa-solid fa-house-chimney botaoAdicionarSprint botaoHome"
+            :title="'Ir para tela de inicial'"></i>
+        <h2 style="margin-left: 5rem;">
+            <input type="text" v-model="codigo" @change="atualizarPCM('codigo', codigo)" style="text-align: center" />
+        </h2>
+        <i style="font-size: 30px; margin-right: 3rem; cursor: pointer; visibility: hidden"
+            class="bi bi-kanban botaoAdicionarSprint" :title="'Ir para painel KanBan'"></i>
+    </div>
+    <br/><br/><br/>
 
     <div class="container" style="padding: 2rem 0rem 0rem 0rem">
-        <i @click="voltarHome()" style="font-size: 30px;position: absolute; cursor: pointer"
+        <!-- <i @click="voltarHome()" style="font-size: 30px;position: absolute; cursor: pointer"
             class="fa-solid fa-house-chimney botaoAdicionarSprint" :title="'Ir para tela inicial'"></i>
-        <br>
+        <br> -->
         <div style="text-align: center;">
             <h5><b>Área do Solicitante</b></h5>
         </div>
@@ -197,13 +211,13 @@
                                         <input type="radio" class="btn-check" :name="'options' + index"
                                             :id="'optionSim' + index" autocomplete="off" v-model="item.concordo"
                                             @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
-                                            value="1" />
+                                            value="true" />
                                         <label class="btn" :for="'optionSim' + index">Sim</label>
                                         <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
                                         <input type="radio" class="btn-check" :name="'options' + index"
                                             :id="'optionNão' + index" autocomplete="off" v-model="item.concordo"
                                             @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
-                                            value="0" />
+                                            value="false" />
                                         <label class="btn" :for="'optionNão' + index">Não</label>
                                     </div>
                                 </td>
@@ -241,18 +255,13 @@
                             </tr>
                         </tbody>
                     </table>
-
-                    <!-- <div>
-                        {{ teste }}
-                        <input type="checkbox" v-model="teste">
-                    </div> -->
-
                     <div style="align-items: center; display: flex; margin-inline: 1rem;">
                         <div v-for="item in impacto_viabilidade.slice(2)" :key="item.id"
                             style="border: 1px solid black; padding: 5px; width: 40rem; border-radius: 10px; margin-top: 0.5rem; margin-inline: 0.5rem;">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" v-model="item.concordo"
-                                    :id="'pergunta' + item.id">
+                                <input class="form-check-input"
+                                    @change="atualizarPCM('impacto_viabilidade', objetoSemIndiceDescricao(item))"
+                                    type="checkbox" v-model="item.concordo" :id="'pergunta' + item.id">
                                 <label class="form-check-label" :for="'pergunta' + item.id">
                                     {{ item.descricao }}
                                     <!-- {{ objetoSemIndiceDescricao(item) }} -->
@@ -299,26 +308,21 @@
 
                 <div style="border: 1px solid black;padding: 5px;border-radius: 10px;margin-top: 1rem;">
                     <div style="display: flex; align-content: center; justify-content: center">
-                        <div style="display: flex; align-items: center; width: 10rem; flex-flow: column">
+                        <!-- <div style="display: flex; align-items: center; width: 10rem; flex-flow: column">
                             <strong> Meio da mudança </strong>
-                            <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
+                            :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1"
                             <select v-model="meio_mudanca" @change="atualizarPCM('meio_mudanca', meio_mudanca)"
                                 class="form-select" style="margin-top: 0.5rem;text-align: center">
                                 <option>Plano de Ação</option>
                                 <option>Projeto</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div
                             style="display: flex; align-items: center; width: 15rem; flex-flow: column; margin-left: 2rem;">
-                            <strong>{{ meio_mudanca == 'Projeto' ? 'Projeto associado' : 'Plano de ação associado'
-                                }}</strong>
+                            <strong>{{ tipo }} associado</strong>
                             <!-- :disabled="permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1" -->
-                            <select class="form-select" v-model="planoAcao_ou_Projeto_id"
-                                @change="atualizarPCM(meio_mudanca == 'Projeto' ? 'projeto_id' : 'planoAcao_id', planoAcao_ou_Projeto_id)"
-                                style="margin-top: 0.5rem;text-align: left">
-                                <option v-for="item in (meio_mudanca == 'Projeto' ? projetosSemPCM : planoDeAcaoSemPCM)"
-                                    :key="item.id" :value="item.id">{{ item.nome }}</option>
-                            </select>
+                            <input disabled style="background-color: white; text-align: center;" type="text"
+                                class="form-control" v-model="nome_associacao">
                         </div>
                         <div
                             style="  display: flex;  align-items: center;  width: fit-content;  margin-left: 2rem;  flex-flow: column;">
@@ -395,8 +399,8 @@
 <script>
 // import { permissoes } from '../../services/api';
 import { Money3Component } from "v-money3";
-import api from '../../services/api'
-
+import api from '../../services/api';
+import { getPermissoes } from '@/services/permissao-pcm';
 
 export default {
     name: "VisualizaçãoCriaçãoPCM",
@@ -406,13 +410,12 @@ export default {
         return {
             modalConfirmacao: false,
 
-            planoAcao_ou_Projeto_id: null,
+            nome_associacao: null,
             projetosSemPCM: null,
             planoDeAcaoSemPCM: null,
             idUsuario: localStorage.getItem('id'),
             idPCM: localStorage.getItem("idPCM"),
-            permissoes: this.getPermissoes(),
-
+            permissoes: this.carregarPermissoes(),
 
             tipo: null,
             nivel: null,
@@ -491,16 +494,14 @@ export default {
         };
     },
 
-    created() {
+    mounted() {
         this.getSetores(),
-            this.getProjetosePlanoSemPCM(),
-            this.tipo = localStorage.getItem('Tipo'),
             this.getPCM()
     },
 
     methods: {
         voltarHome() {
-            this.$router.push({ name: "home" })
+            this.$router.push({ name: "ControlePCM" })
         },
 
         validarCampos() {
@@ -650,77 +651,17 @@ export default {
 
         },
 
-        getPermissoes() {
-            let permissoes
-
-            var promiseAprovadores = api.get('grupo/2/usuarios')
-                .then((response) => {
-                    return response.data.map(item => ({
-                        "usuario_id": item.id,
-                        "nivel": 3,
-                        "nome": item.name
-                    }));
+        carregarPermissoes() {
+            getPermissoes()
+                .then(permissoes => {
+                    this.permissoes = permissoes;
+                    console.log(permissoes);
                 })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            var promiseCriadores = api.get('grupo/3/usuarios')
-                .then((response) => {
-                    return response.data.map(item => ({
-                        "usuario_id": item.id,
-                        "nivel": 2,
-                        "nome": item.name
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            var promiseLeitores = api.get('grupo/4/usuarios')
-                .then((response) => {
-                    return response.data.map(item => ({
-                        "usuario_id": item.id,
-                        "nivel": 1,
-                        "nome": item.name
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            Promise.all([promiseAprovadores, promiseCriadores, promiseLeitores])
-                .then(([aprovadores, criadores, leitores]) => {
-                    var mergedArray = [...aprovadores, ...criadores, ...leitores];
-                    const usuariosMap = {};
-                    // Preencha o mapeamento
-                    mergedArray.forEach(usuario => {
-                        const { usuario_id, nivel } = usuario;
-                        if (!(usuario_id in usuariosMap) || nivel > usuariosMap[usuario_id].nivel) {
-                            usuariosMap[usuario_id] = usuario;
-                        }
-                    });
-                    // Converta o mapeamento de volta para uma array
-                    permissoes = Object.values(usuariosMap);
-                    this.permissoes = permissoes
-                    console.log(permissoes)
-                })
-                .catch((error) => {
+                .catch(error => {
                     console.error(error);
                 });
         },
 
-        getProjetosePlanoSemPCM() {
-            api.get(`planoacao-projeto/listar/sem-pcm`)
-                .then((response) => {
-                    this.projetosSemPCM = response.data.projeto
-                    this.planoDeAcaoSemPCM = response.data.planoAcao
-                    console.log(response.data)
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        },
 
         objetoSemIndiceDescricao(item) {
             if (item) {
@@ -821,22 +762,10 @@ export default {
                     this.dtCadastro = response.data.dtCadastro;
                     this.codigo_cadastro = response.data.codigo_cadastro;
                     this.nivel = response.data.nivel,
-                    this.tipo = response.data.tipo,
+                        this.tipo = response.data.tipo,
 
-                            this.planoAcao_ou_Projeto_id = response.data.id_associacao;
-                    if (response.data.projeto == 1) {
-                        this.projetosSemPCM.push({
-                            "id": response.data.id_associacao,
-                            "nome": response.data.nome_associacao
-                        })
-                    }
+                        this.nome_associacao = response.data.nome_associacao;
 
-                    if (response.data.projeto == 0) {
-                        this.planoDeAcaoSemPCM.push({
-                            "id": response.data.id_associacao,
-                            "nome": response.data.nome_associacao
-                        })
-                    }
 
                 })
 

@@ -549,13 +549,30 @@ export default {
 
         },
 
+        // filtrarProjetos() {
+        //     if (!this.projetoSelecionado) {
+        //         this.listaProjetosFiltrada = this.projetos;
+        //     } else {
+        //         const textoLowerCase = this.projetoSelecionado.toLowerCase();
+        //         this.listaProjetosFiltrada = this.projetos.filter(projeto => {
+        //             return projeto.nome.toLowerCase().includes(textoLowerCase);
+        //         });
+        //     }
+        // },
+
         filtrarProjetos() {
             if (!this.projetoSelecionado) {
                 this.listaProjetosFiltrada = this.projetos;
             } else {
                 const textoLowerCase = this.projetoSelecionado.toLowerCase();
                 this.listaProjetosFiltrada = this.projetos.filter(projeto => {
-                    return projeto.nome.toLowerCase().includes(textoLowerCase);
+                    // Verifica se alguma chave do objeto contém o texto
+                    return Object.values(projeto).some(value => {
+                        if (typeof value === 'string') {
+                            return value.toLowerCase().includes(textoLowerCase);
+                        }
+                        return false;
+                    });
                 });
             }
         },

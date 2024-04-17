@@ -89,17 +89,36 @@ export default {
             this.$router.push({ name: "controleProtocolos" })
         },
         verProgramas() {
-            this.$router.push('/Programas/controle');
+            // this.$router.push('/Programas/controle');
+            if (this.$route.path === '/Programas/controle') {
+                window.location.reload();
+            } else {
+                this.$router.push({ name: "controleProgramas" });
+            }
         },
         verProjetos() {
-            this.$router.push('/projetos');
+            if (this.$route.path === '/projetos') {
+                window.location.reload();
+            } else {
+                this.$router.push('/projetos');
+            }
         },
         verPA() {
-            this.$router.push('/PA/Controle');
+            if (this.$route.path === '/PA/Controle') {
+                window.location.reload();
+            } else {
+                this.$router.push('/PA/Controle');
+            }
         },
         verPCM() {
-            this.$router.push({ name: "ControlePCM" })
+            // this.$router.push({ name: "ControlePCM" })
+            if (this.$route.path === '/PCM/Controle') {
+                window.location.reload();
+            } else {
+                this.$router.push('/PCM/Controle');
+            }
         },
+        
         getPCMs() {
             api.get(`pcm/listar`, {})
                 .then((response) => {

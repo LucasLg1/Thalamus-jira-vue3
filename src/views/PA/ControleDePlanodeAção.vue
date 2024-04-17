@@ -273,10 +273,14 @@
                     <h6 class="titulo">Deseja excluir o plano de ação {{ planoEditado.nome }}?</h6>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn button-cancel" @click="fecharModalExcluirPlano">Cancelar</button>
+                    <!-- <button type="button" class="btn button-cancel" @click="fecharModalExcluirPlano">Cancelar</button>
                     &nbsp;&nbsp;
                     <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary"
-                        @click="excluirPlano" data-bs-dismiss="modal">Confirmar</button>
+                        @click="excluirPlano" data-bs-dismiss="modal">Confirmar</button> -->
+
+                    <button type="button" class="btn btn-light" @click="excluirPlano" style="border: 1px solid black;">Confirmar</button>
+                    <button type="button" class="btn btn-dark" @click="fecharModalExcluirPlano"
+                        style="margin-left: 0.5rem;">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -671,13 +675,29 @@ export default {
 
         },
 
+        // filtrarPlanosdeAção() {
+        //     if (!this.planoSelecionado) {
+        //         this.listaPlanosFiltrada = this.planosAcao;
+        //     } else {
+        //         const textoLowerCase = this.planoSelecionado.toLowerCase();
+        //         this.listaPlanosFiltrada = this.planosAcao.filter(planoAcao => {
+        //             return planoAcao.nome.toLowerCase().includes(textoLowerCase);
+        //         });
+        //     }
+        // },
+
         filtrarPlanosdeAção() {
             if (!this.planoSelecionado) {
                 this.listaPlanosFiltrada = this.planosAcao;
             } else {
                 const textoLowerCase = this.planoSelecionado.toLowerCase();
-                this.listaPlanosFiltrada = this.planosAcao.filter(planoAcao => {
-                    return planoAcao.nome.toLowerCase().includes(textoLowerCase);
+                this.listaPlanosFiltrada = this.planosAcao.filter(plano => {
+                    return Object.values(plano).some(value => {
+                        if (typeof value === 'string') {
+                            return value.toLowerCase().includes(textoLowerCase);
+                        }
+                        return false;
+                    });
                 });
             }
         },

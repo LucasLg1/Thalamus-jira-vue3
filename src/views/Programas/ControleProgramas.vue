@@ -43,7 +43,8 @@
                                 @mouseover="mostrarBotao(item.id, true)" @click="programasAssociados(item.id)"
                                 @mouseleave="mostrarBotao(item.id, false)">
                                 <td style="vertical-align: middle;">{{ item.nome }}</td>
-                                <td style="vertical-align: middle; display: flex; align-items: center; justify-content: center; border: none">
+                                <td
+                                    style="vertical-align: middle; display: flex; align-items: center; justify-content: center; border: none">
                                     <select v-model="item.status" class="form-select"
                                         :style="{ 'color': (item.status == 'Pendente') ? 'rgb(255, 145, 0)' : (item.status == 'Em andamento') ? 'rgb(0, 47, 255)' : (item.status == 'Concluído') ? 'rgb(0, 192, 0)' : 'red', }"
                                         style="width: 10rem; outline: none; text-align: center; border: none; background-color: transparent; "
@@ -52,19 +53,20 @@
                                         <option style="color: rgb(255, 145, 0);">Pendente</option>
                                         <option style="color: rgb(0, 47, 255);">Em andamento</option>
                                         <option style="color: rgb(0, 192, 0);">Concluído</option>
-                                    </select></td>
+                                    </select>
+                                </td>
                                 <td style="vertical-align: middle;">
 
-                                        {{ item.dtInicio ?
-                                `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
-                                : '' }}
+                                    {{ item.dtInicio ?
+                                        `${formatarDataHora(item.dtInicio).split('-')[2]}/${formatarDataHora(item.dtInicio).split('-')[1]}/${formatarDataHora(item.dtInicio).split('-')[0]}`
+                                        : '' }}
 
                                 </td>
                                 <td style="vertical-align: middle;">
 
                                     {{ item.dtTermino ?
-                                `${formatarDataHora(item.dtTermino).split('-')[2]}/${formatarDataHora(item.dtTermino).split('-')[1]}/${formatarDataHora(item.dtTermino).split('-')[0]}`
-                                : '-' }}
+                                        `${formatarDataHora(item.dtTermino).split('-')[2]}/${formatarDataHora(item.dtTermino).split('-')[1]}/${formatarDataHora(item.dtTermino).split('-')[0]}`
+                                        : '-' }}
 
                                 </td>
                                 <td style="vertical-align: middle;">{{ item.gerente_nome }}</td>
@@ -78,15 +80,19 @@
                                             </template>
 
                                             <v-list>
-                                                <v-list-item :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
+                                                <v-list-item
+                                                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                                     @click="modalEditarPrograma = true, this.programaEditado = item, this.programaEditado.dtFim !== null ? this.programaEditado.dtFim = this.programaEditado.dtFim.slice(0, 10) : '', this.programaEditado.dtInicio !== null ? this.programaEditado.dtInicio = this.programaEditado.dtInicio.slice(0, 10) : ''">
                                                     Editar
                                                 </v-list-item>
-                                                <v-list-item :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 :true "
+                                                <v-list-item
+                                                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
                                                     @click="modalFinalizarPrograma = true, this.programaEditado = item">
                                                     Finalizar
                                                 </v-list-item>
-                                                <v-list-item :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true" style="color: red;"
+                                                <v-list-item
+                                                    :disabled="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel == 1 : true"
+                                                    style="color: red;"
                                                     @click="modalExcluirPrograma = true, this.programaEditado = item">
                                                     Excluir
                                                 </v-list-item>
@@ -100,7 +106,8 @@
                 </div>
             </div>
         </div>
-        <div class="container" v-else style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; text-align: center; ">
+        <div class="container" v-else
+            style="border: 1px solid black; border-radius: 15px ; background-color: rgb(255, 255, 255); margin-bottom: 1rem; padding: 0.5rem; width: 100%; text-align: center; ">
             <h5 style="color: red">
                 Você não tem permissão para acessar esta tela! <br>
                 Por favor, contate o administrador do sistema
@@ -144,11 +151,16 @@
                     <h6 class="titulo">Deseja excluir o programa {{ programaEditado.nome }}?</h6>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn button-cancel"
+                    <!-- <button type="button" class="btn button-cancel"
                         @click="fecharModalExcluirPrograma">Cancelar</button>
                     &nbsp;&nbsp;
-                    <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary" @click="excluirPrograma"
-                        data-bs-dismiss="modal">Confirmar</button>
+                    <button type="button" style="background-color: #F89E31; border: none;" class="btn btn-primary"
+                        @click="excluirPrograma" data-bs-dismiss="modal">Confirmar</button> -->
+
+                    <button type="button" class="btn btn-light" @click="excluirPrograma"
+                        style="border: 1px solid black;">Confirmar</button>
+                    <button type="button" class="btn btn-dark" @click="fecharModalExcluirPrograma"
+                        style="margin-left: 0.5rem;">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -212,8 +224,11 @@
             <div style="display: flex; justify-content: space-between;">
                 <!-- Coluna de Projetos associados -->
                 <div style="width: 48%;">
-                    <h5 v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">Projetos disponíveis:</h5>
-                    <select id="projetos" class="form-select" @change="associarProjeto($event)" v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false" >
+                    <h5
+                        v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">
+                        Projetos disponíveis:</h5>
+                    <select id="projetos" class="form-select" @change="associarProjeto($event)"
+                        v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">
                         <option hidden selected>Selecione um projeto</option>
                         <option v-for="item in projetos" :key="item.id" :value="item.id">{{ item.nome }}</option>
                     </select>
@@ -224,7 +239,9 @@
                             <!-- <li    style="display: flex; border: 1px solid black; align-items: center; justify-content: space-between; padding: 5px; border-radius: 10px; width: 90%;"  -->
                             <li v-for="(projeto, index) in programaEditado.projeto" :key="index"> {{
                                 projeto.projeto_nome }}
-                                <span v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false" @click="desassociarPlano('projeto', projeto.associacao_id)"
+                                <span
+                                    v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false"
+                                    @click="desassociarPlano('projeto', projeto.associacao_id)"
                                     style="cursor: pointer; color: red; text-align: right;"
                                     class="bi bi-dash-circle"></span>
                             </li>
@@ -241,21 +258,26 @@
                 <!-- Coluna de Planos de Ação associados -->
 
                 <div style="width: 48%;">
-                    <h5 v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">Planos de ação disponíveis:</h5>
-                    <select id="planosAcao" class="form-select" @change="associarPlanoAcao($event)" v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">
+                    <h5
+                        v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">
+                        Planos de ação disponíveis:</h5>
+                    <select id="planosAcao" class="form-select" @change="associarPlanoAcao($event)"
+                        v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false">
                         <option hidden selected>Selecione um plano de ação</option>
                         <option v-for="item in planosAcao" :key="item.id" :value="item.id">{{ item.nome }}</option>
                     </select>
 
 
-                    <div v-if="programaEditado.planoAcao.length > 0 && programaEditado.planoAcao[0].associacao_id !== null">
+                    <div
+                        v-if="programaEditado.planoAcao.length > 0 && programaEditado.planoAcao[0].associacao_id !== null">
 
                         <br>
                         <h5>Planos de Ação associados:</h5>
                         <ul style="height: 5rem;">
-                            <li v-for="(plano, index) in programaEditado.planoAcao" :key="index"> 
-                                    {{ plano.planoAcao_nome }} <span v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false" @click="desassociarPlano('plano', plano.associacao_id)"
-                                    class="bi bi-dash-circle"
+                            <li v-for="(plano, index) in programaEditado.planoAcao" :key="index">
+                                {{ plano.planoAcao_nome }} <span
+                                    v-if="permissoes ? permissoes.find(pessoa => pessoa.usuario_id == idUsuario).nivel !== 1 : false"
+                                    @click="desassociarPlano('plano', plano.associacao_id)" class="bi bi-dash-circle"
                                     style="cursor: pointer; color: red; text-align: right;"></span>
                             </li>
                         </ul>
@@ -328,13 +350,14 @@
 <script>
 // import {  permissoes } from '../../services/api'
 import api from '../../services/api'
+import { getPermissoes } from '@/services/permissao-pcm';
 
 export default {
     name: "ControleProgramas",
 
     data() {
         return {
-            permissoes: this.getPermissoes(),
+            permissoes: this.carregarPermissoes(),
             idUsuario: localStorage.getItem('id'),
 
             programaSelecionado: null,
@@ -369,62 +392,13 @@ export default {
     },
 
     methods: {
-        getPermissoes() {
-            let permissoes
-
-            var promiseAprovadores = api.get('grupo/2/usuarios')
-                .then((response) => {
-                    return response.data.map(item => ({
-                        "usuario_id": item.id,
-                        "nivel": 3,
-                        "nome": item.name
-                    }));
+        carregarPermissoes() {
+            getPermissoes()
+                .then(permissoes => {
+                    this.permissoes = permissoes;
+                    console.log(permissoes);
                 })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            var promiseCriadores = api.get('grupo/3/usuarios')
-                .then((response) => {
-                    return response.data.map(item => ({
-                        "usuario_id": item.id,
-                        "nivel": 2,
-                        "nome": item.name
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            var promiseLeitores = api.get('grupo/4/usuarios')
-                .then((response) => {
-                    return response.data.map(item => ({
-                        "usuario_id": item.id,
-                        "nivel": 1,
-                        "nome": item.name
-                    }));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            Promise.all([promiseAprovadores, promiseCriadores, promiseLeitores])
-                .then(([aprovadores, criadores, leitores]) => {
-                    var mergedArray = [...aprovadores, ...criadores, ...leitores];
-                    const usuariosMap = {};
-                    // Preencha o mapeamento
-                    mergedArray.forEach(usuario => {
-                        const { usuario_id, nivel } = usuario;
-                        if (!(usuario_id in usuariosMap) || nivel > usuariosMap[usuario_id].nivel) {
-                            usuariosMap[usuario_id] = usuario;
-                        }
-                    });
-                    // Converta o mapeamento de volta para uma array
-                    permissoes = Object.values(usuariosMap);
-                    this.permissoes = permissoes
-                    console.log(permissoes)
-                })
-                .catch((error) => {
+                .catch(error => {
                     console.error(error);
                 });
         },
@@ -449,13 +423,29 @@ export default {
 
         },
 
+        // filtrarProgramas() {
+        //     if (!this.programaSelecionado) {
+        //         this.listaProgramasFiltrada = this.programas;
+        //     } else {
+        //         const textoLowerCase = this.programaSelecionado.toLowerCase();
+        //         this.listaProgramasFiltrada = this.programas.filter(programa => {
+        //             return programa.nome.toLowerCase().includes(textoLowerCase);
+        //         });
+        //     }
+        // },
+
         filtrarProgramas() {
             if (!this.programaSelecionado) {
                 this.listaProgramasFiltrada = this.programas;
             } else {
                 const textoLowerCase = this.programaSelecionado.toLowerCase();
                 this.listaProgramasFiltrada = this.programas.filter(programa => {
-                    return programa.nome.toLowerCase().includes(textoLowerCase);
+                    return Object.values(programa).some(value => {
+                        if (typeof value === 'string') {
+                            return value.toLowerCase().includes(textoLowerCase);
+                        }
+                        return false;
+                    });
                 });
             }
         },
@@ -700,12 +690,15 @@ export default {
     transition: 50ms linear;
     transform: scale(1.1);
 }
-input:disabled{
-    color:black
+
+input:disabled {
+    color: black
 }
-select:disabled{
-    color:black
+
+select:disabled {
+    color: black
 }
+
 .fa-solid {
     margin-left: 0rem !important;
 }

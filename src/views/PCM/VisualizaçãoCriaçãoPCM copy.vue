@@ -585,17 +585,17 @@ export default {
                     this.dtCadastro = response.data.dtCadastro;
                     this.codigo_cadastro = response.data.codigo_cadastro;
 
-                    this.planoAcao_ou_Projeto_id = response.data.id_associacao;
+                    this.planoAcao_ou_Projeto_id = response.data.associacao_id;
                     if (response.data.projeto == 1) {
                         this.projetosSemPCM.push({
-                            "id": response.data.id_associacao, 
+                            "id": response.data.associacao_id, 
                             "nome": response.data.nome_associacao
                         })
                     }
 
                     if (response.data.projeto == 0) {
                         this.planoDeAcaoSemPCM.push({
-                            "id": response.data.id_associacao, 
+                            "id": response.data.associacao_id, 
                             "nome": response.data.nome_associacao
                         })
                     }
