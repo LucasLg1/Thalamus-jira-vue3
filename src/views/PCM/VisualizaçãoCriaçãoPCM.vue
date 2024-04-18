@@ -397,7 +397,6 @@
 </template>
 
 <script>
-// import { permissoes } from '../../services/api';
 import { Money3Component } from "v-money3";
 import api from '../../services/api';
 import { getPermissoes } from '@/services/permissao-pcm';

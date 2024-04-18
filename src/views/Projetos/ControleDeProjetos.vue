@@ -264,7 +264,7 @@
                                 type="file" @change="handleFileUpload">
 
                             <ul style="list-style: none; padding-left: 0rem; overflow: auto; max-height: 8.5rem;">
-                                <li v-for="item in projetoEditado.anexos" :key="item" 
+                                <li v-for="item in projetoEditado.anexos" :key="item"
                                     @mouseover="mostrarBotaoExcluirAnexo(item.id, true)"
                                     @mouseleave="mostrarBotaoExcluirAnexo(item.id, false)">
                                     <div
@@ -273,7 +273,7 @@
                                             class="link">
                                             <i style="font-size: 25px;"
                                                 :class="'bi bi-filetype-' + item.nome.split('.')[1].toLowerCase()"></i>
-                                                {{ item.nome }}
+                                            {{ item.nome }}
                                         </a>
 
                                         <button class="botaoAdicionarSprint" style="color: red; visibility: hidden;"
@@ -413,7 +413,8 @@
 
 <script>
 import { ref } from 'vue';
-import api from '../../services/api'
+import api from '../../services/api';
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     name: "ControleDeProjetos",
@@ -548,17 +549,6 @@ export default {
             }
 
         },
-
-        // filtrarProjetos() {
-        //     if (!this.projetoSelecionado) {
-        //         this.listaProjetosFiltrada = this.projetos;
-        //     } else {
-        //         const textoLowerCase = this.projetoSelecionado.toLowerCase();
-        //         this.listaProjetosFiltrada = this.projetos.filter(projeto => {
-        //             return projeto.nome.toLowerCase().includes(textoLowerCase);
-        //         });
-        //     }
-        // },
 
         filtrarProjetos() {
             if (!this.projetoSelecionado) {
@@ -849,31 +839,14 @@ export default {
             }
         },
 
-        getGerenteseSetor() {
-            // axios.get('http://192.168.0.5:8000/api/usuario/', {
-            api.get(`usuario`, {
-            })
-                .then((response) => {
-                    this.gerente = response.data
-                    this.gerente = this.gerente.map(item => ({
-                        id: item.id,
-                        nomeCompleto: item.name
-                    }))
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            // axios.get('http://192.168.0.5:8000/api/setor', {
-            api.get(`setor`, {
-
-            })
-                .then((response) => {
-                    this.setores = response.data
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        async getGerenteseSetor() {
+            try {
+                const { usuarios, setores } = await consultarSetores();
+                this.gerente = usuarios;
+                this.setores = setores;
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         getProjetos() {
@@ -885,7 +858,7 @@ export default {
                 .then((response) => {
                     this.projetos = response.data;
                     this.filtrarProjetos()
-                    
+
                     document.getElementById(`setaBaixodtInicio`).style.display = 'none'
                     document.getElementById(`setaCimadtInicio`).style.display = 'none'
                     this.ordenarLista('dtInicio')

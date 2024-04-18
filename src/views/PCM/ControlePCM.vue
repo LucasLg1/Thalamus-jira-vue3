@@ -48,46 +48,41 @@
 
                                 </th>
                                 <th scope="col">
-                                    <button 
-                                    >
-                                    <!-- @click="ordenarLista('tipo')" -->
+                                    <button>
+                                        <!-- @click="ordenarLista('tipo')" -->
                                         Tipo
                                     </button>
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixotipo"></i>
                                     <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimatipo"></i>
                                 </th>
-                                
+
                                 <th scope="col">
-                                    <button 
-                                    >
-                                    <!-- @click="ordenarLista('nome')" -->
+                                    <button>
+                                        <!-- @click="ordenarLista('nome')" -->
                                         Nome
                                     </button>
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixonome"></i>
                                     <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimanome"></i>
                                 </th>
                                 <th scope="col">
-                                    <button
-                                    >
-                                    <!-- @click="ordenarLista('codigo')" -->
+                                    <button>
+                                        <!-- @click="ordenarLista('codigo')" -->
                                         Setor
                                     </button>
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixocodigo"></i>
                                     <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimacodigo"></i>
                                 </th>
                                 <th scope="col">
-                                    <button 
-                                    >
-                                    <!-- @click="ordenarLista('status')" -->
+                                    <button>
+                                        <!-- @click="ordenarLista('status')" -->
                                         Status
                                     </button>
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixostatus"></i>
                                     <i class="bi bi-caret-up-fill" style="display: none;" id="setaCimastatus"></i>
                                 </th>
                                 <th scope="col" style="width: 10rem;">
-                                    <button
-                                    >
-                                     <!-- @click="ordenarLista('dtInicio')" -->
+                                    <button>
+                                        <!-- @click="ordenarLista('dtInicio')" -->
                                         Data de abertura
                                     </button>
                                     <i class="bi bi-caret-down-fill" style="display: none;" id="setaBaixodtInicio"></i>
@@ -119,10 +114,12 @@
                                 <td style="text-align: center; vertical-align: middle; width: max-content ;">
                                     {{ item.nome }}
                                 </td>
-                                
-                                <td style="text-align: center; vertical-align: middle; width: min-content; width: 9rem;">
+
+                                <td
+                                    style="text-align: center; vertical-align: middle; width: min-content; width: 9rem;">
                                     <select disabled>
-                                        <option v-for="item in setores" :key="item.id" :value="item.id">{{ item.nome }}</option>
+                                        <option v-for="item in setores" :key="item.id" :value="item.id">{{ item.nome }}
+                                        </option>
                                     </select>
                                 </td>
 
@@ -147,8 +144,8 @@
                                             <button class="button-aprovar"
                                                 :style="{ 'background-color': (item.status == 'Reprovado') ? '#4298677e' : '#429867' }"
                                                 @click="criarElemento(item), atualizarPCM('status', 'Aprovado', item.id)">
-                                                
-                                                {{item.status == 'Aprovado' ? 'Aprovado' : 'Aprovar'}}
+
+                                                {{ item.status == 'Aprovado' ? 'Aprovado' : 'Aprovar' }}
                                                 <i class="fa-solid fa-thumbs-up"></i>
                                             </button>
                                         </div>
@@ -156,7 +153,7 @@
                                             <button type="button" class="button-reprovar"
                                                 :style="{ 'background-color': (item.status == 'Aprovado') ? '#e0213171' : '#e02130' }"
                                                 @click="avisoExclusao(item)">
-                                                {{item.status == 'Reprovado' ? 'Reprovado' : 'Reprovar'}}
+                                                {{ item.status == 'Reprovado' ? 'Reprovado' : 'Reprovar' }}
                                                 <i class="fa-solid fa-thumbs-down"></i>
                                             </button>
                                         </div>

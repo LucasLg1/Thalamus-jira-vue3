@@ -89,7 +89,6 @@ export default {
             this.$router.push({ name: "controleProtocolos" })
         },
         verProgramas() {
-            // this.$router.push('/Programas/controle');
             if (this.$route.path === '/Programas/controle') {
                 window.location.reload();
             } else {
@@ -111,14 +110,13 @@ export default {
             }
         },
         verPCM() {
-            // this.$router.push({ name: "ControlePCM" })
             if (this.$route.path === '/PCM/Controle') {
                 window.location.reload();
             } else {
                 this.$router.push('/PCM/Controle');
             }
         },
-        
+
         getPCMs() {
             api.get(`pcm/listar`, {})
                 .then((response) => {
@@ -128,7 +126,6 @@ export default {
                     console.error(error);
                 });
         },
-
 
         getAllSidebar() {
             //axios.get(`http://192.168.0.6:8000/api/menu/estrutura/7`)

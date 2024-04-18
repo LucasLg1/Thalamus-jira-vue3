@@ -424,7 +424,8 @@
 </template>
 
 <script>
-import api from '../../services/api'
+import api from '../../services/api';
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     name: "ControlePCM",
@@ -675,17 +676,6 @@ export default {
 
         },
 
-        // filtrarPlanosdeAção() {
-        //     if (!this.planoSelecionado) {
-        //         this.listaPlanosFiltrada = this.planosAcao;
-        //     } else {
-        //         const textoLowerCase = this.planoSelecionado.toLowerCase();
-        //         this.listaPlanosFiltrada = this.planosAcao.filter(planoAcao => {
-        //             return planoAcao.nome.toLowerCase().includes(textoLowerCase);
-        //         });
-        //     }
-        // },
-
         filtrarPlanosdeAção() {
             if (!this.planoSelecionado) {
                 this.listaPlanosFiltrada = this.planosAcao;
@@ -811,30 +801,14 @@ export default {
 
         },
 
-        getGerenteseSetor() {
-            api.get(`usuario`, {
-
-            })
-                .then((response) => {
-                    this.gerente = response.data
-                    this.gerente = this.gerente.map(item => ({
-                        id: item.id,
-                        nomeCompleto: item.name
-                    }))
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-
-            api.get(`setor`, {
-
-            })
-                .then((response) => {
-                    this.setores = response.data
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        async getGerenteseSetor() {
+            try {
+                const { usuarios, setores } = await consultarSetores();
+                this.gerente = usuarios;
+                this.setores = setores;
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         getPlanoAcao() {

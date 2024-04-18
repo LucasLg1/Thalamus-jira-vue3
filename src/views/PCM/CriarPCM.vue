@@ -351,6 +351,7 @@
             </div>
         </div>
     </div>
+
     <!-- modal confirmação de criação -->
     <div style="overflow: auto" class="modal-mask" v-if="modalConfirmacao" @click="fecharModalFora">
         <div style="max-height: 85%; width: 50rem; padding: 3rem; margin-bottom: 3rem; overflow: hidden; border: solid 1px black;"
@@ -372,7 +373,6 @@
 </template>
 
 <script>
-// import { permissoes } from '../../services/api';
 import { Money3Component } from "v-money3";
 import api from '../../services/api';
 import { getPermissoes } from '@/services/permissao-pcm';
@@ -632,57 +632,6 @@ export default {
                 console.error(error);
             }
         },
-
-        // getPCM() {
-        //     api.get(`pcm/buscar/${this.idPCM}`, {})
-        //         .then(response => {
-        //             this.codigo = response.data.codigo;
-        //             this.finalidade = response.data.finalidade;
-        //             this.area = response.data.area;
-        //             this.setor_id = response.data.setor_id;
-        //             this.nome = response.data.nome;
-        //             this.dtInicio = response.data.dtInicio;
-        //             this.descricao_problema = response.data.descricao_problema;
-        //             this.possivel_solucao = response.data.possivel_solucao;
-        //             this.proposito_mudanca = response.data.proposito_mudanca;
-        //             this.dtLimiteImplementacao = response.data.dtLimiteImplementacao;
-        //             this.solicitante_id = response.data.solicitante_id;
-        //             this.solicitante_nome = response.data.solicitante_nome;
-        //             this.estimativa_custo = response.data.estimativa_custo;
-        //             this.custo_justificativa = response.data.custo_justificativa;
-        //             this.parecer_responsavel = response.data.parecer_responsavel;
-        //             this.responsavel_id = response.data.responsavel_id;
-        //             this.responsavel_nome = response.data.responsavel_nome;
-        //             this.responsavel_justificativa = response.data.responsavel_justificativa;
-        //             this.meio_mudanca = response.data.meio_mudanca;
-        //             this.cadastro_omie = response.data.cadastro_omie;
-        //             this.impacto_viabilidade = response.data.impacto_viabilidade
-        //             this.responsavelCadastro_id = response.data.responsavelCadastro_id;
-        //             this.responsavelCadastro_nome = response.data.responsavelCadastro_nome;
-        //             this.dtCadastro = response.data.dtCadastro;
-        //             this.codigo_cadastro = response.data.codigo_cadastro;
-
-        //             this.planoAcao_ou_Projeto_id = response.data.associacao_id;
-        //             if (response.data.projeto == 1) {
-        //                 this.projetosSemPCM.push({
-        //                     "id": response.data.associacao_id, 
-        //                     "nome": response.data.nome_associacao
-        //                 })
-        //             }
-
-        //             if (response.data.projeto == 0) {
-        //                 this.planoDeAcaoSemPCM.push({
-        //                     "id": response.data.associacao_id, 
-        //                     "nome": response.data.nome_associacao
-        //                 })
-        //             }
-
-        //         })
-
-        //         .catch((error) => {
-        //             console.error(error);
-        //         });
-        // },
 
         verPCMs() {
             this.$router.push({ name: "ControlePCM" });

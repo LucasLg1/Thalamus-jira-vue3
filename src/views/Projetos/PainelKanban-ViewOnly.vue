@@ -136,7 +136,6 @@
 import draggableVue from "@/vuedraggableVue";
 import api from "../../services/api";
 
-
 export default {
     components: {
         draggableVue,
@@ -189,10 +188,6 @@ export default {
         verBacklogs() {
             this.$router.push({ name: "sprintsVo" })
         },
-
-        // verPainel() {
-        //     this.$router.push({ name: "painel" })
-        // },
 
         verProjetos() {
             this.$router.push({ name: "ControleDeProjetos" })

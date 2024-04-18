@@ -348,9 +348,9 @@
 
 
 <script>
-// import {  permissoes } from '../../services/api'
 import api from '../../services/api'
 import { getPermissoes } from '@/services/permissao-pcm';
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     name: "ControleProgramas",
@@ -423,17 +423,6 @@ export default {
 
         },
 
-        // filtrarProgramas() {
-        //     if (!this.programaSelecionado) {
-        //         this.listaProgramasFiltrada = this.programas;
-        //     } else {
-        //         const textoLowerCase = this.programaSelecionado.toLowerCase();
-        //         this.listaProgramasFiltrada = this.programas.filter(programa => {
-        //             return programa.nome.toLowerCase().includes(textoLowerCase);
-        //         });
-        //     }
-        // },
-
         filtrarProgramas() {
             if (!this.programaSelecionado) {
                 this.listaProgramasFiltrada = this.programas;
@@ -477,7 +466,6 @@ export default {
                 });
         },
 
-
         associarProjeto(event) {
             const projetoId = event.target.value;
             api.post(`programa/associar/${this.programaEditado.id}`, {
@@ -498,7 +486,6 @@ export default {
                     console.error('Erro ao associar projeto:', error);
                 });
         },
-
 
         associarPlanoAcao(event) {
             const planoAcaoId = event.target.value;
@@ -544,7 +531,6 @@ export default {
             this.getProjetosPlanoAcao()
         },
 
-
         getProjetosPlanoAcao() {
             api.get(`planoacao-projeto/listar/sem-programa`)
                 .then((response) => {
@@ -583,7 +569,6 @@ export default {
                 [itemAlterado]: novoValor,
             })
         },
-
 
         editarProgramaInline(idProjeto, itemAlterado, novoValor) {
 
@@ -648,20 +633,13 @@ export default {
                 });
         },
 
-        getGerente() {
-            api.get(`usuario`, {
-
-            })
-                .then((response) => {
-                    this.gerente = response.data
-                    this.gerente = this.gerente.map(item => ({
-                        id: item.id,
-                        nomeCompleto: item.name
-                    }))
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        async getGerente() {
+            try {
+                const { usuarios } = await consultarSetores();
+                this.gerente = usuarios;
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         fecharModalFora(event) {
@@ -677,6 +655,7 @@ export default {
         verPCM() {
             this.$router.push({ name: "PCM" })
         },
+
         verPCMvazio() {
             this.$router.push({ name: "PCMv" })
         },

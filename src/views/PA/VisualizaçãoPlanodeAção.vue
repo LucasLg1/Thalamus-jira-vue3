@@ -335,6 +335,7 @@
 <script>
 import { ref } from 'vue';
 import api from "../../services/api";
+import { consultarSetores } from '@/services/usuario-setor';
 
 export default {
     components: {
@@ -513,28 +514,14 @@ export default {
             }
         },
 
-        getGerenteseSetor() {
-            // axios.get('http://192.168.0.5:8000/api/pessoa/', {
-            // })
-            //     .then((response) => {
-            //         this.gerente = response.data
-            //     })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     });
-
-            api.get('usuario/', {
-            })
-                .then((response) => {
-                    this.gerente = response.data
-                    this.gerente = this.gerente.map(item => ({
-                        id: item.id,
-                        nomeCompleto: item.name
-                    }))
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        async getGerenteseSetor() {
+            try {
+                const { usuarios, setores } = await consultarSetores();
+                this.gerente = usuarios;
+                this.setores = setores;
+            } catch (error) {
+                console.error(error);
+            }
         },
 
         mostrarBotao(id, mostrar) {
